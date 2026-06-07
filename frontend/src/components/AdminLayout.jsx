@@ -26,7 +26,7 @@ const AdminLayout = () => {
   };
 
   const isActive = (path) => {
-    return location.pathname === path ? 'sidebar-active text-secondary-fixed font-bold bg-[#e0e0ff]' : 'text-on-surface-variant hover:bg-surface-container-high';
+    return location.pathname === path ? 'sidebar-active text-on-secondary-fixed font-bold bg-[#e0e0ff]' : 'text-on-surface-variant hover:bg-surface-container-high';
   };
 
   return (
