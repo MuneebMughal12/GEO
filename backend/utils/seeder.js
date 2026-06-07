@@ -72,6 +72,9 @@ const seedData = async () => {
       homepage: {
         heroTitle: 'Building the Future with Precision & Innovation',
         heroSubtitle: 'A global conglomerate delivering excellence in architectural design, soil engineering, and large-scale infrastructure construction.',
+        heroBgImage: '',
+        heroBgVideo: '',
+        aboutImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuADKyVl4iPTgTKT8axz8gBGKuewZn0RCuFzYfdrGN1Gpz_1bVxb39HnR98tXTwBc-IeWTO16klJ7Z--rPiJcLLNtSbO7POXjbMvJ9CwymSdXr9nGamfwfY13SUUTwEpVz_GnPqSM7XfPzgl_dNxH7J4N58PB4EIIZ4hElO94C5kcuhIIHZpnA_RZv7SKXzAaBnoP3024vt2KUn87JCyBbvOJjhtI_HiFb5JmGRm5CcjhftUIgGz7khfY3andNCd2Ar56-DytXvH0B4',
         heroCTA1: 'Explore Companies',
         heroCTA2: 'Contact Us',
         aboutTitle: 'Established Excellence in Global Infrastructure',
@@ -103,6 +106,8 @@ const seedData = async () => {
       tagline: 'Defining the Global Skyline',
       description: 'Precision-engineered structures meeting world-class architectural vision. We bridge the gap between aesthetic brilliance and structural integrity.',
       aboutText: 'Pioneering architectural solutions that blend aesthetic elegance with functional sustainability for modern urban landscapes.',
+      featuredImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuALFxi773AFyBHTufFGUq5Ht4X7XJOc07BLrNPATVM7_n_GM2i97oOmwuwmr2y6wwe3k4ZzYrK_5qKBMFg7cjJdoeMte-DQRkTmdd-XBipsRyDE4r06TYPuVtfR12lpX7udRIeBlmoQSruwDtgeE-Ay3Tle16cmEqOSecBJP67eShq2VPUpiq3MDvrdpC8P1UqYSegXQrXs-bNwL5dCxWOpzo3kbOA6e954ufpQdzu_owBJClt1lHO3zLfGH6Bd06BcehglmRxN5n4',
+      heroVideo: '',
       icon: 'architecture',
       division: 'ARC',
       certifications: [
@@ -123,6 +128,8 @@ const seedData = async () => {
       tagline: 'Precision Laboratory Services',
       description: 'Advanced geotechnical analysis and material characterization. Our ISO-certified laboratories provide the bedrock data required for global architectural and infrastructure marvels.',
       aboutText: 'Specialized geotechnical analysis ensuring the foundational integrity of complex engineering projects worldwide.',
+      featuredImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBHybj8pwKP8LgTw-lrqzjcaQz9Wc8Rmod1-KL-_J6C1bI0r83Jfwyw2iT5Hea7c1PxEO2iAVk7ccK4Net1fI2UvWI15E-9oy31g4y_cGN2guV56Etibfn5GybcgBBr-0MKkhjDtJkDzxasTYhSnkjwpsNvrhKkxfZqouCCgHQbnV6Sudp1JUXPbClnIhN_Cy9HPiiPGR6o_TDlwIByp6KTycKUowoqvPvfOCxfYTcZbBYPbmx9oymY-CxKYzctwlVpe93w9Eu-O-A',
+      heroVideo: '',
       icon: 'science',
       division: 'SOIL',
       certifications: [
@@ -142,6 +149,8 @@ const seedData = async () => {
       tagline: 'Building Tomorrow\'s Infrastructure',
       description: 'Setting the gold standard in civil engineering and large-scale infrastructure. From high-speed rail networks to industrial monoliths, GEO Construction delivers engineering excellence with surgical precision.',
       aboutText: 'Full-cycle construction management for commercial and industrial infrastructures, delivered with unmatched precision.',
+      featuredImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPpuQBj18rx33YYWBnP1aKZrkDoa8ZGQe9sSUXt0DJyR0GxHJVlmAY_NbbHCR0zWOLS4FkNfaDaJu948FKC8OCPd0YlHvx067xCb9XmRcu8-EDR2WT1fOhbMkz75njMlcHUq5ei_4I3dMD_R0OBIF7i67LNv_kbHaM1rrk5dGABZmYUJIpgUYUSKgV61VZZiiiGnaNE9Izg2oidIde-j538_kHx5nfTOcsv-fHTNhdJ1RdGzrHMfhavTJwxVTppU4Jt-UGYcoRegg',
+      heroVideo: '',
       icon: 'home_work',
       division: 'CONSTRUCTION',
       certifications: [

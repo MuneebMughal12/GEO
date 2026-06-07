@@ -7,7 +7,7 @@ const DivisionConstruction = () => {
   const [company, setCompany] = useState(null);
   const [projects, setProjects] = useState([]);
   const [allTeam, setAllTeam] = useState([]);
-  const [activeTab, setActiveTab] = useState('CONSTRUCTION');
+  const activeTab = 'CONSTRUCTION';
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,11 +49,15 @@ const DivisionConstruction = () => {
       {/* Hero Section */}
       <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            className="w-full h-full object-cover" 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPpuQBj18rx33YYWBnP1aKZrkDoa8ZGQe9sSUXt0DJyR0GxHJVlmAY_NbbHCR0zWOLS4FkNfaDaJu948FKC8OCPd0YlHvx067xCb9XmRcu8-EDR2WT1fOhbMkz75njMlcHUq5ei_4I3dMD_R0OBIF7i67LNv_kbHaM1rrk5dGABZmYUJIpgUYUSKgV61VZZiiiGnaNE9Izg2oidIde-j538_kHx5nfTOcsv-fHTNhdJ1RdGzrHMfhavTJwxVTppU4Jt-UGYcoRegg"
-            alt="GEO Heavy Civil Construction Site"
-          />
+          {company?.heroVideo ? (
+            <video className="w-full h-full object-cover" autoPlay loop muted playsInline src={company.heroVideo} />
+          ) : (
+            <img 
+              className="w-full h-full object-cover" 
+              src={company?.featuredImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuBPpuQBj18rx33YYWBnP1aKZrkDoa8ZGQe9sSUXt0DJyR0GxHJVlmAY_NbbHCR0zWOLS4FkNfaDaJu948FKC8OCPd0YlHvx067xCb9XmRcu8-EDR2WT1fOhbMkz75njMlcHUq5ei_4I3dMD_R0OBIF7i67LNv_kbHaM1rrk5dGABZmYUJIpgUYUSKgV61VZZiiiGnaNE9Izg2oidIde-j538_kHx5nfTOcsv-fHTNhdJ1RdGzrHMfhavTJwxVTppU4Jt-UGYcoRegg"}
+              alt="GEO Heavy Civil Construction Site"
+            />
+          )}
           <div className="absolute inset-0 hero-gradient" />
         </div>
         <div className="relative z-10 max-w-container-max mx-auto px-margin-desktop w-full text-white">
@@ -263,31 +267,9 @@ const DivisionConstruction = () => {
           <div className="text-center mb-12">
             <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
-            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-8">
+            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
               Explore the professional minds driving safety, precision, and building excellence across GEO Group.
             </p>
-
-            {/* Department Navigation Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 md:gap-4 p-1 bg-surface-container-high rounded-xl max-w-2xl mx-auto mb-12 border border-outline-variant/20">
-              <button 
-                onClick={() => setActiveTab('ARC')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'ARC' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO ARC
-              </button>
-              <button 
-                onClick={() => setActiveTab('SOIL')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'SOIL' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO Soil Testing
-              </button>
-              <button 
-                onClick={() => setActiveTab('CONSTRUCTION')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'CONSTRUCTION' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO Construction
-              </button>
-            </div>
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}

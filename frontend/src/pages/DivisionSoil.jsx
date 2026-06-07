@@ -8,7 +8,7 @@ const DivisionSoil = () => {
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
   const [allTeam, setAllTeam] = useState([]);
-  const [activeTab, setActiveTab] = useState('SOIL');
+  const activeTab = 'SOIL';
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -75,11 +75,15 @@ const DivisionSoil = () => {
             </div>
             <div className="relative">
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl emerald-glow">
-                <img 
-                  className="w-full aspect-[4/3] object-cover" 
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHybj8pwKP8LgTw-lrqzjcaQz9Wc8Rmod1-KL-_J6C1bI0r83Jfwyw2iT5Hea7c1PxEO2iAVk7ccK4Net1fI2UvWI15E-9oy31g4y_cGN2guV56Etibfn5GybcgBBr-0MKkhjDtJkDzxasTYhSnkjwpsNvrhKkxfZqouCCgHQbnV6Sudp1JUXPbClnIhN_Cy9HPiiPGR6o_TDlwIByp6KTycKUowoqvPvfOCxfYTcZbBYPbmx9oymY-CxKYzctwlVpe93w9Eu-O-A"
-                  alt="GEO Triaxial Soil Testing Lab"
-                />
+                {company?.heroVideo ? (
+                  <video className="w-full aspect-[4/3] object-cover" autoPlay loop muted playsInline src={company.heroVideo} />
+                ) : (
+                  <img 
+                    className="w-full aspect-[4/3] object-cover" 
+                    src={company?.featuredImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuBHybj8pwKP8LgTw-lrqzjcaQz9Wc8Rmod1-KL-_J6C1bI0r83Jfwyw2iT5Hea7c1PxEO2iAVk7ccK4Net1fI2UvWI15E-9oy31g4y_cGN2guV56Etibfn5GybcgBBr-0MKkhjDtJkDzxasTYhSnkjwpsNvrhKkxfZqouCCgHQbnV6Sudp1JUXPbClnIhN_Cy9HPiiPGR6o_TDlwIByp6KTycKUowoqvPvfOCxfYTcZbBYPbmx9oymY-CxKYzctwlVpe93w9Eu-O-A"}
+                    alt="GEO Triaxial Soil Testing Lab"
+                  />
+                )}
               </div>
               <div className="absolute -bottom-8 -left-8 glass-card p-6 rounded-xl shadow-xl z-20 max-w-[240px] border-l-4 border-emerald-500">
                 <p className="font-display font-bold text-emerald-700 text-xs tracking-wider mb-1">ACCURACY RATE</p>
@@ -209,31 +213,9 @@ const DivisionSoil = () => {
           <div className="text-center mb-12">
             <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
-            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-8">
+            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
               Explore the professional minds driving safety, precision, and geotechnical excellence across GEO Group.
             </p>
-
-            {/* Department Navigation Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 md:gap-4 p-1 bg-surface-container-high rounded-xl max-w-2xl mx-auto mb-12 border border-outline-variant/20">
-              <button 
-                onClick={() => setActiveTab('ARC')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'ARC' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO ARC
-              </button>
-              <button 
-                onClick={() => setActiveTab('SOIL')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'SOIL' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO Soil Testing
-              </button>
-              <button 
-                onClick={() => setActiveTab('CONSTRUCTION')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'CONSTRUCTION' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO Construction
-              </button>
-            </div>
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}

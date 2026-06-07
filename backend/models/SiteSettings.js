@@ -21,6 +21,9 @@ const SiteSettingsSchema = new mongoose.Schema({
   homepage: {
     heroTitle: { type: String, default: 'Building the Future with Precision & Innovation' },
     heroSubtitle: { type: String, default: 'A global conglomerate delivering excellence in architectural design, soil engineering, and large-scale infrastructure construction.' },
+    heroBgImage: { type: String, default: '' },
+    heroBgVideo: { type: String, default: '' },
+    aboutImage: { type: String, default: '' },
     heroCTA1: { type: String, default: 'Explore Companies' },
     heroCTA2: { type: String, default: 'Contact Us' },
     aboutTitle: { type: String, default: 'Established Excellence in Global Infrastructure' },

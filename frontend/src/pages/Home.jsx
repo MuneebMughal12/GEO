@@ -63,7 +63,13 @@ const Home = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <ThreeHeroBackground />
+        {settings?.homepage?.heroBgVideo ? (
+          <video className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline src={settings.homepage.heroBgVideo} />
+        ) : settings?.homepage?.heroBgImage ? (
+          <img className="absolute inset-0 w-full h-full object-cover" src={settings.homepage.heroBgImage} alt="Hero Background" />
+        ) : (
+          <ThreeHeroBackground />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-primary/40 to-background/90 z-10" />
         <div className="relative z-20 max-w-container-max mx-auto px-margin-desktop text-center">
           <h1 className="font-display text-4xl md:text-6xl font-extrabold text-primary mb-6 max-w-4xl mx-auto leading-tight">
@@ -136,7 +142,7 @@ const Home = () => {
               <img 
                 alt="Modern Office Building" 
                 className="w-full h-[600px] object-cover" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuADKyVl4iPTgTKT8axz8gBGKuewZn0RCuFzYfdrGN1Gpz_1bVxb39HnR98tXTwBc-IeWTO16klJ7Z--rPiJcLLNtSbO7POXjbMvJ9CwymSdXr9nGamfwfY13SUUTwEpVz_GnPqSM7XfPzgl_dNxH7J4N58PB4EIIZ4hElO94C5kcuhIIHZpnA_RZv7SKXzAaBnoP3024vt2KUn87JCyBbvOJjhtI_HiFb5JmGRm5CcjhftUIgGz7khfY3andNCd2Ar56-DytXvH0B4"
+                src={settings?.homepage?.aboutImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuADKyVl4iPTgTKT8axz8gBGKuewZn0RCuFzYfdrGN1Gpz_1bVxb39HnR98tXTwBc-IeWTO16klJ7Z--rPiJcLLNtSbO7POXjbMvJ9CwymSdXr9nGamfwfY13SUUTwEpVz_GnPqSM7XfPzgl_dNxH7J4N58PB4EIIZ4hElO94C5kcuhIIHZpnA_RZv7SKXzAaBnoP3024vt2KUn87JCyBbvOJjhtI_HiFb5JmGRm5CcjhftUIgGz7khfY3andNCd2Ar56-DytXvH0B4"}
               />
             </div>
             <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-secondary/10 rounded-2xl -z-10 animate-pulse" />

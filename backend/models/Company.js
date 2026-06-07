@@ -27,6 +27,10 @@ const CompanySchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  heroVideo: {
+    type: String,
+    default: ''
+  },
   icon: {
     type: String,
     default: 'architecture' // Material icon name

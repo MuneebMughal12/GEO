@@ -8,7 +8,7 @@ const DivisionArc = () => {
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
   const [allTeam, setAllTeam] = useState([]);
-  const [activeTab, setActiveTab] = useState('ARC');
+  const activeTab = 'ARC';
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -72,11 +72,15 @@ const DivisionArc = () => {
             </div>
           </div>
           <div className="relative h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-            <img 
-              className="w-full h-full object-cover" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuALFxi773AFyBHTufFGUq5Ht4X7XJOc07BLrNPATVM7_n_GM2i97oOmwuwmr2y6wwe3k4ZzYrK_5qKBMFg7cjJdoeMte-DQRkTmdd-XBipsRyDE4r06TYPuVtfR12lpX7udRIeBlmoQSruwDtgeE-Ay3Tle16cmEqOSecBJP67eShq2VPUpiq3MDvrdpC8P1UqYSegXQrXs-bNwL5dCxWOpzo3kbOA6e954ufpQdzu_owBJClt1lHO3zLfGH6Bd06BcehglmRxN5n4"
-              alt="GEO ARC Wireframe Banner"
-            />
+            {company?.heroVideo ? (
+              <video className="w-full h-full object-cover" autoPlay loop muted playsInline src={company.heroVideo} />
+            ) : (
+              <img 
+                className="w-full h-full object-cover" 
+                src={company?.featuredImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuALFxi773AFyBHTufFGUq5Ht4X7XJOc07BLrNPATVM7_n_GM2i97oOmwuwmr2y6wwe3k4ZzYrK_5qKBMFg7cjJdoeMte-DQRkTmdd-XBipsRyDE4r06TYPuVtfR12lpX7udRIeBlmoQSruwDtgeE-Ay3Tle16cmEqOSecBJP67eShq2VPUpiq3MDvrdpC8P1UqYSegXQrXs-bNwL5dCxWOpzo3kbOA6e954ufpQdzu_owBJClt1lHO3zLfGH6Bd06BcehglmRxN5n4"}
+                alt="GEO ARC Wireframe Banner"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
           </div>
         </div>
@@ -180,31 +184,9 @@ const DivisionArc = () => {
           <div className="text-center mb-12">
             <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
-            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-8">
+            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
               Explore the professional minds driving safety, precision, and architectural excellence across GEO Group.
             </p>
-
-            {/* Department Navigation Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 md:gap-4 p-1 bg-surface-container-high rounded-xl max-w-2xl mx-auto mb-12 border border-outline-variant/20">
-              <button 
-                onClick={() => setActiveTab('ARC')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'ARC' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO ARC
-              </button>
-              <button 
-                onClick={() => setActiveTab('SOIL')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'SOIL' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO Soil Testing
-              </button>
-              <button 
-                onClick={() => setActiveTab('CONSTRUCTION')} 
-                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'CONSTRUCTION' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
-              >
-                GEO Construction
-              </button>
-            </div>
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}
