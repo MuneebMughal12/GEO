@@ -296,9 +296,18 @@ const seedData = async () => {
     // 7. Seed Team
     await TeamMember.create([
       {
+        name: 'Muneeb Mughal',
+        designation: 'CEO & Founder, GEO Group',
+        profileImage: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600',
+        bio: 'Visionary entrepreneur leading GEO Group\'s global expansion and commitment to infrastructure excellence.',
+        division: 'GLOBAL',
+        experience: '25 Years',
+        certifications: ['Global Business Leader', 'Corporate Strategy Fellow']
+      },
+      {
         name: 'Dr. Julian Vance',
-        designation: 'Chief Architectural Officer',
-        profileImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA100Sfjqj3OOhaVokM5m36hJguaE03iBeVSyf-sy5f-qrJ2T9_bUxLMyL_d0sWHUOwR8FYDXnJh7JArWzn7NGhtwsoTre8OwakhJta3qQdnTJM4c9HmomlfY5qKmsOvdPOn_3vOeVgr4wbR6ieAVKTxcTEr44bAxLv_I4pFXtr-_WvJf_9GCWRUaeA3WVsPGaAIuwasjPwo4oKL9rUVDHVaMktn7gvJaknvQVrpA1ZHFaV_iC9OYqeDmlYQhx1lp1l2H8qAQl5iX0',
+        designation: 'CEO, GEO ARC',
+        profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600',
         bio: 'Dr. Vance holds a Ph.D. in Architecture from MIT and has pioneered parametric design methodologies worldwide.',
         division: 'ARC',
         experience: '22 Years',
@@ -307,7 +316,7 @@ const seedData = async () => {
       {
         name: 'Sarah Chen',
         designation: 'Head of Structural Engineering',
-        profileImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDaeNGqzQ6kjN4-tO5l3F7xmK8NBKbZ69fWcKP5z1BnCv7VlSMzv47tRXo8vQhI9FdZlTWamjEpCqpU5_QXQkbMRqlY4XRaiDL6UshcvOkWvCvD3WFf2gAfucOnl5sGX-lznkfDO0kXmHt-lHr_-d-xvKPbW5QmGhUj1KkVXzuifWi2WCeSVvLVUrpAQBjLllEGryKt307eJ4tJCMIP1njkCEAAFLT43S-9VvTlBx_ymHOMnlWxLMmKRLRxzNBITRllniRzphCrJf0',
+        profileImage: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600',
         bio: 'Sarah leads seismic analysis studies and structural optimization for high-density skyscrapers.',
         division: 'ARC',
         experience: '15 Years',
@@ -316,7 +325,7 @@ const seedData = async () => {
       {
         name: 'Marcus Thorne',
         designation: 'Director of Interiors',
-        profileImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEOKKv6BxCKi2m7mal7qnDdByOwLikRDF2sdrp5qaNANd07DOAt_DKUkD2dhbXIPU3pZgGcaSL1e-TaulHNL-y7hnjlcA9Z2fJv_Qb_3W_02B-9i3WAUsEbj6Xv3P6QfhkPnOn9LtZbJtvFcwjqrvDObBXj9ndGXFUCI5efXxKTdhvr9qyH3uiVRS1LpZGXOLD1CxUey_EDdRIEyCtEozNLttVsEtsXCu6Z40mty1doVVaY1EPXRlpNdoqXN34jOcCPVq3D5uAgMM',
+        profileImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600',
         bio: 'Creating award-winning interior spaces for international financial centers.',
         division: 'ARC',
         experience: '18 Years'
@@ -324,11 +333,62 @@ const seedData = async () => {
       {
         name: 'Elena Rodriguez',
         designation: 'Sustainability Lead',
-        profileImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDHwe0QMybY7i2hTI7FGoqt_gvj_HSEqxuEtEtPM2x0zf2Skog9e9nnXqWPSxd2oK4s3BhlqKVdQVMluSLi7YGt9OkBuDkZkpx5WnGXPfQabTMjVVclgetDy6lOvrz4hQ02nRoEiYOYOfpNg8kvEJsTPrWSNqY49zu5NpbUhD9YpoYW1PP6xcYMmIgoWeLvQf5fzPUye7B3Vvsd_9TH5cqj9dD63b8sFGVzMlsIPee3iGPKoqUpMZuGTdlRBP_md5y_1TzJQMKmq4Q',
+        profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600',
         bio: 'A visionary in biophilic green architectures and LEED compliance protocols.',
         division: 'ARC',
         experience: '12 Years',
         certifications: ['LEED AP BD+C']
+      },
+      {
+        name: 'Dr. Elias Vance',
+        designation: 'CEO, GEO Soil Testing',
+        profileImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=600',
+        bio: 'Specialist in geotechnical soil characterization with over two decades of advisory experience for massive infrastructure projects.',
+        division: 'SOIL',
+        experience: '20 Years',
+        certifications: ['Geotechnical Engineering Expert', 'ISO/IEC Lab Director']
+      },
+      {
+        name: 'Jonathan Mercer',
+        designation: 'Senior Geotechnical Analyst',
+        profileImage: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600',
+        bio: 'Specializes in CPT and Triaxial soil load testing under various geological stress environments.',
+        division: 'SOIL',
+        experience: '10 Years',
+        certifications: ['ASTM Certified Field Logist']
+      },
+      {
+        name: 'Dr. Clara Oswald',
+        designation: 'Lab Director',
+        profileImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600',
+        bio: 'Manages ASTM certified soil spectroscopy and chemical analysis testing at GEO Labs.',
+        division: 'SOIL',
+        experience: '12 Years'
+      },
+      {
+        name: 'Robert Vance',
+        designation: 'CEO, GEO Construction',
+        profileImage: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&q=80&w=600',
+        bio: 'A veteran of heavy civil engineering and large-scale infrastructure project execution.',
+        division: 'CONSTRUCTION',
+        experience: '24 Years',
+        certifications: ['Certified Construction Manager', 'OSHA Safety Trainer']
+      },
+      {
+        name: 'Aisha Rahman',
+        designation: 'Chief Operations Officer',
+        profileImage: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600',
+        bio: 'Oversees heavy machinery logistics, field scheduling, and strict safety compliance audits.',
+        division: 'CONSTRUCTION',
+        experience: '14 Years'
+      },
+      {
+        name: 'Vikram Singh',
+        designation: 'Lead Infrastructure Engineer',
+        profileImage: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600',
+        bio: 'BIM modeling expert specialized in steel bridges and railway line layouts.',
+        division: 'CONSTRUCTION',
+        experience: '11 Years'
       }
     ]);
     console.log('Team members seeded.');

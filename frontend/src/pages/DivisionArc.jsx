@@ -7,7 +7,8 @@ const DivisionArc = () => {
   const [company, setCompany] = useState(null);
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [team, setTeam] = useState([]);
+  const [allTeam, setAllTeam] = useState([]);
+  const [activeTab, setActiveTab] = useState('ARC');
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,14 +19,14 @@ const DivisionArc = () => {
           API.get('/companies/geo-arc'),
           API.get('/services?division=ARC'),
           API.get('/projects?division=ARC'),
-          API.get('/team?division=ARC'),
+          API.get('/team'),
           API.get('/gallery?division=ARC')
         ]);
 
         if (compRes.data.success) setCompany(compRes.data.data);
         if (servRes.data.success) setServices(servRes.data.data);
         if (projRes.data.success) setProjects(projRes.data.data);
-        if (teamRes.data.success) setTeam(teamRes.data.data);
+        if (teamRes.data.success) setAllTeam(teamRes.data.data);
         if (galRes.data.success) setGallery(galRes.data.data);
       } catch (err) {
         console.error('Error fetching GEO ARC data:', err);
@@ -35,6 +36,10 @@ const DivisionArc = () => {
     };
     fetchArcData();
   }, []);
+
+  const globalCeo = allTeam.find(m => m.division === 'GLOBAL');
+  const activeDivisionCeo = allTeam.find(m => m.division === activeTab && m.designation.includes('CEO'));
+  const activeDivisionMembers = allTeam.filter(m => m.division === activeTab && !m.designation.includes('CEO'));
 
   const metaTitle = company?.seo?.metaTitle || 'GEO ARC | Engineering & Architecture';
   const metaDescription = company?.seo?.metaDescription || 'Innovative architectural design, masterplanning, and structural engineering services by GEO ARC.';
@@ -172,25 +177,113 @@ const DivisionArc = () => {
       {/* Team Section */}
       <section className="py-120px bg-surface-container-low border-t border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl font-bold text-primary mb-4">Visionaries Behind the Blueprint</h2>
-            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto">Our lead architects bring decades of international experience and multiple award-winning designs to every GEO Group project.</p>
+          <div className="text-center mb-12">
+            <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
+            <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
+            <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-8">
+              Explore the professional minds driving safety, precision, and architectural excellence across GEO Group.
+            </p>
+
+            {/* Department Navigation Tabs */}
+            <div className="flex flex-wrap justify-center gap-2 md:gap-4 p-1 bg-surface-container-high rounded-xl max-w-2xl mx-auto mb-12 border border-outline-variant/20">
+              <button 
+                onClick={() => setActiveTab('ARC')} 
+                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'ARC' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
+              >
+                GEO ARC
+              </button>
+              <button 
+                onClick={() => setActiveTab('SOIL')} 
+                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'SOIL' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
+              >
+                GEO Soil Testing
+              </button>
+              <button 
+                onClick={() => setActiveTab('CONSTRUCTION')} 
+                className={`px-5 py-2.5 rounded-lg font-display text-xs font-semibold transition-all ${activeTab === 'CONSTRUCTION' ? 'bg-primary text-on-primary shadow-md' : 'text-on-surface hover:bg-surface-container-highest'}`}
+              >
+                GEO Construction
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter">
-            {team.map((member) => (
-              <div key={member._id} className="group">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-xl mb-6 shadow-lg">
-                  <img 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                    src={member.profileImage}
-                    alt={member.name}
-                  />
+          {/* Leaders Area (Main CEO + Department CEO) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter max-w-4xl mx-auto mb-16">
+            {/* Main CEO (Corporate) */}
+            {globalCeo && (
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
+                  <img src={globalCeo.profileImage} alt={globalCeo.name} className="w-full h-full object-cover" />
                 </div>
-                <h4 className="font-display text-lg font-bold text-primary">{member.name}</h4>
-                <p className="font-sans text-xs text-secondary font-semibold">{member.designation}</p>
+                <div className="flex-1 flex flex-col justify-between">
+                  <div>
+                    <span className="inline-block px-2.5 py-1 bg-secondary/10 text-secondary text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Group Leadership</span>
+                    <h3 className="font-display text-xl font-bold text-primary">{globalCeo.name}</h3>
+                    <p className="font-sans text-xs text-secondary font-semibold mt-1">{globalCeo.designation}</p>
+                    <p className="font-sans text-xs text-on-surface-variant mt-4 leading-relaxed">{globalCeo.bio}</p>
+                  </div>
+                  {globalCeo.experience && (
+                    <div className="pt-4 border-t border-outline-variant/10 text-[10px] text-outline font-semibold uppercase tracking-wider mt-4">
+                      Experience: {globalCeo.experience}
+                    </div>
+                  )}
+                </div>
               </div>
-            ))}
+            )}
+
+            {/* Department CEO/Head */}
+            {activeDivisionCeo && (
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
+                  <img src={activeDivisionCeo.profileImage} alt={activeDivisionCeo.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 flex flex-col justify-between">
+                  <div>
+                    <span className="inline-block px-2.5 py-1 bg-primary-fixed/10 text-primary text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Department Head</span>
+                    <h3 className="font-display text-xl font-bold text-primary">{activeDivisionCeo.name}</h3>
+                    <p className="font-sans text-xs text-secondary font-semibold mt-1">{activeDivisionCeo.designation}</p>
+                    <p className="font-sans text-xs text-on-surface-variant mt-4 leading-relaxed">{activeDivisionCeo.bio}</p>
+                  </div>
+                  {activeDivisionCeo.experience && (
+                    <div className="pt-4 border-t border-outline-variant/10 text-[10px] text-outline font-semibold uppercase tracking-wider mt-4">
+                      Experience: {activeDivisionCeo.experience}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Division Members Grid */}
+          <div>
+            <h3 className="font-display text-lg font-bold text-primary mb-8 text-center">Division Experts & Engineers</h3>
+            {activeDivisionMembers.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-gutter max-w-5xl mx-auto">
+                {activeDivisionMembers.map((member) => (
+                  <div key={member._id} className="group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                      <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 shadow-sm bg-surface-container">
+                        <img 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                          src={member.profileImage}
+                          alt={member.name}
+                        />
+                      </div>
+                      <h4 className="font-display text-base font-bold text-primary">{member.name}</h4>
+                      <p className="font-sans text-xs text-secondary font-semibold mt-1">{member.designation}</p>
+                      <p className="font-sans text-xs text-on-surface-variant mt-3 leading-relaxed">{member.bio}</p>
+                    </div>
+                    {member.experience && (
+                      <div className="pt-4 border-t border-outline-variant/10 text-[10px] text-outline font-semibold mt-4">
+                        EXPERIENCE: {member.experience}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-on-surface-variant text-sm font-sans">No additional team members listed for this division.</p>
+            )}
           </div>
         </div>
       </section>
