@@ -295,6 +295,36 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Pinned Gallery Showcase */}
+      {gallery.length > 0 && (
+        <section className="py-160px bg-background border-t border-outline-variant/10">
+          <div className="max-w-container-max mx-auto px-margin-desktop">
+            <div className="text-center mb-16">
+              <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Visual Showcase</span>
+              <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">GEO Group Gallery</h2>
+              <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto">
+                Explore real-time physical snapshots and high-fidelity project captures from across our architectural and construction divisions.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {gallery.map((item) => (
+                <div key={item._id} className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                  <img 
+                    src={item.url} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                  />
+                  <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <span className="text-secondary font-display text-[9px] uppercase tracking-wider mb-1 font-semibold">{item.division} DIVISION</span>
+                    <p className="text-white font-display font-semibold text-sm">{item.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Interactive Contact CTA Banner */}
       <section className="py-160px bg-background">
         <div className="max-w-container-max mx-auto px-margin-desktop">

@@ -19,7 +19,8 @@ const CompanyManagement = () => {
       aboutImage: '',
       aboutVideo: '',
       aboutMission: '',
-      aboutVision: ''
+      aboutVision: '',
+      partners: []
     },
     metadata: {
       footerText: '',
@@ -55,6 +56,31 @@ const CompanyManagement = () => {
   const [activeTab, setActiveTab] = useState('global');
   const [editingCompany, setEditingCompany] = useState(null);
   const [status, setStatus] = useState('');
+  const [newPartnerName, setNewPartnerName] = useState('');
+
+  const handleAddPartner = () => {
+    if (!newPartnerName.trim()) return;
+    const currentPartners = settings.homepage?.partners || [];
+    setSettings({
+      ...settings,
+      homepage: {
+        ...settings.homepage,
+        partners: [...currentPartners, { name: newPartnerName.trim() }]
+      }
+    });
+    setNewPartnerName('');
+  };
+
+  const handleRemovePartner = (indexToRemove) => {
+    const currentPartners = settings.homepage?.partners || [];
+    setSettings({
+      ...settings,
+      homepage: {
+        ...settings.homepage,
+        partners: currentPartners.filter((_, idx) => idx !== indexToRemove)
+      }
+    });
+  };
 
   useEffect(() => {
     fetchSettingsAndCompanies();
@@ -765,6 +791,54 @@ const CompanyManagement = () => {
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <hr className="border-outline-variant/20" />
+
+          <div>
+            <h2 className="font-display font-bold text-lg text-primary mb-6 border-b border-outline-variant/10 pb-2">Homepage Partners</h2>
+            <p className="text-outline-variant font-sans text-xs mb-4">Manage the names of corporate partners displayed under the testimonials section on the Homepage.</p>
+            
+            <div className="space-y-4">
+              {/* List of current partners */}
+              <div className="flex flex-wrap gap-3 mb-4">
+                {(settings.homepage?.partners || []).length > 0 ? (
+                  settings.homepage.partners.map((partner, index) => (
+                    <div key={index} className="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-xl border border-outline-variant/30 font-display font-bold text-xs text-primary shadow-sm">
+                      <span>{partner.name}</span>
+                      <button 
+                        type="button" 
+                        onClick={() => handleRemovePartner(index)}
+                        className="text-error hover:text-error-container transition-colors flex items-center justify-center"
+                        title="Remove Partner"
+                      >
+                        <span className="material-symbols-outlined text-[16px]">close</span>
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-on-surface-variant font-sans text-xs italic">No partners added yet.</p>
+                )}
+              </div>
+
+              {/* Add partner form controls */}
+              <div className="flex gap-4 max-w-md">
+                <input 
+                  type="text" 
+                  value={newPartnerName}
+                  onChange={(e) => setNewPartnerName(e.target.value)}
+                  placeholder="e.g. PARTNER_G"
+                  className="flex-1 px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                />
+                <button 
+                  type="button"
+                  onClick={handleAddPartner}
+                  className="px-6 py-3 bg-secondary text-white rounded-xl font-display font-semibold hover:bg-secondary/90 transition-colors text-xs shadow-sm"
+                >
+                  Add Partner
+                </button>
               </div>
             </div>
           </div>
