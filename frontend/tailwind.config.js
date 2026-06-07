@@ -1,0 +1,68 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: "#00113a",
+        secondary: "#4b53bc",
+        "primary-container": "#002366",
+        "secondary-container": "#8991fe",
+        "on-secondary-container": "#1b218f",
+        "outline-variant": "#c5c6d2",
+        "on-surface-variant": "#444650",
+        "inverse-surface": "#2f3035",
+        background: "#faf8ff",
+        surface: "#faf8ff",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f4f3f9",
+        "surface-container": "#efedf3",
+        "surface-container-high": "#e9e7ee",
+        "surface-container-highest": "#e3e2e8",
+        "primary-fixed": "#dbe1ff",
+        "primary-fixed-dim": "#b3c5ff",
+        "on-primary-fixed": "#00174a",
+        "on-primary-fixed-variant": "#2a4386",
+        "secondary-fixed": "#e0e0ff",
+        "secondary-fixed-dim": "#bfc2ff",
+        "on-secondary-fixed": "#00006e",
+        "on-secondary-fixed-variant": "#3239a3",
+        "tertiary-fixed": "#ffdbd0",
+        "tertiary-fixed-dim": "#ffb59e",
+        "on-tertiary-fixed": "#390b00",
+        "on-tertiary-fixed-variant": "#783018",
+        "on-primary": "#ffffff",
+        "on-secondary": "#ffffff",
+        "on-surface": "#1a1b20",
+        "on-background": "#1a1b20",
+        error: "#ba1a1a",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "on-error-container": "#93000a",
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        full: "9999px"
+      },
+      spacing: {
+        unit: "8px",
+        "container-max": "1280px",
+        "margin-mobile": "16px",
+        "margin-desktop": "48px",
+        gutter: "24px",
+        "160px": "160px",
+      },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+        display: ["Montserrat", "sans-serif"],
+        body: ["Inter", "sans-serif"],
+      }
+    },
+  },
+  plugins: [],
+}

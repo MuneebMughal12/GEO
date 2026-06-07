@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-on-background font-sans;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* Glassmorphism Styles */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 10px 30px rgba(0, 35, 102, 0.05);
+}
+
+/* Gradients and Accent Classes */
+.gold-accent {
+  background: linear-gradient(135deg, #D4AF37 0%, #F9E29C 50%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-badge {
+  background: linear-gradient(135deg, #d4af37 0%, #f9e29c 50%, #b8860b 100%);
+}
+
+.luxury-badge {
+  background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+  color: #00113a;
+}
+
+/* Glow effects */
+.sky-glow:hover {
+  box-shadow: 0px 10px 40px rgba(135, 206, 235, 0.25);
+}
+
+.sky-blue-glow:hover {
+  box-shadow: 0px 10px 30px rgba(0, 35, 102, 0.05), 0 0 15px rgba(135, 206, 235, 0.2);
+  transform: translateY(-2px);
+}
+
+.emerald-glow {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+/* Overlay elements */
+.blueprint-overlay {
+  background-image: radial-gradient(circle at 2px 2px, rgba(0, 35, 102, 0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+.hero-gradient {
+  background: linear-gradient(to bottom, rgba(0, 17, 58, 0.4), rgba(0, 17, 58, 0.9));
+}
+
+.hero-gradient-overlay {
+  background: linear-gradient(to bottom, rgba(0, 17, 58, 0.8), rgba(250, 248, 255, 1));
+}
+
+/* Progress bar helpers */
+.progress-bar {
+  height: 6px;
+  border-radius: 99px;
+  background: #e9e7ee;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #4b53bc;
+  transition: width 1s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
