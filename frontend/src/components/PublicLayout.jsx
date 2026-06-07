@@ -131,7 +131,7 @@ const PublicLayout = () => {
           <div>
             <div className="font-display text-2xl font-bold text-on-primary mb-6">{siteName}</div>
             <p className="text-outline-variant text-sm mb-6">
-              Building tomorrow's infrastructure with today's most advanced technology and precision-led engineering.
+              {settings?.metadata?.footerText || "Building tomorrow's infrastructure with today's most advanced technology and precision-led engineering."}
             </p>
             <div className="flex gap-4">
               <a href={settings?.socialLinks?.linkedin || '#'} className="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center hover:bg-secondary transition-colors"><span className="material-symbols-outlined text-[20px]">language</span></a>
@@ -164,7 +164,7 @@ const PublicLayout = () => {
           </div>
         </div>
         <div className="max-w-container-max mx-auto px-margin-desktop py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-xs text-outline-variant">
-          <p>© {new Date().getFullYear()} {siteName} of Companies. All Rights Reserved.</p>
+          <p>{settings?.metadata?.footerCopyright || `© ${new Date().getFullYear()} ${siteName} of Companies. All Rights Reserved.`}</p>
           <div className="flex gap-8 mt-4 md:mt-0">
             <Link to="#" className="hover:text-white transition-colors">Terms of Service</Link>
             <Link to="#" className="hover:text-white transition-colors">Cookie Policy</Link>

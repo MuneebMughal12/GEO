@@ -151,29 +151,40 @@ const DivisionSoil = () => {
           <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-8">
             <div className="max-w-2xl">
               <span className="font-display text-xs font-bold text-secondary tracking-widest uppercase">The Arsenal</span>
-              <h2 className="font-display text-3xl font-bold text-primary mt-2">World-Class Instrumentation</h2>
+              <h2 className="font-display text-3xl font-bold text-primary mt-2">
+                {company?.metadata?.equipmentTitle || 'World-Class Instrumentation'}
+              </h2>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter h-auto md:h-[650px]">
             <div className="md:col-span-8 rounded-2xl overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300 shadow-lg">
               <img 
                 className="w-full h-full object-cover" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqWSc527K_R45c7K3sYFopSUmiaWG2mIPaELKOdLRO6hSH9zaVnSvMOrSDKcbaANJwjjiveM8kZLTsQp_2RrKzTnvdj0ylXKwTKhE-IvNRaDG3mjROvxudK1Xz9Na6mWU7C5Wv9ukUoJCgpdPYrFSwkYjNtuf1f9STKJnsat-1IE6twJ7pr6L0LkvefB5h-a5Mc1Gp7750kl1aunnCSigopPk41OdlOplnBPIIpdmlfNY51xIBa-8c6C7DKKICmloCn-7hWoPw8NY"
-                alt="Triaxial Load Frames"
+                src={company?.metadata?.equipment1Image || "https://lh3.googleusercontent.com/aida-public/AB6AXuAqWSc527K_R45c7K3sYFopSUmiaWG2mIPaELKOdLRO6hSH9zaVnSvMOrSDKcbaANJwjjiveM8kZLTsQp_2RrKzTnvdj0ylXKwTKhE-IvNRaDG3mjROvxudK1Xz9Na6mWU7C5Wv9ukUoJCgpdPYrFSwkYjNtuf1f9STKJnsat-1IE6twJ7pr6L0LkvefB5h-a5Mc1Gp7750kl1aunnCSigopPk41OdlOplnBPIIpdmlfNY51xIBa-8c6C7DKKICmloCn-7hWoPw8NY"}
+                alt={company?.metadata?.equipment1Name || "Triaxial Load Frames"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8">
-                <h4 className="font-display text-xl font-bold text-white mb-2">Triaxial Load Frames</h4>
-                <p className="text-white/80 font-sans text-sm max-w-md">Precision-engineered for stress-strain behavior analysis of soil specimens.</p>
+                <h4 className="font-display text-xl font-bold text-white mb-2">
+                  {company?.metadata?.equipment1Name || 'Triaxial Load Frames'}
+                </h4>
+                <p className="text-white/80 font-sans text-sm max-w-md">
+                  {company?.metadata?.equipment1Desc || 'Precision-engineered for stress-strain behavior analysis of soil specimens.'}
+                </p>
               </div>
             </div>
             <div className="md:col-span-4 rounded-2xl overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300 shadow-lg">
               <img 
                 className="w-full h-full object-cover" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g"
-                alt="Chemical Analysis"
+                src={company?.metadata?.equipment2Image || "https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g"}
+                alt={company?.metadata?.equipment2Name || "Chemical Analysis"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8">
-                <h4 className="font-display text-xl font-bold text-white">Chemical analysis profiling</h4>
+                <h4 className="font-display text-xl font-bold text-white">
+                  {company?.metadata?.equipment2Name || 'Chemical analysis profiling'}
+                </h4>
+                {company?.metadata?.equipment2Desc && (
+                  <p className="text-white/80 font-sans text-sm mt-2">{company.metadata.equipment2Desc}</p>
+                )}
               </div>
             </div>
           </div>

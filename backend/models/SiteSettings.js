@@ -37,6 +37,10 @@ const SiteSettingsSchema = new mongoose.Schema({
     partners: [{
       name: { type: String }
     }]
+  },
+  metadata: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
   }
 }, { timestamps: true });
 

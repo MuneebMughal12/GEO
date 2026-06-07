@@ -95,6 +95,20 @@ const seedData = async () => {
           { name: 'PARTNER_E' },
           { name: 'PARTNER_F' }
         ]
+      },
+      metadata: {
+        footerText: 'Engineering stability and architectural brilliance across borders for over 25 years.',
+        footerCopyright: '© 2026 GEO Group of Companies. All Rights Reserved.',
+        ctaTitle: 'Ready to Start Your Next Milestone?',
+        ctaSubtitle: 'Consult with our experts across Architectural Design, Geotechnical Engineering, and Infrastructure Construction.',
+        ctaContactText: 'Contact Us Now',
+        ctaWhatsappText: 'WhatsApp Us',
+        testimonialTitle: 'What Global Leaders Say',
+        aboutHeroTitle: 'Our Corporate Story',
+        aboutHeroSubtitle: 'Engineering stability and architectural brilliance across borders for over 25 years.',
+        aboutMessageHeading: 'Uncompromising Standards in Civil Engineering',
+        aboutMessageText1: 'At GEO Group of Companies, our operational philosophy is anchored in precision, transparency, and safety. Every project proposal we evaluate, borehole test we log, and civil foundation we secure represents our pledge of permanence to the global stakeholders who place their trust in our capabilities.',
+        aboutMessageText2: 'We continue to expand our technological parameters, adopting parametric modeling and high-capacity remote telemetry to make our physical infrastructures smarter, more sustainable, and highly efficient.'
       }
     });
     console.log('Site settings seeded.');
@@ -119,6 +133,11 @@ const seedData = async () => {
       seo: {
         metaTitle: 'GEO ARC | Engineering & Architecture',
         metaDescription: 'Innovative architectural design, masterplanning, and structural engineering services by GEO ARC.'
+      },
+      metadata: {
+        awardQuote: '"Engineering Company of the Decade"',
+        awardAuthor: '— Global Construction Review',
+        awardYears: 'Over 45+ Global Awards'
       }
     });
 
@@ -140,6 +159,14 @@ const seedData = async () => {
       seo: {
         metaTitle: 'GEO Soil Testing | Geotechnical Services',
         metaDescription: 'Soil investigation, geotechnical engineering, laboratory testing, and site analysis by GEO Soil Testing.'
+      },
+      metadata: {
+        equipmentTitle: 'World-Class Instrumentation',
+        equipment1Name: 'Triaxial Load Frames',
+        equipment1Desc: 'Precision-engineered for stress-strain behavior analysis of soil specimens.',
+        equipment1Image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAqWSc527K_R45c7K3sYFopSUmiaWG2mIPaELKOdLRO6hSH9zaVnSvMOrSDKcbaANJwjjiveM8kZLTsQp_2RrKzTnvdj0ylXKwTKhE-IvNRaDG3mjROvxudK1Xz9Na6mWU7C5Wv9ukUoJCgpdPYrFSwkYjNtuf1f9STKJnsat-1IE6twJ7pr6L0LkvefB5h-a5Mc1Gp7750kl1aunnCSigopPk41OdlOplnBPIIpdmlfNY51xIBa-8c6C7DKKICmloCn-7hWoPw8NY',
+        equipment2Name: 'Chemical analysis profiling',
+        equipment2Image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g'
       }
     });
 
@@ -161,6 +188,32 @@ const seedData = async () => {
       seo: {
         metaTitle: 'GEO Construction | Infrastructure & Civil Engineering',
         metaDescription: 'Full-cycle building construction, infrastructure development, and project management by GEO Construction.'
+      },
+      metadata: {
+        op1Name: 'North Rail Link',
+        op1Subtitle: 'Industrial Hub Connector',
+        op1Progress: 72,
+        op1Stat1Label: 'Cranes',
+        op1Stat1Val: '12',
+        op1Stat2Label: 'Personnel',
+        op1Stat2Val: '1.4k',
+        op1Stat3Label: 'Est. Completion',
+        op1Stat3Val: 'Q3 2025',
+        op2Name: 'Maritime Port Expansion',
+        op2Subtitle: 'Strategic Deep-water Berth',
+        op2Progress: 45,
+        op2Stat1Label: 'Dredgers',
+        op2Stat1Val: '04',
+        op2Stat2Label: 'Concrete (m³)',
+        op2Stat2Val: '850k',
+        op2Stat3Label: 'Est. Completion',
+        op2Stat3Val: 'Q2 2026',
+        phase1Title: 'Phase 01: Pre-Construction & Analysis',
+        phase1Desc: 'Feasibility studies, soil analysis, and advanced structural modeling using proprietary GEO datasets.',
+        phase2Title: 'Phase 02: Structural Groundwork',
+        phase2Desc: 'Deep foundation engineering, earth retention systems, and site utilities installation.',
+        phase3Title: 'Phase 03: Vertical Mobilization',
+        phase3Desc: 'Rapid erection of core structures using pre-fabricated elements and high-capacity cranes.'
       }
     });
     console.log('Company divisions seeded.');

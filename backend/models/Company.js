@@ -48,6 +48,10 @@ const CompanySchema = new mongoose.Schema({
   seo: {
     metaTitle: { type: String },
     metaDescription: { type: String }
+  },
+  metadata: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
   }
 }, { timestamps: true });
 

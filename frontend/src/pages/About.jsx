@@ -33,8 +33,12 @@ const About = () => {
       <section className="bg-primary text-white py-24 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary-container/30 to-secondary/20 pointer-events-none" />
         <div className="relative z-10 max-w-container-max mx-auto px-margin-desktop space-y-4">
-          <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight">Our Corporate Story</h1>
-          <p className="font-sans text-white/80 max-w-xl mx-auto text-sm md:text-base">Engineering stability and architectural brilliance across borders for over 25 years.</p>
+          <h1 className="font-display text-4xl md:text-5xl font-extrabold tracking-tight">
+            {settings?.metadata?.aboutHeroTitle || 'Our Corporate Story'}
+          </h1>
+          <p className="font-sans text-white/80 max-w-xl mx-auto text-sm md:text-base">
+            {settings?.metadata?.aboutHeroSubtitle || 'Engineering stability and architectural brilliance across borders for over 25 years.'}
+          </p>
         </div>
       </section>
 
@@ -43,12 +47,14 @@ const About = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="space-y-6">
             <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block">Message from Leadership</span>
-            <h2 className="font-display text-3xl font-bold text-primary">Uncompromising Standards in Civil Engineering</h2>
+            <h2 className="font-display text-3xl font-bold text-primary">
+              {settings?.metadata?.aboutMessageHeading || 'Uncompromising Standards in Civil Engineering'}
+            </h2>
             <p className="font-sans text-on-surface-variant text-sm md:text-base leading-relaxed">
-              At GEO Group of Companies, our operational philosophy is anchored in precision, transparency, and safety. Every project proposal we evaluate, borehole test we log, and civil foundation we secure represents our pledge of permanence to the global stakeholders who place their trust in our capabilities.
+              {settings?.metadata?.aboutMessageText1 || 'At GEO Group of Companies, our operational philosophy is anchored in precision, transparency, and safety. Every project proposal we evaluate, borehole test we log, and civil foundation we secure represents our pledge of permanence to the global stakeholders who place their trust in our capabilities.'}
             </p>
             <p className="font-sans text-on-surface-variant text-sm md:text-base leading-relaxed">
-              We continue to expand our technological parameters, adopting parametric modeling and high-capacity remote telemetry to make our physical infrastructures smarter, more sustainable, and highly efficient.
+              {settings?.metadata?.aboutMessageText2 || 'We continue to expand our technological parameters, adopting parametric modeling and high-capacity remote telemetry to make our physical infrastructures smarter, more sustainable, and highly efficient.'}
             </p>
           </div>
           <div className="bg-white p-10 rounded-2xl border border-outline-variant/30 shadow-md">

@@ -167,22 +167,34 @@ const DivisionConstruction = () => {
                 <div className="absolute left-0 top-1 w-10 h-10 rounded-full bg-secondary flex items-center justify-center z-10 text-white">
                   <span className="material-symbols-outlined text-sm">edit</span>
                 </div>
-                <h4 className="font-display font-bold text-lg mb-2">Phase 01: Pre-Construction & Analysis</h4>
-                <p className="text-white/60 text-sm">Feasibility studies, soil analysis, and advanced structural modeling using proprietary GEO datasets.</p>
+                <h4 className="font-display font-bold text-lg mb-2">
+                  {company?.metadata?.phase1Title || 'Phase 01: Pre-Construction & Analysis'}
+                </h4>
+                <p className="text-white/60 text-sm">
+                  {company?.metadata?.phase1Desc || 'Feasibility studies, soil analysis, and advanced structural modeling using proprietary GEO datasets.'}
+                </p>
               </div>
               <div className="relative pl-16">
                 <div className="absolute left-0 top-1 w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center z-10 text-primary">
                   <span className="material-symbols-outlined text-sm">foundation</span>
                 </div>
-                <h4 className="font-display font-bold text-lg mb-2">Phase 02: Structural Groundwork</h4>
-                <p className="text-white/60 text-sm">Deep foundation engineering, earth retention systems, and site utilities installation.</p>
+                <h4 className="font-display font-bold text-lg mb-2">
+                  {company?.metadata?.phase2Title || 'Phase 02: Structural Groundwork'}
+                </h4>
+                <p className="text-white/60 text-sm">
+                  {company?.metadata?.phase2Desc || 'Deep foundation engineering, earth retention systems, and site utilities installation.'}
+                </p>
               </div>
               <div className="relative pl-16">
                 <div className="absolute left-0 top-1 w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center z-10 text-primary">
                   <span className="material-symbols-outlined text-sm">apartment</span>
                 </div>
-                <h4 className="font-display font-bold text-lg mb-2">Phase 03: Vertical Mobilization</h4>
-                <p className="text-white/60 text-sm">Rapid erection of core structures using pre-fabricated elements and high-capacity cranes.</p>
+                <h4 className="font-display font-bold text-lg mb-2">
+                  {company?.metadata?.phase3Title || 'Phase 03: Vertical Mobilization'}
+                </h4>
+                <p className="text-white/60 text-sm">
+                  {company?.metadata?.phase3Desc || 'Rapid erection of core structures using pre-fabricated elements and high-capacity cranes.'}
+                </p>
               </div>
             </div>
           </div>
@@ -207,26 +219,44 @@ const DivisionConstruction = () => {
             <div className="bg-white p-8 rounded-xl shadow-sm border border-outline-variant/20 hover:shadow-lg transition-shadow duration-300">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h4 className="font-display font-bold text-lg text-primary">North Rail Link</h4>
-                  <p className="text-outline text-xs mt-1">Industrial Hub Connector</p>
+                  <h4 className="font-display font-bold text-lg text-primary">
+                    {company?.metadata?.op1Name || 'North Rail Link'}
+                  </h4>
+                  <p className="text-outline text-xs mt-1">
+                    {company?.metadata?.op1Subtitle || 'Industrial Hub Connector'}
+                  </p>
                 </div>
-                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase">72% Complete</span>
+                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase">
+                  {company?.metadata?.op1Progress !== undefined ? company.metadata.op1Progress : 72}% Complete
+                </span>
               </div>
               <div className="progress-bar mb-6">
-                <div className="progress-fill" style={{ width: '72%' }} />
+                <div className="progress-fill" style={{ width: `${company?.metadata?.op1Progress !== undefined ? company.metadata.op1Progress : 72}%` }} />
               </div>
               <div className="grid grid-cols-3 gap-4 text-center text-sm font-semibold">
                 <div>
-                  <p className="text-xs text-outline uppercase mb-1">Cranes</p>
-                  <p className="text-primary">12</p>
+                  <p className="text-xs text-outline uppercase mb-1">
+                    {company?.metadata?.op1Stat1Label || 'Cranes'}
+                  </p>
+                  <p className="text-primary">
+                    {company?.metadata?.op1Stat1Val || '12'}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-outline uppercase mb-1">Personnel</p>
-                  <p className="text-primary">1.4k</p>
+                  <p className="text-xs text-outline uppercase mb-1">
+                    {company?.metadata?.op1Stat2Label || 'Personnel'}
+                  </p>
+                  <p className="text-primary">
+                    {company?.metadata?.op1Stat2Val || '1.4k'}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-outline uppercase mb-1">Est. Completion</p>
-                  <p className="text-primary">Q3 2025</p>
+                  <p className="text-xs text-outline uppercase mb-1">
+                    {company?.metadata?.op1Stat3Label || 'Est. Completion'}
+                  </p>
+                  <p className="text-primary">
+                    {company?.metadata?.op1Stat3Val || 'Q3 2025'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -234,26 +264,44 @@ const DivisionConstruction = () => {
             <div className="bg-white p-8 rounded-xl shadow-sm border border-outline-variant/20 hover:shadow-lg transition-shadow duration-300">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h4 className="font-display font-bold text-lg text-primary">Maritime Port Expansion</h4>
-                  <p className="text-outline text-xs mt-1">Strategic Deep-water Berth</p>
+                  <h4 className="font-display font-bold text-lg text-primary">
+                    {company?.metadata?.op2Name || 'Maritime Port Expansion'}
+                  </h4>
+                  <p className="text-outline text-xs mt-1">
+                    {company?.metadata?.op2Subtitle || 'Strategic Deep-water Berth'}
+                  </p>
                 </div>
-                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase">45% Complete</span>
+                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase">
+                  {company?.metadata?.op2Progress !== undefined ? company.metadata.op2Progress : 45}% Complete
+                </span>
               </div>
               <div className="progress-bar mb-6">
-                <div className="progress-fill" style={{ width: '45%' }} />
+                <div className="progress-fill" style={{ width: `${company?.metadata?.op2Progress !== undefined ? company.metadata.op2Progress : 45}%` }} />
               </div>
               <div className="grid grid-cols-3 gap-4 text-center text-sm font-semibold">
                 <div>
-                  <p className="text-xs text-outline uppercase mb-1">Dredgers</p>
-                  <p className="text-primary">04</p>
+                  <p className="text-xs text-outline uppercase mb-1">
+                    {company?.metadata?.op2Stat1Label || 'Dredgers'}
+                  </p>
+                  <p className="text-primary">
+                    {company?.metadata?.op2Stat1Val || '04'}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-outline uppercase mb-1">Concrete (m³)</p>
-                  <p className="text-primary">850k</p>
+                  <p className="text-xs text-outline uppercase mb-1">
+                    {company?.metadata?.op2Stat2Label || 'Concrete (m³)'}
+                  </p>
+                  <p className="text-primary">
+                    {company?.metadata?.op2Stat2Val || '850k'}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-outline uppercase mb-1">Est. Completion</p>
-                  <p className="text-primary">Q2 2026</p>
+                  <p className="text-xs text-outline uppercase mb-1">
+                    {company?.metadata?.op2Stat3Label || 'Est. Completion'}
+                  </p>
+                  <p className="text-primary">
+                    {company?.metadata?.op2Stat3Val || 'Q2 2026'}
+                  </p>
                 </div>
               </div>
             </div>

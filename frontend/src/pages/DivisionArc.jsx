@@ -295,8 +295,12 @@ const DivisionArc = () => {
               <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
               <div className="relative z-10">
                 <span className="material-symbols-outlined text-tertiary-fixed-dim text-4xl mb-6">trophy</span>
-                <h3 className="text-white font-display text-xl font-bold mb-4">"Engineering Company of the Decade"</h3>
-                <p className="text-on-primary-container font-sans text-sm mb-8">— Global Construction Review</p>
+                <h3 className="text-white font-display text-xl font-bold mb-4">
+                  {company?.metadata?.awardQuote || '"Engineering Company of the Decade"'}
+                </h3>
+                <p className="text-on-primary-container font-sans text-sm mb-8">
+                  {company?.metadata?.awardAuthor || '— Global Construction Review'}
+                </p>
                 <hr className="border-on-primary-container/20 mb-8" />
                 <div className="flex items-center justify-between">
                   <div className="flex -space-x-4">
@@ -304,7 +308,9 @@ const DivisionArc = () => {
                     <div className="w-10 h-10 rounded-full bg-white/20 border-2 border-primary flex items-center justify-center text-[10px] text-white">AIA</div>
                     <div className="w-10 h-10 rounded-full bg-white/20 border-2 border-primary flex items-center justify-center text-[10px] text-white">ASCE</div>
                   </div>
-                  <span className="text-on-primary-container font-display text-xs font-semibold">Over 45+ Global Awards</span>
+                  <span className="text-on-primary-container font-display text-xs font-semibold">
+                    {company?.metadata?.awardYears || 'Over 45+ Global Awards'}
+                  </span>
                 </div>
               </div>
             </div>
