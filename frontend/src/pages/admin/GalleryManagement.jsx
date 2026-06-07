@@ -39,24 +39,28 @@ const GalleryManagement = () => {
   };
 
   const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('title', uploadData.title || file.name.split('.')[0]);
-    formData.append('division', uploadData.division);
-    formData.append('isPinnedHomepage', uploadData.isPinnedHomepage);
 
     try {
-      const res = await API.post('/gallery', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      if (res.data.success) {
-        fetchGallery();
-        setUploadData({ title: '', division: 'GLOBAL', url: '', isPinnedHomepage: false });
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+        // If multiple files are uploaded, use file name (without extension) if title is blank or generic
+        formData.append('title', uploadData.title || file.name.split('.')[0]);
+        formData.append('division', uploadData.division);
+        formData.append('isPinnedHomepage', uploadData.isPinnedHomepage);
+        const isVideo = file.type.startsWith('video/') || file.name.toLowerCase().endsWith('.mp4');
+        formData.append('type', isVideo ? 'video' : 'image');
+
+        await API.post('/gallery', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
       }
+      fetchGallery();
+      setUploadData({ title: '', division: 'GLOBAL', url: '', isPinnedHomepage: false });
     } catch (err) {
       console.error('Upload failed:', err);
     } finally {
@@ -144,7 +148,7 @@ const GalleryManagement = () => {
           <h3 className="font-display text-lg font-bold text-primary">{uploading ? 'Uploading Asset...' : 'Upload Visual Assets'}</h3>
           <p className="font-sans text-xs text-on-surface-variant mt-2">Drag and drop high-resolution images here, or click to browse files</p>
           <p className="text-[10px] font-display text-outline-variant mt-4 uppercase tracking-widest font-semibold">Supports PNG, JPG, WEBP (Max 20MB)</p>
-          <input type="file" onChange={handleFileUpload} className="hidden" disabled={uploading} />
+          <input type="file" multiple onChange={handleFileUpload} className="hidden" disabled={uploading} />
         </label>
       </section>
 
@@ -156,7 +160,11 @@ const GalleryManagement = () => {
           gallery.map((media) => (
             <div key={media._id} className="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-outline-variant/30 sky-blue-glow flex flex-col justify-between">
               <div className="aspect-[4/3] relative overflow-hidden bg-surface-container">
-                <img src={media.url} alt={media.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                {media.type === 'video' ? (
+                  <video src={media.url} className="w-full h-full object-cover" muted playsInline />
+                ) : (
+                  <img src={media.url} alt={media.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                )}
                 {media.isPinnedHomepage && (
                   <div className="absolute top-4 right-4 luxury-badge flex items-center gap-1.5 px-3 py-1 rounded-full shadow-lg">
                     <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>

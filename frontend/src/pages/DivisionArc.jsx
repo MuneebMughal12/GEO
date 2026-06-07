@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import API from '../services/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
+import Lightbox from '../components/Lightbox';
 
 const DivisionArc = () => {
   const [company, setCompany] = useState(null);
@@ -11,6 +12,7 @@ const DivisionArc = () => {
   const activeTab = 'ARC';
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedMedia, setSelectedMedia] = useState(null);
 
   useEffect(() => {
     const fetchArcData = async () => {
@@ -327,6 +329,53 @@ const DivisionArc = () => {
           </div>
         </div>
       </section>
+
+      {/* Media Gallery Section */}
+      {gallery.length > 0 && (
+        <section id="gallery" className="py-24 md:py-40 bg-surface border-t border-outline-variant/10">
+          <div className="max-w-container-max mx-auto px-margin-desktop">
+            <div className="text-center mb-16">
+              <h2 className="font-display text-3xl font-bold text-primary mb-4">GEO ARC Design Gallery</h2>
+              <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore snapshots of active sites, blueprints, renders, and completed architectural marvels.</p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {gallery.map((item) => (
+                <div 
+                  key={item._id} 
+                  onClick={() => setSelectedMedia(item)}
+                  className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                >
+                  {item.type === 'video' ? (
+                    <div className="w-full h-full relative">
+                      <video 
+                        src={item.url} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        muted 
+                        playsInline
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
+                        <span className="material-symbols-outlined text-white text-5xl opacity-80 group-hover:scale-110 transition-transform">play_circle</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <img 
+                      src={item.url} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                    <p className="text-white font-display font-semibold text-sm">{item.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <Lightbox media={selectedMedia} onClose={() => setSelectedMedia(null)} />
     </div>
   );
 };

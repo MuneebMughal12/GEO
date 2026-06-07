@@ -4,6 +4,7 @@ import API from '../services/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
 import ThreeHeroBackground from '../components/ThreeHeroBackground';
+import Lightbox from '../components/Lightbox';
 
 const Home = () => {
   const [settings, setSettings] = useState(null);
@@ -11,6 +12,7 @@ const Home = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedMedia, setSelectedMedia] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -308,12 +310,30 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {gallery.map((item) => (
-                <div key={item._id} className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                  <img 
-                    src={item.url} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                  />
+                <div 
+                  key={item._id} 
+                  onClick={() => setSelectedMedia(item)}
+                  className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                >
+                  {item.type === 'video' ? (
+                    <div className="w-full h-full relative">
+                      <video 
+                        src={item.url} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        muted 
+                        playsInline
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
+                        <span className="material-symbols-outlined text-white text-5xl opacity-80 group-hover:scale-110 transition-transform">play_circle</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <img 
+                      src={item.url} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    />
+                  )}
                   <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                     <span className="text-secondary font-display text-[9px] uppercase tracking-wider mb-1 font-semibold">{item.division} DIVISION</span>
                     <p className="text-white font-display font-semibold text-sm">{item.title}</p>
@@ -349,6 +369,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <Lightbox media={selectedMedia} onClose={() => setSelectedMedia(null)} />
     </div>
   );
 };
