@@ -61,24 +61,42 @@ const About = () => {
             <h4 className="font-display font-bold text-primary text-lg mb-4">Core Commitments</h4>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <span className="material-symbols-outlined text-secondary text-2xl">verified_user</span>
+                <span className="material-symbols-outlined text-secondary text-2xl">
+                  {settings?.metadata?.aboutCommit1Icon || 'verified_user'}
+                </span>
                 <div>
-                  <h5 className="font-display font-bold text-sm text-primary">Absolute Safety</h5>
-                  <p className="font-sans text-xs text-on-surface-variant mt-1">Zero-accident targets supported by rigorous field auditing protocols.</p>
+                  <h5 className="font-display font-bold text-sm text-primary">
+                    {settings?.metadata?.aboutCommit1Title || 'Absolute Safety'}
+                  </h5>
+                  <p className="font-sans text-xs text-on-surface-variant mt-1">
+                    {settings?.metadata?.aboutCommit1Desc || 'Zero-accident targets supported by rigorous field auditing protocols.'}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <span className="material-symbols-outlined text-secondary text-2xl">eco</span>
+                <span className="material-symbols-outlined text-secondary text-2xl">
+                  {settings?.metadata?.aboutCommit2Icon || 'eco'}
+                </span>
                 <div>
-                  <h5 className="font-display font-bold text-sm text-primary">Biophilic Sustainability</h5>
-                  <p className="font-sans text-xs text-on-surface-variant mt-1">Using green concrete mixtures and energy-balanced masterplans.</p>
+                  <h5 className="font-display font-bold text-sm text-primary">
+                    {settings?.metadata?.aboutCommit2Title || 'Biophilic Sustainability'}
+                  </h5>
+                  <p className="font-sans text-xs text-on-surface-variant mt-1">
+                    {settings?.metadata?.aboutCommit2Desc || 'Using green concrete mixtures and energy-balanced masterplans.'}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <span className="material-symbols-outlined text-secondary text-2xl">monitoring</span>
+                <span className="material-symbols-outlined text-secondary text-2xl">
+                  {settings?.metadata?.aboutCommit3Icon || 'monitoring'}
+                </span>
                 <div>
-                  <h5 className="font-display font-bold text-sm text-primary">Precision Analysis</h5>
-                  <p className="font-sans text-xs text-on-surface-variant mt-1">Geotechnical datasets certified in climate-regulated laboratory ovens.</p>
+                  <h5 className="font-display font-bold text-sm text-primary">
+                    {settings?.metadata?.aboutCommit3Title || 'Precision Analysis'}
+                  </h5>
+                  <p className="font-sans text-xs text-on-surface-variant mt-1">
+                    {settings?.metadata?.aboutCommit3Desc || 'Geotechnical datasets certified in climate-regulated laboratory ovens.'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -96,18 +114,30 @@ const About = () => {
           <div className="relative border-l-2 border-outline-variant/30 max-w-3xl mx-auto pl-8 space-y-12">
             <div className="relative">
               <span className="absolute left-[-41px] top-1.5 w-6 h-6 rounded-full bg-secondary border-4 border-white shadow-md" />
-              <h4 className="font-display font-bold text-primary text-lg">1998 - Corporate Foundation</h4>
-              <p className="font-sans text-on-surface-variant text-sm mt-1">GEO Group starts as a specialized surveying and surveying consultancy firm in Abu Dhabi.</p>
+              <h4 className="font-display font-bold text-primary text-lg">
+                {settings?.metadata?.aboutJourney1Year || '1998 - Corporate Foundation'}
+              </h4>
+              <p className="font-sans text-on-surface-variant text-sm mt-1">
+                {settings?.metadata?.aboutJourney1Desc || 'GEO Group starts as a specialized surveying and surveying consultancy firm in Abu Dhabi.'}
+              </p>
             </div>
             <div className="relative">
               <span className="absolute left-[-41px] top-1.5 w-6 h-6 rounded-full bg-primary border-4 border-white shadow-md" />
-              <h4 className="font-display font-bold text-primary text-lg">2005 - Geotechnical Expansion</h4>
-              <p className="font-sans text-on-surface-variant text-sm mt-1">Launching specialized material testing lab services and core drilling rigs under GEO Soil Testing.</p>
+              <h4 className="font-display font-bold text-primary text-lg">
+                {settings?.metadata?.aboutJourney2Year || '2005 - Geotechnical Expansion'}
+              </h4>
+              <p className="font-sans text-on-surface-variant text-sm mt-1">
+                {settings?.metadata?.aboutJourney2Desc || 'Launching specialized material testing lab services and core drilling rigs under GEO Soil Testing.'}
+              </p>
             </div>
             <div className="relative">
               <span className="absolute left-[-41px] top-1.5 w-6 h-6 rounded-full bg-primary border-4 border-white shadow-md" />
-              <h4 className="font-display font-bold text-primary text-lg">2014 - Infrastructure Milestone</h4>
-              <p className="font-sans text-on-surface-variant text-sm mt-1">Sealing municipal civil infrastructure bids and bridge building portfolios under GEO Construction.</p>
+              <h4 className="font-display font-bold text-primary text-lg">
+                {settings?.metadata?.aboutJourney3Year || '2014 - Infrastructure Milestone'}
+              </h4>
+              <p className="font-sans text-on-surface-variant text-sm mt-1">
+                {settings?.metadata?.aboutJourney3Desc || 'Sealing municipal civil infrastructure bids and bridge building portfolios under GEO Construction.'}
+              </p>
             </div>
           </div>
         </div>

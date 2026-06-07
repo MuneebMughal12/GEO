@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import API from '../services/api';
 import SEO from '../components/SEO';
 
 const Contact = () => {
+  const [settings, setSettings] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,6 +13,20 @@ const Contact = () => {
   });
   const [status, setStatus] = useState({ type: '', msg: '' });
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await API.get('/companies/settings');
+        if (res.data.success) {
+          setSettings(res.data.data);
+        }
+      } catch (err) {
+        console.error('Error fetching global settings:', err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,21 +84,21 @@ const Contact = () => {
                 <span className="material-symbols-outlined text-secondary text-2xl">location_on</span>
                 <div>
                   <h4 className="font-display font-bold text-sm text-primary">Headquarters</h4>
-                  <p className="font-sans text-xs text-on-surface-variant mt-1">1200 Elite Tower, Financial District, Abu Dhabi, UAE</p>
+                  <p className="font-sans text-xs text-on-surface-variant mt-1">{settings?.address || '1200 Elite Tower, Financial District, Abu Dhabi, UAE'}</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <span className="material-symbols-outlined text-secondary text-2xl">mail</span>
                 <div>
                   <h4 className="font-display font-bold text-sm text-primary">Email Contacts</h4>
-                  <p className="font-sans text-xs text-on-surface-variant mt-1">contact@geogroup.global</p>
+                  <p className="font-sans text-xs text-on-surface-variant mt-1">{settings?.contactEmail || 'contact@geogroup.global'}</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <span className="material-symbols-outlined text-secondary text-2xl">call</span>
                 <div>
                   <h4 className="font-display font-bold text-sm text-primary">Phone Inquiries</h4>
-                  <p className="font-sans text-xs text-on-surface-variant mt-1">+971 4 000 0000</p>
+                  <p className="font-sans text-xs text-on-surface-variant mt-1">{settings?.contactPhone || '+971 4 000 0000'}</p>
                 </div>
               </div>
             </div>

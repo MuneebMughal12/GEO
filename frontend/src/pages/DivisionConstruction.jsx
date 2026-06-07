@@ -90,20 +90,36 @@ const DivisionConstruction = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter">
             <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">500+</h3>
-              <p className="text-outline font-sans text-sm font-semibold">Completed Projects</p>
+              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+                {company?.metadata?.stat1Val || '500+'}
+              </h3>
+              <p className="text-outline font-sans text-sm font-semibold">
+                {company?.metadata?.stat1Label || 'Completed Projects'}
+              </p>
             </div>
             <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">12M</h3>
-              <p className="text-outline font-sans text-sm font-semibold">Safe Man Hours</p>
+              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+                {company?.metadata?.stat2Val || '12M'}
+              </h3>
+              <p className="text-outline font-sans text-sm font-semibold">
+                {company?.metadata?.stat2Label || 'Safe Man Hours'}
+              </p>
             </div>
             <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">15</h3>
-              <p className="text-outline font-sans text-sm font-semibold">Global Locations</p>
+              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+                {company?.metadata?.stat3Val || '15'}
+              </h3>
+              <p className="text-outline font-sans text-sm font-semibold">
+                {company?.metadata?.stat3Label || 'Global Locations'}
+              </p>
             </div>
             <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">$4B</h3>
-              <p className="text-outline font-sans text-sm font-semibold">Asset Portfolio</p>
+              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+                {company?.metadata?.stat4Val || '$4B'}
+              </h3>
+              <p className="text-outline font-sans text-sm font-semibold">
+                {company?.metadata?.stat4Label || 'Asset Portfolio'}
+              </p>
             </div>
           </div>
         </div>
@@ -113,8 +129,12 @@ const DivisionConstruction = () => {
       <section id="landmarks" className="py-160px bg-surface">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-16">
-            <h2 className="font-display text-3xl font-bold text-primary mb-4">Engineering Landmarks</h2>
-            <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">A showcase of our multi-billion dollar infrastructure initiatives across the globe.</p>
+            <h2 className="font-display text-3xl font-bold text-primary mb-4">
+              {company?.metadata?.landmarksTitle || 'Engineering Landmarks'}
+            </h2>
+            <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">
+              {company?.metadata?.landmarksSubtitle || 'A showcase of our multi-billion dollar infrastructure initiatives across the globe.'}
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             {projects.length > 0 && (
@@ -159,8 +179,12 @@ const DivisionConstruction = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
             <div className="lg:col-span-1 space-y-6">
-              <h2 className="font-display text-3xl font-bold mb-6">The Lifecycle of Excellence</h2>
-              <p className="text-white/60 text-sm leading-relaxed">Our phased approach ensures stability and accountability at every milestone of the project delivery.</p>
+              <h2 className="font-display text-3xl font-bold mb-6">
+                {company?.metadata?.lifecycleTitle || 'The Lifecycle of Excellence'}
+              </h2>
+              <p className="text-white/60 text-sm leading-relaxed">
+                {company?.metadata?.lifecycleSubtitle || 'Our phased approach ensures stability and accountability at every milestone of the project delivery.'}
+              </p>
             </div>
             <div className="lg:col-span-2 space-y-12 relative before:absolute before:left-[19px] before:top-4 before:bottom-4 before:w-[2px] before:bg-white/10">
               <div className="relative pl-16">

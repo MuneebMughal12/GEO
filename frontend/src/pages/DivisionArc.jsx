@@ -54,7 +54,7 @@ const DivisionArc = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
           <div className="relative z-10 space-y-6">
             <span className="inline-block py-1.5 px-4 gold-badge text-primary font-display font-semibold text-[10px] uppercase tracking-widest rounded-full">
-              Engineering & Architecture
+              {company?.metadata?.disciplineTag || 'Engineering & Architecture'}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-extrabold text-primary leading-tight">
               {company?.name || 'GEO ARC'}: {company?.tagline || 'Defining the Global Skyline'}
@@ -90,7 +90,9 @@ const DivisionArc = () => {
       <section id="disciplines" className="py-120px bg-surface-container-lowest border-y border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-16">
-            <h2 className="font-display text-3xl font-bold text-primary mb-4">Core Disciplines</h2>
+            <h2 className="font-display text-3xl font-bold text-primary mb-4">
+              {company?.metadata?.coreDisciplinesTitle || 'Core Disciplines'}
+            </h2>
             <div className="w-20 h-1 bg-secondary mx-auto"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
@@ -124,8 +126,12 @@ const DivisionArc = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="flex justify-between items-end mb-16">
             <div>
-              <h2 className="font-display text-3xl font-bold text-primary">Landmark Projects</h2>
-              <p className="font-sans text-sm text-on-surface-variant mt-2">A testament to our global footprint and engineering prowess.</p>
+              <h2 className="font-display text-3xl font-bold text-primary">
+                {company?.metadata?.landmarkProjectsTitle || 'Landmark Projects'}
+              </h2>
+              <p className="font-sans text-sm text-on-surface-variant mt-2">
+                {company?.metadata?.landmarkProjectsSubtitle || 'A testament to our global footprint and engineering prowess.'}
+              </p>
             </div>
           </div>
 
@@ -275,8 +281,12 @@ const DivisionArc = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
             <div>
-              <h2 className="font-display text-3xl font-bold text-primary mb-6">A Legacy of Excellence</h2>
-              <p className="font-sans text-on-surface-variant text-sm mb-8 leading-relaxed">Our commitment to safety, innovation, and design quality is verified by the industry's most rigorous certification bodies.</p>
+              <h2 className="font-display text-3xl font-bold text-primary mb-6">
+                {company?.metadata?.legacyTitle || 'A Legacy of Excellence'}
+              </h2>
+              <p className="font-sans text-on-surface-variant text-sm mb-8 leading-relaxed">
+                {company?.metadata?.legacyText || 'Our commitment to safety, innovation, and design quality is verified by the industry\'s most rigorous certification bodies.'}
+              </p>
               <div className="grid grid-cols-2 gap-6">
                 {company?.certifications?.map((c, i) => (
                   <div key={i} className="flex items-center gap-4">

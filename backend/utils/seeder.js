@@ -108,7 +108,22 @@ const seedData = async () => {
         aboutHeroSubtitle: 'Engineering stability and architectural brilliance across borders for over 25 years.',
         aboutMessageHeading: 'Uncompromising Standards in Civil Engineering',
         aboutMessageText1: 'At GEO Group of Companies, our operational philosophy is anchored in precision, transparency, and safety. Every project proposal we evaluate, borehole test we log, and civil foundation we secure represents our pledge of permanence to the global stakeholders who place their trust in our capabilities.',
-        aboutMessageText2: 'We continue to expand our technological parameters, adopting parametric modeling and high-capacity remote telemetry to make our physical infrastructures smarter, more sustainable, and highly efficient.'
+        aboutMessageText2: 'We continue to expand our technological parameters, adopting parametric modeling and high-capacity remote telemetry to make our physical infrastructures smarter, more sustainable, and highly efficient.',
+        aboutCommit1Title: 'Absolute Safety',
+        aboutCommit1Desc: 'Zero-accident targets supported by rigorous field auditing protocols.',
+        aboutCommit1Icon: 'verified_user',
+        aboutCommit2Title: 'Biophilic Sustainability',
+        aboutCommit2Desc: 'Using green concrete mixtures and energy-balanced masterplans.',
+        aboutCommit2Icon: 'eco',
+        aboutCommit3Title: 'Precision Analysis',
+        aboutCommit3Desc: 'Geotechnical datasets certified in climate-regulated laboratory ovens.',
+        aboutCommit3Icon: 'monitoring',
+        aboutJourney1Year: '1998 - Corporate Foundation',
+        aboutJourney1Desc: 'GEO Group starts as a specialized surveying and surveying consultancy firm in Abu Dhabi.',
+        aboutJourney2Year: '2005 - Geotechnical Expansion',
+        aboutJourney2Desc: 'Launching specialized material testing lab services and core drilling rigs under GEO Soil Testing.',
+        aboutJourney3Year: '2014 - Infrastructure Milestone',
+        aboutJourney3Desc: 'Sealing municipal civil infrastructure bids and bridge building portfolios under GEO Construction.'
       }
     });
     console.log('Site settings seeded.');
@@ -137,7 +152,13 @@ const seedData = async () => {
       metadata: {
         awardQuote: '"Engineering Company of the Decade"',
         awardAuthor: '— Global Construction Review',
-        awardYears: 'Over 45+ Global Awards'
+        awardYears: 'Over 45+ Global Awards',
+        disciplineTag: 'Engineering & Architecture',
+        coreDisciplinesTitle: 'Core Disciplines',
+        landmarkProjectsTitle: 'Landmark Projects',
+        landmarkProjectsSubtitle: 'A testament to our global footprint and engineering prowess.',
+        legacyTitle: 'A Legacy of Excellence',
+        legacyText: 'Our commitment to safety, innovation, and design quality is verified by the industry\'s most rigorous certification bodies.'
       }
     });
 
@@ -166,7 +187,21 @@ const seedData = async () => {
         equipment1Desc: 'Precision-engineered for stress-strain behavior analysis of soil specimens.',
         equipment1Image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAqWSc527K_R45c7K3sYFopSUmiaWG2mIPaELKOdLRO6hSH9zaVnSvMOrSDKcbaANJwjjiveM8kZLTsQp_2RrKzTnvdj0ylXKwTKhE-IvNRaDG3mjROvxudK1Xz9Na6mWU7C5Wv9ukUoJCgpdPYrFSwkYjNtuf1f9STKJnsat-1IE6twJ7pr6L0LkvefB5h-a5Mc1Gp7750kl1aunnCSigopPk41OdlOplnBPIIpdmlfNY51xIBa-8c6C7DKKICmloCn-7hWoPw8NY',
         equipment2Name: 'Chemical analysis profiling',
-        equipment2Image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g'
+        equipment2Image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g',
+        methodologyTitle: 'Scientific Methodology',
+        methodologySubtitle: 'Our end-to-end testing lifecycle ensures every sample is tracked, analyzed, and reported with surgical precision.',
+        methodologyStep1Title: 'Sample Collection',
+        methodologyStep1Desc: 'Rigorous on-site extraction using specialized drilling rigs, ensuring sample integrity from the moment it leaves the earth.',
+        methodologyStep1Tag: 'Field Verification',
+        methodologyStep2Title: 'Laboratory Analysis',
+        methodologyStep2Desc: 'Multi-phasic testing including Triaxial, Direct Shear, and Consolidation tests performed in climate-controlled environments.',
+        methodologyStep2Tag: 'Advanced Spectroscopy',
+        methodologyStep3Title: 'Final Certification',
+        methodologyStep3Desc: 'Data synthesis and comprehensive geotechnical reporting by chartered engineers for construction readiness.',
+        methodologyStep3Tag: 'Compliance Verified',
+        integrityTitle: 'Data Integrity',
+        integritySpan: 'You Can Build On',
+        integrityText: 'Our reports are more than just numbers; they are the foundation of engineering confidence. We adhere to stringent global standards to ensure liability protection and structural permanence.'
       }
     });
 
@@ -213,7 +248,20 @@ const seedData = async () => {
         phase2Title: 'Phase 02: Structural Groundwork',
         phase2Desc: 'Deep foundation engineering, earth retention systems, and site utilities installation.',
         phase3Title: 'Phase 03: Vertical Mobilization',
-        phase3Desc: 'Rapid erection of core structures using pre-fabricated elements and high-capacity cranes.'
+        phase3Desc: 'Rapid erection of core structures using pre-fabricated elements and high-capacity cranes.',
+        heroTitle: 'Building Tomorrow\'s Infrastructure.',
+        stat1Val: '500+',
+        stat1Label: 'Completed Projects',
+        stat2Val: '12M',
+        stat2Label: 'Safe Man Hours',
+        stat3Val: '15',
+        stat3Label: 'Global Locations',
+        stat4Val: '$4B',
+        stat4Label: 'Asset Portfolio',
+        landmarksTitle: 'Engineering Landmarks',
+        landmarksSubtitle: 'A showcase of our multi-billion dollar infrastructure initiatives across the globe.',
+        lifecycleTitle: 'The Lifecycle of Excellence',
+        lifecycleSubtitle: 'Our phased approach ensures stability and accountability at every milestone of the project delivery.'
       }
     });
     console.log('Company divisions seeded.');

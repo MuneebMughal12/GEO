@@ -99,8 +99,12 @@ const DivisionSoil = () => {
       <section id="methodology" className="py-24 md:py-40 bg-surface-container-low border-y border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="font-display text-3xl font-bold text-primary mb-6">Scientific Methodology</h2>
-            <p className="font-sans text-sm text-on-surface-variant leading-relaxed">Our end-to-end testing lifecycle ensures every sample is tracked, analyzed, and reported with surgical precision.</p>
+            <h2 className="font-display text-3xl font-bold text-primary mb-6">
+              {company?.metadata?.methodologyTitle || 'Scientific Methodology'}
+            </h2>
+            <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
+              {company?.metadata?.methodologySubtitle || 'Our end-to-end testing lifecycle ensures every sample is tracked, analyzed, and reported with surgical precision.'}
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {/* Step 1 */}
@@ -109,11 +113,15 @@ const DivisionSoil = () => {
                 <div className="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-lg relative z-10 transition-transform group-hover:scale-110">1</div>
                 <div className="hidden md:block absolute top-1/2 left-16 right-0 h-[2px] bg-outline-variant/30 -z-0" />
               </div>
-              <h3 className="font-display text-xl font-bold text-primary mb-4">Sample Collection</h3>
-              <p className="font-sans text-sm text-on-surface-variant">Rigorous on-site extraction using specialized drilling rigs, ensuring sample integrity from the moment it leaves the earth.</p>
+              <h3 className="font-display text-xl font-bold text-primary mb-4">
+                {company?.metadata?.methodologyStep1Title || 'Sample Collection'}
+              </h3>
+              <p className="font-sans text-sm text-on-surface-variant">
+                {company?.metadata?.methodologyStep1Desc || 'Rigorous on-site extraction using specialized drilling rigs, ensuring sample integrity from the moment it leaves the earth.'}
+              </p>
               <div className="mt-4 flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs">
                 <span className="material-symbols-outlined text-[18px]">verified</span>
-                Field Verification
+                {company?.metadata?.methodologyStep1Tag || 'Field Verification'}
               </div>
             </div>
             {/* Step 2 */}
@@ -122,11 +130,15 @@ const DivisionSoil = () => {
                 <div className="w-16 h-16 rounded-full bg-secondary text-on-primary flex items-center justify-center font-display font-bold text-lg relative z-10 transition-transform group-hover:scale-110">2</div>
                 <div className="hidden md:block absolute top-1/2 left-16 right-0 h-[2px] bg-outline-variant/30 -z-0" />
               </div>
-              <h3 className="font-display text-xl font-bold text-primary mb-4">Laboratory Analysis</h3>
-              <p className="font-sans text-sm text-on-surface-variant">Multi-phasic testing including Triaxial, Direct Shear, and Consolidation tests performed in climate-controlled environments.</p>
+              <h3 className="font-display text-xl font-bold text-primary mb-4">
+                {company?.metadata?.methodologyStep2Title || 'Laboratory Analysis'}
+              </h3>
+              <p className="font-sans text-sm text-on-surface-variant">
+                {company?.metadata?.methodologyStep2Desc || 'Multi-phasic testing including Triaxial, Direct Shear, and Consolidation tests performed in climate-controlled environments.'}
+              </p>
               <div className="mt-4 flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs">
                 <span className="material-symbols-outlined text-[18px]">science</span>
-                Advanced Spectroscopy
+                {company?.metadata?.methodologyStep2Tag || 'Advanced Spectroscopy'}
               </div>
             </div>
             {/* Step 3 */}
@@ -134,11 +146,15 @@ const DivisionSoil = () => {
               <div className="mb-8">
                 <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center font-display font-bold text-lg relative z-10 transition-transform group-hover:scale-110">3</div>
               </div>
-              <h3 className="font-display text-xl font-bold text-primary mb-4">Final Certification</h3>
-              <p className="font-sans text-sm text-on-surface-variant">Data synthesis and comprehensive geotechnical reporting by chartered engineers for construction readiness.</p>
+              <h3 className="font-display text-xl font-bold text-primary mb-4">
+                {company?.metadata?.methodologyStep3Title || 'Final Certification'}
+              </h3>
+              <p className="font-sans text-sm text-on-surface-variant">
+                {company?.metadata?.methodologyStep3Desc || 'Data synthesis and comprehensive geotechnical reporting by chartered engineers for construction readiness.'}
+              </p>
               <div className="mt-4 flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs">
                 <span className="material-symbols-outlined text-[18px]">assignment_turned_in</span>
-                Compliance Verified
+                {company?.metadata?.methodologyStep3Tag || 'Compliance Verified'}
               </div>
             </div>
           </div>
@@ -341,10 +357,10 @@ const DivisionSoil = () => {
             </div>
             <div className="space-y-10">
               <h2 className="font-display text-3xl md:text-4xl font-bold leading-tight">
-                Data Integrity <span className="text-secondary-fixed">You Can Build On</span>
+                {company?.metadata?.integrityTitle || 'Data Integrity'} <span className="text-secondary-fixed">{company?.metadata?.integritySpan || 'You Can Build On'}</span>
               </h2>
               <p className="font-sans opacity-85 leading-relaxed">
-                Our reports are more than just numbers; they are the foundation of engineering confidence. We adhere to stringent global standards to ensure liability protection and structural permanence.
+                {company?.metadata?.integrityText || 'Our reports are more than just numbers; they are the foundation of engineering confidence. We adhere to stringent global standards to ensure liability protection and structural permanence.'}
               </p>
               <ul className="space-y-6">
                 {company?.certifications?.map((c, idx) => (

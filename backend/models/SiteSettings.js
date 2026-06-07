@@ -24,6 +24,7 @@ const SiteSettingsSchema = new mongoose.Schema({
     heroBgImage: { type: String, default: '' },
     heroBgVideo: { type: String, default: '' },
     aboutImage: { type: String, default: '' },
+    aboutVideo: { type: String, default: '' },
     heroCTA1: { type: String, default: 'Explore Companies' },
     heroCTA2: { type: String, default: 'Contact Us' },
     aboutTitle: { type: String, default: 'Established Excellence in Global Infrastructure' },

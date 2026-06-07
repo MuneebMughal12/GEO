@@ -17,6 +17,7 @@ const CompanyManagement = () => {
       aboutTitle: '',
       aboutText: '',
       aboutImage: '',
+      aboutVideo: '',
       aboutMission: '',
       aboutVision: ''
     },
@@ -32,7 +33,22 @@ const CompanyManagement = () => {
       aboutHeroSubtitle: '',
       aboutMessageHeading: '',
       aboutMessageText1: '',
-      aboutMessageText2: ''
+      aboutMessageText2: '',
+      aboutCommit1Title: '',
+      aboutCommit1Desc: '',
+      aboutCommit1Icon: '',
+      aboutCommit2Title: '',
+      aboutCommit2Desc: '',
+      aboutCommit2Icon: '',
+      aboutCommit3Title: '',
+      aboutCommit3Desc: '',
+      aboutCommit3Icon: '',
+      aboutJourney1Year: '',
+      aboutJourney1Desc: '',
+      aboutJourney2Year: '',
+      aboutJourney2Desc: '',
+      aboutJourney3Year: '',
+      aboutJourney3Desc: ''
     }
   });
   const [companies, setCompanies] = useState([]);
@@ -254,6 +270,7 @@ const CompanyManagement = () => {
                 name="whatsappNumber"
                 value={settings.whatsappNumber || ''}
                 onChange={handleGlobalChange}
+                placeholder="e.g. +971 50 000 0000"
                 className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
               />
             </div>
@@ -327,7 +344,7 @@ const CompanyManagement = () => {
           <div>
             <h2 className="font-display font-bold text-lg text-primary mb-6 border-b border-outline-variant/10 pb-2">Homepage About Section</h2>
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="flex flex-col gap-1.5">
                   <label className="font-display font-bold text-xs text-primary">About Title</label>
                   <input 
@@ -345,6 +362,17 @@ const CompanyManagement = () => {
                     name="aboutImage"
                     value={settings.homepage?.aboutImage || ''}
                     onChange={handleGlobalChange}
+                    className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-display font-bold text-xs text-primary">About Section Video URL (Optional)</label>
+                  <input 
+                    type="text" 
+                    name="aboutVideo"
+                    value={settings.homepage?.aboutVideo || ''}
+                    onChange={handleGlobalChange}
+                    placeholder="e.g. Link to MP4 file (takes priority over image)"
                     className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
                   />
                 </div>
@@ -463,7 +491,7 @@ const CompanyManagement = () => {
           <hr className="border-outline-variant/20" />
 
           <div>
-            <h2 className="font-display font-bold text-lg text-primary mb-6 border-b border-outline-variant/10 pb-2">About Page & Testimonials Text</h2>
+            <h2 className="font-display font-bold text-lg text-primary mb-6 border-b border-outline-variant/10 pb-2">About Page leadership message</h2>
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-1.5">
@@ -530,6 +558,212 @@ const CompanyManagement = () => {
                     rows="4"
                     className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm resize-none font-sans"
                   />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr className="border-outline-variant/20" />
+
+          <div>
+            <h2 className="font-display font-bold text-lg text-primary mb-6 border-b border-outline-variant/10 pb-2">About Page Commitments Details</h2>
+            <div className="space-y-6">
+              <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                <h4 className="font-display font-bold text-sm text-primary">Commitment 1</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Title</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutCommit1Title"
+                      value={settings.metadata?.aboutCommit1Title || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Icon (Material Icon Name)</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutCommit1Icon"
+                      value={settings.metadata?.aboutCommit1Icon || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                      placeholder="e.g. verified_user"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 md:col-span-3">
+                    <label className="font-display font-bold text-xs text-primary">Description</label>
+                    <textarea 
+                      name="meta_aboutCommit1Desc"
+                      value={settings.metadata?.aboutCommit1Desc || ''}
+                      onChange={handleGlobalChange}
+                      rows="2"
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                <h4 className="font-display font-bold text-sm text-primary">Commitment 2</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Title</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutCommit2Title"
+                      value={settings.metadata?.aboutCommit2Title || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Icon (Material Icon Name)</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutCommit2Icon"
+                      value={settings.metadata?.aboutCommit2Icon || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                      placeholder="e.g. eco"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 md:col-span-3">
+                    <label className="font-display font-bold text-xs text-primary">Description</label>
+                    <textarea 
+                      name="meta_aboutCommit2Desc"
+                      value={settings.metadata?.aboutCommit2Desc || ''}
+                      onChange={handleGlobalChange}
+                      rows="2"
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                <h4 className="font-display font-bold text-sm text-primary">Commitment 3</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Title</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutCommit3Title"
+                      value={settings.metadata?.aboutCommit3Title || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Icon (Material Icon Name)</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutCommit3Icon"
+                      value={settings.metadata?.aboutCommit3Icon || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                      placeholder="e.g. monitoring"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 md:col-span-3">
+                    <label className="font-display font-bold text-xs text-primary">Description</label>
+                    <textarea 
+                      name="meta_aboutCommit3Desc"
+                      value={settings.metadata?.aboutCommit3Desc || ''}
+                      onChange={handleGlobalChange}
+                      rows="2"
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr className="border-outline-variant/20" />
+
+          <div>
+            <h2 className="font-display font-bold text-lg text-primary mb-6 border-b border-outline-variant/10 pb-2">About Page Corporate Journey Timeline</h2>
+            <div className="space-y-6">
+              <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                <h4 className="font-display font-bold text-sm text-primary">Journey Milestone 1</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Year / Header Label</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutJourney1Year"
+                      value={settings.metadata?.aboutJourney1Year || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                      placeholder="e.g. 1998 - Corporate Foundation"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 md:col-span-2">
+                    <label className="font-display font-bold text-xs text-primary">Description</label>
+                    <textarea 
+                      name="meta_aboutJourney1Desc"
+                      value={settings.metadata?.aboutJourney1Desc || ''}
+                      onChange={handleGlobalChange}
+                      rows="2"
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                <h4 className="font-display font-bold text-sm text-primary">Journey Milestone 2</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Year / Header Label</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutJourney2Year"
+                      value={settings.metadata?.aboutJourney2Year || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                      placeholder="e.g. 2005 - Geotechnical Expansion"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 md:col-span-2">
+                    <label className="font-display font-bold text-xs text-primary">Description</label>
+                    <textarea 
+                      name="meta_aboutJourney2Desc"
+                      value={settings.metadata?.aboutJourney2Desc || ''}
+                      onChange={handleGlobalChange}
+                      rows="2"
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                <h4 className="font-display font-bold text-sm text-primary">Journey Milestone 3</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-display font-bold text-xs text-primary">Year / Header Label</label>
+                    <input 
+                      type="text" 
+                      name="meta_aboutJourney3Year"
+                      value={settings.metadata?.aboutJourney3Year || ''}
+                      onChange={handleGlobalChange}
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                      placeholder="e.g. 2014 - Infrastructure Milestone"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 md:col-span-2">
+                    <label className="font-display font-bold text-xs text-primary">Description</label>
+                    <textarea 
+                      name="meta_aboutJourney3Desc"
+                      value={settings.metadata?.aboutJourney3Desc || ''}
+                      onChange={handleGlobalChange}
+                      rows="2"
+                      className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -639,130 +873,408 @@ const CompanyManagement = () => {
 
             {/* Division specific metadata */}
             {editingCompany.division === 'ARC' && (
-              <div>
-                <h3 className="font-display font-bold text-primary mb-6">GEO ARC Award Banner Details</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col gap-1.5">
-                    <label className="font-display font-bold text-xs text-primary">Award Quote Text</label>
-                    <input 
-                      type="text" 
-                      name="meta_awardQuote"
-                      value={editingCompany.metadata?.awardQuote || ''}
-                      onChange={handleCompanyChange}
-                      className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                      placeholder='e.g. "Engineering Company of the Decade"'
-                    />
+              <div className="space-y-8">
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">GEO ARC Structural Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Discipline Tagline</label>
+                      <input 
+                        type="text" 
+                        name="meta_disciplineTag"
+                        value={editingCompany.metadata?.disciplineTag || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Engineering & Architecture"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Core Disciplines Section Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_coreDisciplinesTitle"
+                        value={editingCompany.metadata?.coreDisciplinesTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Core Disciplines"
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label className="font-display font-bold text-xs text-primary">Award Quote Author</label>
-                    <input 
-                      type="text" 
-                      name="meta_awardAuthor"
-                      value={editingCompany.metadata?.awardAuthor || ''}
-                      onChange={handleCompanyChange}
-                      className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                      placeholder="e.g. — Global Construction Review"
-                    />
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">Landmark Projects Titles</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Landmark Projects Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_landmarkProjectsTitle"
+                        value={editingCompany.metadata?.landmarkProjectsTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Landmark Projects"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Landmark Projects Subtitle</label>
+                      <input 
+                        type="text" 
+                        name="meta_landmarkProjectsSubtitle"
+                        value={editingCompany.metadata?.landmarkProjectsSubtitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. A testament to our global footprint..."
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-1.5 md:col-span-2">
-                    <label className="font-display font-bold text-xs text-primary">Awards Badge / Description Subtext</label>
-                    <input 
-                      type="text" 
-                      name="meta_awardYears"
-                      value={editingCompany.metadata?.awardYears || ''}
-                      onChange={handleCompanyChange}
-                      className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                      placeholder="e.g. Over 45+ Global Awards"
-                    />
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">Legacy card details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Legacy Section Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_legacyTitle"
+                        value={editingCompany.metadata?.legacyTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. A Legacy of Excellence"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Legacy Description Text</label>
+                      <textarea 
+                        name="meta_legacyText"
+                        value={editingCompany.metadata?.legacyText || ''}
+                        onChange={handleCompanyChange}
+                        rows="2"
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm resize-none font-sans"
+                        placeholder="Our commitment to safety, innovation..."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">GEO ARC Award Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Award Quote Text</label>
+                      <input 
+                        type="text" 
+                        name="meta_awardQuote"
+                        value={editingCompany.metadata?.awardQuote || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder='e.g. "Engineering Company of the Decade"'
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Award Quote Author</label>
+                      <input 
+                        type="text" 
+                        name="meta_awardAuthor"
+                        value={editingCompany.metadata?.awardAuthor || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. — Global Construction Review"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5 md:col-span-2">
+                      <label className="font-display font-bold text-xs text-primary">Awards Badge / Description Subtext</label>
+                      <input 
+                        type="text" 
+                        name="meta_awardYears"
+                        value={editingCompany.metadata?.awardYears || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Over 45+ Global Awards"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
             {editingCompany.division === 'SOIL' && (
-              <div>
-                <h3 className="font-display font-bold text-primary mb-6">World-Class Instrumentation (Bento Grid)</h3>
-                <div className="space-y-6">
-                  <div className="flex flex-col gap-1.5">
-                    <label className="font-display font-bold text-xs text-primary">Instrumentation Section Title</label>
-                    <input 
-                      type="text" 
-                      name="meta_equipmentTitle"
-                      value={editingCompany.metadata?.equipmentTitle || ''}
-                      onChange={handleCompanyChange}
-                      className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                      placeholder="e.g. World-Class Instrumentation"
-                    />
-                  </div>
-
-                  <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
-                    <h4 className="font-display font-bold text-sm text-primary">Instrument 1 (Large Bento Element)</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="flex flex-col gap-1.5">
-                        <label className="font-display font-bold text-[10px] text-outline">Name</label>
-                        <input 
-                          type="text" 
-                          name="meta_equipment1Name"
-                          value={editingCompany.metadata?.equipment1Name || ''}
-                          onChange={handleCompanyChange}
-                          className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-1.5">
-                        <label className="font-display font-bold text-[10px] text-outline">Image URL</label>
-                        <input 
-                          type="text" 
-                          name="meta_equipment1Image"
-                          value={editingCompany.metadata?.equipment1Image || ''}
-                          onChange={handleCompanyChange}
-                          className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-1.5 md:col-span-2">
-                        <label className="font-display font-bold text-[10px] text-outline">Description</label>
-                        <textarea 
-                          name="meta_equipment1Desc"
-                          value={editingCompany.metadata?.equipment1Desc || ''}
-                          onChange={handleCompanyChange}
-                          rows="2"
-                          className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
-                        />
-                      </div>
+              <div className="space-y-8">
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">GEO Soil Scientific Methodology Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Methodology Section Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_methodologyTitle"
+                        value={editingCompany.metadata?.methodologyTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Scientific Methodology"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Methodology Subtitle Description</label>
+                      <textarea 
+                        name="meta_methodologySubtitle"
+                        value={editingCompany.metadata?.methodologySubtitle || ''}
+                        onChange={handleCompanyChange}
+                        rows="2"
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm resize-none font-sans"
+                        placeholder="Our end-to-end testing lifecycle ensures..."
+                      />
                     </div>
                   </div>
 
-                  <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
-                    <h4 className="font-display font-bold text-sm text-primary">Instrument 2 (Small Bento Element)</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="flex flex-col gap-1.5">
-                        <label className="font-display font-bold text-[10px] text-outline">Name</label>
-                        <input 
-                          type="text" 
-                          name="meta_equipment2Name"
-                          value={editingCompany.metadata?.equipment2Name || ''}
-                          onChange={handleCompanyChange}
-                          className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                        />
+                  <div className="grid grid-cols-1 gap-6 mt-6">
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Methodology Step 1</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Title</label>
+                          <input 
+                            type="text" 
+                            name="meta_methodologyStep1Title"
+                            value={editingCompany.metadata?.methodologyStep1Title || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Bottom Tag Line</label>
+                          <input 
+                            type="text" 
+                            name="meta_methodologyStep1Tag"
+                            value={editingCompany.metadata?.methodologyStep1Tag || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            placeholder="e.g. Field Verification"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="font-display font-bold text-xs text-primary">Description</label>
+                          <textarea 
+                            name="meta_methodologyStep1Desc"
+                            value={editingCompany.metadata?.methodologyStep1Desc || ''}
+                            onChange={handleCompanyChange}
+                            rows="2"
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                          />
+                        </div>
                       </div>
-                      <div className="flex flex-col gap-1.5">
-                        <label className="font-display font-bold text-[10px] text-outline">Image URL</label>
-                        <input 
-                          type="text" 
-                          name="meta_equipment2Image"
-                          value={editingCompany.metadata?.equipment2Image || ''}
-                          onChange={handleCompanyChange}
-                          className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                        />
+                    </div>
+
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Methodology Step 2</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Title</label>
+                          <input 
+                            type="text" 
+                            name="meta_methodologyStep2Title"
+                            value={editingCompany.metadata?.methodologyStep2Title || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Bottom Tag Line</label>
+                          <input 
+                            type="text" 
+                            name="meta_methodologyStep2Tag"
+                            value={editingCompany.metadata?.methodologyStep2Tag || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            placeholder="e.g. Advanced Spectroscopy"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="font-display font-bold text-xs text-primary">Description</label>
+                          <textarea 
+                            name="meta_methodologyStep2Desc"
+                            value={editingCompany.metadata?.methodologyStep2Desc || ''}
+                            onChange={handleCompanyChange}
+                            rows="2"
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                          />
+                        </div>
                       </div>
-                      <div className="flex flex-col gap-1.5 md:col-span-2">
-                        <label className="font-display font-bold text-[10px] text-outline">Description (Optional)</label>
-                        <textarea 
-                          name="meta_equipment2Desc"
-                          value={editingCompany.metadata?.equipment2Desc || ''}
-                          onChange={handleCompanyChange}
-                          rows="2"
-                          className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
-                        />
+                    </div>
+
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Methodology Step 3</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Title</label>
+                          <input 
+                            type="text" 
+                            name="meta_methodologyStep3Title"
+                            value={editingCompany.metadata?.methodologyStep3Title || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Bottom Tag Line</label>
+                          <input 
+                            type="text" 
+                            name="meta_methodologyStep3Tag"
+                            value={editingCompany.metadata?.methodologyStep3Tag || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            placeholder="e.g. Compliance Verified"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="font-display font-bold text-xs text-primary">Description</label>
+                          <textarea 
+                            name="meta_methodologyStep3Desc"
+                            value={editingCompany.metadata?.methodologyStep3Desc || ''}
+                            onChange={handleCompanyChange}
+                            rows="2"
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">GEO Soil Data Integrity Section Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Integrity Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_integrityTitle"
+                        value={editingCompany.metadata?.integrityTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Data Integrity"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Integrity Highlight Span Text</label>
+                      <input 
+                        type="text" 
+                        name="meta_integritySpan"
+                        value={editingCompany.metadata?.integritySpan || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. You Can Build On"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5 md:col-span-2">
+                      <label className="font-display font-bold text-xs text-primary">Integrity Description Copy</label>
+                      <textarea 
+                        name="meta_integrityText"
+                        value={editingCompany.metadata?.integrityText || ''}
+                        onChange={handleCompanyChange}
+                        rows="3"
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm resize-none font-sans"
+                        placeholder="Our reports are more than just numbers..."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">World-Class Instrumentation (Bento Grid)</h3>
+                  <div className="space-y-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Instrumentation Section Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_equipmentTitle"
+                        value={editingCompany.metadata?.equipmentTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. World-Class Instrumentation"
+                      />
+                    </div>
+
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Instrument 1 (Large Bento Element)</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-[10px] text-outline">Name</label>
+                          <input 
+                            type="text" 
+                            name="meta_equipment1Name"
+                            value={editingCompany.metadata?.equipment1Name || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-[10px] text-outline">Image URL</label>
+                          <input 
+                            type="text" 
+                            name="meta_equipment1Image"
+                            value={editingCompany.metadata?.equipment1Image || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="font-display font-bold text-[10px] text-outline">Description</label>
+                          <textarea 
+                            name="meta_equipment1Desc"
+                            value={editingCompany.metadata?.equipment1Desc || ''}
+                            onChange={handleCompanyChange}
+                            rows="2"
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Instrument 2 (Small Bento Element)</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-[10px] text-outline">Name</label>
+                          <input 
+                            type="text" 
+                            name="meta_equipment2Name"
+                            value={editingCompany.metadata?.equipment2Name || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-[10px] text-outline">Image URL</label>
+                          <input 
+                            type="text" 
+                            name="meta_equipment2Image"
+                            value={editingCompany.metadata?.equipment2Image || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
+                          <label className="font-display font-bold text-[10px] text-outline">Description (Optional)</label>
+                          <textarea 
+                            name="meta_equipment2Desc"
+                            value={editingCompany.metadata?.equipment2Desc || ''}
+                            onChange={handleCompanyChange}
+                            rows="2"
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs resize-none font-sans"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -772,6 +1284,196 @@ const CompanyManagement = () => {
 
             {editingCompany.division === 'CONSTRUCTION' && (
               <div className="space-y-8">
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">GEO Construction Structural Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Construction Page Hero Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_heroTitle"
+                        value={editingCompany.metadata?.heroTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Building Tomorrow's Infrastructure."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">Capabilities Statistics (4 Cards)</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Stat Card 1</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Value (e.g. 500+)</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat1Val"
+                            value={editingCompany.metadata?.stat1Val || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Label</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat1Label"
+                            value={editingCompany.metadata?.stat1Label || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Stat Card 2</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Value (e.g. 12M)</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat2Val"
+                            value={editingCompany.metadata?.stat2Val || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Label</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat2Label"
+                            value={editingCompany.metadata?.stat2Label || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Stat Card 3</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Value (e.g. 15)</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat3Val"
+                            value={editingCompany.metadata?.stat3Val || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Label</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat3Label"
+                            value={editingCompany.metadata?.stat3Label || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
+                      <h4 className="font-display font-bold text-sm text-primary">Stat Card 4</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Value (e.g. $4B)</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat4Val"
+                            value={editingCompany.metadata?.stat4Val || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <label className="font-display font-bold text-xs text-primary">Label</label>
+                          <input 
+                            type="text" 
+                            name="meta_stat4Label"
+                            value={editingCompany.metadata?.stat4Label || ''}
+                            onChange={handleCompanyChange}
+                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">Engineering Landmarks Header</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Landmarks Section Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_landmarksTitle"
+                        value={editingCompany.metadata?.landmarksTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. Engineering Landmarks"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Landmarks Subtitle</label>
+                      <textarea 
+                        name="meta_landmarksSubtitle"
+                        value={editingCompany.metadata?.landmarksSubtitle || ''}
+                        onChange={handleCompanyChange}
+                        rows="2"
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm resize-none font-sans"
+                        placeholder="A showcase of our multi-billion dollar..."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
+                <div>
+                  <h3 className="font-display font-bold text-primary mb-6">Lifecycle of Excellence Process</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Lifecycle Section Title</label>
+                      <input 
+                        type="text" 
+                        name="meta_lifecycleTitle"
+                        value={editingCompany.metadata?.lifecycleTitle || ''}
+                        onChange={handleCompanyChange}
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                        placeholder="e.g. The Lifecycle of Excellence"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-xs text-primary">Lifecycle Subtitle</label>
+                      <textarea 
+                        name="meta_lifecycleSubtitle"
+                        value={editingCompany.metadata?.lifecycleSubtitle || ''}
+                        onChange={handleCompanyChange}
+                        rows="2"
+                        className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm resize-none font-sans"
+                        placeholder="Our phased approach ensures stability..."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="border-outline-variant/20" />
+
                 <div>
                   <h3 className="font-display font-bold text-primary mb-6">Active Operations Progress & Metrics</h3>
                   <div className="space-y-6">
