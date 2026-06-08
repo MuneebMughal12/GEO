@@ -35,7 +35,7 @@ const PublicLayout = () => {
       {/* Navigation Shell */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled 
-          ? 'py-2 bg-white/90 shadow-xl' 
+          ? 'py-2 bg-white shadow-md' 
           : 'py-4 bg-white/70 backdrop-blur-xl'
       } border-b border-white/20`}>
         <div className="flex justify-between items-center max-w-container-max mx-auto px-margin-desktop h-16">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
+import { getMediaUrl } from '../../services/media';
 
 const ProjectManagement = () => {
   const [projects, setProjects] = useState([]);
@@ -15,9 +16,58 @@ const ProjectManagement = () => {
     status: 'Ongoing',
     description: '',
     isFeatured: false,
-    isPinnedHomepage: false
+    isPinnedHomepage: false,
+    images: []
   });
   const [editingId, setEditingId] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [imageUrlInput, setImageUrlInput] = useState('');
+
+  const handleUploadProjectImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('file', file);
+      formDataToSend.append('title', `project-${formData.name || 'render'}-${Date.now()}`);
+      formDataToSend.append('division', formData.division);
+      formDataToSend.append('type', 'image');
+
+      const res = await API.post('/gallery', formDataToSend, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (res.data.success && res.data.data.url) {
+        setFormData(prev => ({
+          ...prev,
+          images: [...(prev.images || []), res.data.data.url]
+        }));
+      }
+    } catch (err) {
+      console.error('Project image upload failed:', err);
+      alert('Failed to upload project image.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleAddImageLink = () => {
+    if (!imageUrlInput.trim()) return;
+    setFormData(prev => ({
+      ...prev,
+      images: [...(prev.images || []), imageUrlInput.trim()]
+    }));
+    setImageUrlInput('');
+  };
+
+  const handleRemoveImage = (indexToRemove) => {
+    setFormData(prev => ({
+      ...prev,
+      images: (prev.images || []).filter((_, idx) => idx !== indexToRemove)
+    }));
+  };
 
   useEffect(() => {
     fetchProjects();
@@ -73,7 +123,8 @@ const ProjectManagement = () => {
       status: proj.status,
       description: proj.description,
       isFeatured: proj.isFeatured || false,
-      isPinnedHomepage: proj.isPinnedHomepage || false
+      isPinnedHomepage: proj.isPinnedHomepage || false,
+      images: proj.images || []
     });
     setModalOpen(true);
   };
@@ -101,7 +152,8 @@ const ProjectManagement = () => {
       status: 'Ongoing',
       description: '',
       isFeatured: false,
-      isPinnedHomepage: false
+      isPinnedHomepage: false,
+      images: []
     });
   };
 
@@ -297,6 +349,67 @@ const ProjectManagement = () => {
                   rows="3"
                   className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary focus:ring-1 focus:ring-secondary/20 outline-none text-sm resize-none"
                 />
+              </div>
+
+              {/* Project Images Gallery */}
+              <div className="flex flex-col gap-2 border-t border-outline-variant/10 pt-4">
+                <label className="font-display font-bold text-xs text-primary">Project Images / Renders</label>
+                
+                {/* Image List Preview */}
+                <div className="flex flex-wrap gap-3 mb-2">
+                  {(formData.images || []).map((img, index) => (
+                    <div key={index} className="w-20 h-20 rounded-xl overflow-hidden relative group border border-outline-variant/30 bg-surface-container shadow-sm shrink-0">
+                      <img src={getMediaUrl(img)} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(index)}
+                        className="absolute inset-0 bg-error/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"
+                        title="Remove Image"
+                      >
+                        <span className="material-symbols-outlined text-base">delete</span>
+                      </button>
+                    </div>
+                  ))}
+                  {(!formData.images || formData.images.length === 0) && (
+                    <p className="text-on-surface-variant font-sans text-xs italic py-2">No images added yet. Click below to upload or paste a link.</p>
+                  )}
+                </div>
+
+                {/* PC Upload and Paste Link inputs */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex gap-2">
+                    <label className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2.5 rounded-xl text-xs font-semibold font-display flex items-center gap-1.5 transition-colors">
+                      <span className="material-symbols-outlined text-[16px]">
+                        {uploading ? 'sync' : 'upload_file'}
+                      </span>
+                      {uploading ? 'Uploading...' : 'Upload Image from PC'}
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={handleUploadProjectImage} 
+                        className="hidden" 
+                        disabled={uploading}
+                      />
+                    </label>
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <input 
+                      type="text" 
+                      value={imageUrlInput}
+                      onChange={(e) => setImageUrlInput(e.target.value)}
+                      placeholder="Or paste an image link here..."
+                      className="flex-1 px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                    />
+                    <button 
+                      type="button"
+                      onClick={handleAddImageLink}
+                      className="px-6 py-3 bg-secondary text-white rounded-xl font-display font-semibold hover:bg-secondary/90 transition-colors text-xs"
+                    >
+                      Add Link
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <div className="flex items-center gap-6">

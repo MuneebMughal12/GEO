@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
+import { getMediaUrl } from '../../services/media';
 
 const TeamManagement = () => {
   const [team, setTeam] = useState([]);
@@ -15,6 +16,37 @@ const TeamManagement = () => {
     certifications: []
   });
   const [editingId, setEditingId] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleUploadProfileImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('file', file);
+      formDataToSend.append('title', `profile-${formData.name || 'member'}-${Date.now()}`);
+      formDataToSend.append('division', formData.division || 'GLOBAL');
+      formDataToSend.append('type', 'image');
+
+      const res = await API.post('/gallery', formDataToSend, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (res.data.success && res.data.data.url) {
+        setFormData(prev => ({
+          ...prev,
+          profileImage: res.data.data.url
+        }));
+      }
+    } catch (err) {
+      console.error('Profile image upload failed:', err);
+      alert('Failed to upload profile image.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     fetchTeam();
@@ -155,7 +187,7 @@ const TeamManagement = () => {
             {team.map((member) => (
               <div key={member._id} className="p-6 border border-outline-variant/20 rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group text-center flex flex-col items-center">
                 <div className="h-24 w-24 rounded-full overflow-hidden border-4 border-white shadow-md mb-6">
-                  <img src={member.profileImage} alt={member.name} className="w-full h-full object-cover" />
+                  <img src={getMediaUrl(member.profileImage)} alt={member.name} className="w-full h-full object-cover" />
                 </div>
                 <h4 className="font-display font-bold text-base text-primary mb-1">{member.name}</h4>
                 <p className="font-display text-[10px] font-bold text-on-primary-container bg-primary-fixed/30 px-3 py-1 rounded-full mb-4">
@@ -235,16 +267,49 @@ const TeamManagement = () => {
                     <option value="CONSTRUCTION">GEO Construction</option>
                   </select>
                 </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-display font-bold text-xs text-primary">Profile Image URL</label>
-                  <input 
-                    type="text" 
-                    name="profileImage"
-                    value={formData.profileImage}
-                    onChange={handleInputChange}
-                    placeholder="https://example.com/avatar.jpg"
-                    className="w-full border-outline-variant/50 rounded-xl focus:ring-1 focus:ring-secondary focus:border-secondary px-4 py-3 bg-background text-sm"
-                  />
+                <div className="flex flex-col gap-1.5 w-full">
+                  <label className="font-display font-bold text-xs text-primary">Profile Image</label>
+                  <div className="flex gap-4 items-start">
+                    {formData.profileImage && (
+                      <div className="w-16 h-16 rounded-full overflow-hidden border border-outline-variant/30 bg-surface-container shrink-0">
+                        <img src={getMediaUrl(formData.profileImage)} alt="Preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <div className="flex-1 flex flex-col gap-2">
+                      <div className="flex gap-2">
+                        <label className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2.5 rounded-xl text-xs font-semibold font-display flex items-center gap-1.5 transition-colors">
+                          <span className="material-symbols-outlined text-[16px]">
+                            {uploading ? 'sync' : 'upload_file'}
+                          </span>
+                          {uploading ? 'Uploading...' : 'Upload from PC'}
+                          <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={handleUploadProfileImage} 
+                            className="hidden" 
+                            disabled={uploading}
+                          />
+                        </label>
+                        {formData.profileImage && (
+                          <button
+                            type="button"
+                            onClick={() => setFormData(prev => ({ ...prev, profileImage: '' }))}
+                            className="bg-error/10 text-error hover:bg-error/20 px-3 py-2 rounded-xl text-xs font-semibold font-display flex items-center gap-1 transition-colors"
+                          >
+                            Clear
+                          </button>
+                        )}
+                      </div>
+                      <input 
+                        type="text" 
+                        name="profileImage"
+                        value={formData.profileImage}
+                        onChange={handleInputChange}
+                        placeholder="Or paste an image URL..."
+                        className="w-full border-outline-variant/50 rounded-xl focus:ring-1 focus:ring-secondary focus:border-secondary px-4 py-3 bg-background text-sm"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 

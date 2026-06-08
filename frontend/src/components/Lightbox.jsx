@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 
 const Lightbox = ({ media, onClose }) => {
   useEffect(() => {
-    // Disable body scroll when lightbox is open
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, []);
+    if (media) {
+      // Disable body scroll when lightbox is open
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = 'unset';
+      };
+    }
+  }, [media]);
 
   if (!media) return null;
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
+import { getMediaUrl } from '../../services/media';
 
 const CompanyManagement = () => {
   const [settings, setSettings] = useState({
@@ -57,6 +58,199 @@ const CompanyManagement = () => {
   const [editingCompany, setEditingCompany] = useState(null);
   const [status, setStatus] = useState('');
   const [newPartnerName, setNewPartnerName] = useState('');
+  const [uploadingOpIndex, setUploadingOpIndex] = useState(null);
+  const [uploadingField, setUploadingField] = useState(null);
+
+  const handleUploadFile = async (e, fieldName, isCompanyMetadata = false, isEditingCompany = false) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploadingField(fieldName);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('title', `${fieldName}-${Date.now()}`);
+      formData.append('division', isEditingCompany ? (editingCompany?.slug === 'geo-construction' ? 'CONSTRUCTION' : editingCompany?.slug === 'geo-soil-testing' ? 'SOIL' : 'ARC') : 'GLOBAL');
+      const isVideo = file.type.startsWith('video/') || file.name.toLowerCase().endsWith('.mp4');
+      formData.append('type', isVideo ? 'video' : 'image');
+
+      const res = await API.post('/gallery', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (res.data.success && res.data.data.url) {
+        if (isEditingCompany) {
+          if (isCompanyMetadata) {
+            setEditingCompany({
+              ...editingCompany,
+              metadata: {
+                ...(editingCompany.metadata || {}),
+                [fieldName]: res.data.data.url
+              }
+            });
+          } else {
+            setEditingCompany({
+              ...editingCompany,
+              [fieldName]: res.data.data.url
+            });
+          }
+        } else {
+          if (isCompanyMetadata) {
+            setSettings({
+              ...settings,
+              metadata: {
+                ...(settings.metadata || {}),
+                [fieldName]: res.data.data.url
+              }
+            });
+          } else {
+            setSettings({
+              ...settings,
+              homepage: {
+                ...(settings.homepage || {}),
+                [fieldName]: res.data.data.url
+              }
+            });
+          }
+        }
+      }
+    } catch (err) {
+      console.error('File upload failed:', err);
+      alert('Failed to upload file. Please try again.');
+    } finally {
+      setUploadingField(null);
+    }
+  };
+
+  const renderMediaUploadField = ({
+    label,
+    value,
+    fieldName,
+    placeholder,
+    accept = "image/*,video/mp4",
+    isCompanyMetadata = false,
+    isEditingCompany = false,
+    onChange
+  }) => {
+    const isUploading = uploadingField === fieldName;
+    const mediaUrl = getMediaUrl(value);
+    const isVideo = value && (value.endsWith('.mp4') || value.includes('video') || (value.includes('/uploads/') && !value.match(/\.(jpeg|jpg|png|webp|gif|pdf)$/i)));
+    const isPdf = value && (value.endsWith('.pdf') || value.includes('pdf'));
+
+    return (
+      <div className="flex flex-col gap-1.5 w-full">
+        <label className="font-display font-bold text-xs text-primary">{label}</label>
+        <div className="flex gap-4 items-start">
+          {value && (
+            <div className="w-20 h-20 rounded-xl overflow-hidden border border-outline-variant/30 bg-surface-container shrink-0 flex items-center justify-center">
+              {isPdf ? (
+                <div className="text-red-600 flex flex-col items-center justify-center h-full w-full bg-red-50/50">
+                  <span className="material-symbols-outlined text-3xl">picture_as_pdf</span>
+                  <span className="text-[8px] font-bold uppercase mt-1 font-display">PDF File</span>
+                </div>
+              ) : isVideo ? (
+                <video src={mediaUrl} className="w-full h-full object-cover" muted playsInline />
+              ) : (
+                <img src={mediaUrl} alt="Preview" className="w-full h-full object-cover" />
+              )}
+            </div>
+          )}
+          <div className="flex-1 flex flex-col gap-2">
+            <div className="flex gap-2">
+              <label className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2.5 rounded-xl text-xs font-semibold font-display flex items-center gap-1.5 transition-colors">
+                <span className="material-symbols-outlined text-[16px]">
+                  {isUploading ? 'sync' : 'upload_file'}
+                </span>
+                {isUploading ? 'Uploading...' : 'Upload from PC'}
+                <input 
+                  type="file" 
+                  accept={accept}
+                  onChange={(e) => handleUploadFile(e, fieldName, isCompanyMetadata, isEditingCompany)} 
+                  className="hidden" 
+                  disabled={uploadingField !== null}
+                />
+              </label>
+              {value && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isEditingCompany) {
+                      if (isCompanyMetadata) {
+                        setEditingCompany({
+                          ...editingCompany,
+                          metadata: { ...(editingCompany.metadata || {}), [fieldName]: '' }
+                        });
+                      } else {
+                        setEditingCompany({ ...editingCompany, [fieldName]: '' });
+                      }
+                    } else {
+                      if (isCompanyMetadata) {
+                        setSettings({
+                          ...settings,
+                          metadata: { ...(settings.metadata || {}), [fieldName]: '' }
+                        });
+                      } else {
+                        setSettings({
+                          ...settings,
+                          homepage: { ...(settings.homepage || {}), [fieldName]: '' }
+                        });
+                      }
+                    }
+                  }}
+                  className="bg-error/10 text-error hover:bg-error/20 px-3 py-2 rounded-xl text-xs font-semibold font-display flex items-center gap-1 transition-colors"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            <input 
+              type="text" 
+              name={isCompanyMetadata ? `meta_${fieldName}` : fieldName}
+              value={value || ''}
+              onChange={onChange}
+              placeholder={placeholder || "Or paste a link here..."}
+              className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary focus:ring-1 focus:ring-secondary/20 outline-none text-sm font-sans w-full"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const handleUploadOpImage = async (e, idx) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploadingOpIndex(idx);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('title', `operation-${idx + 1}-${Date.now()}`);
+      formData.append('division', 'CONSTRUCTION');
+      formData.append('type', 'image');
+
+      const res = await API.post('/gallery', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (res.data.success && res.data.data.url) {
+        const ops = [...(editingCompany.metadata?.activeOperations || [])];
+        ops[idx] = { ...ops[idx], image: res.data.data.url };
+        setEditingCompany({
+          ...editingCompany,
+          metadata: {
+            ...editingCompany.metadata,
+            activeOperations: ops
+          }
+        });
+      }
+    } catch (err) {
+      console.error('Operation image upload failed:', err);
+      alert('Failed to upload image. Please try again.');
+    } finally {
+      setUploadingOpIndex(null);
+    }
+  };
 
   const handleAddPartner = () => {
     if (!newPartnerName.trim()) return;
@@ -90,7 +284,41 @@ const CompanyManagement = () => {
     if (activeTab !== 'global') {
       const comp = companies.find(c => c.slug === activeTab);
       if (comp) {
-        setEditingCompany({ ...comp });
+        const parsedCompany = { ...comp };
+        if (comp.slug === 'geo-construction' && (!parsedCompany.metadata || !parsedCompany.metadata.activeOperations)) {
+          parsedCompany.metadata = {
+            ...(parsedCompany.metadata || {}),
+            activeOperations: [
+              {
+                name: comp.metadata?.op1Name || 'North Rail Link',
+                subtitle: comp.metadata?.op1Subtitle || 'Industrial Hub Connector',
+                progress: comp.metadata?.op1Progress !== undefined ? comp.metadata.op1Progress : 72,
+                stat1Label: comp.metadata?.op1Stat1Label || 'Cranes',
+                stat1Val: comp.metadata?.op1Stat1Val || '12',
+                stat2Label: comp.metadata?.op1Stat2Label || 'Personnel',
+                stat2Val: comp.metadata?.op1Stat2Val || '1.4k',
+                stat3Label: comp.metadata?.op1Stat3Label || 'Est. Completion',
+                stat3Val: comp.metadata?.op1Stat3Val || 'Q3 2025',
+                image: comp.metadata?.op1Image || '',
+                link: comp.metadata?.op1Link || ''
+              },
+              {
+                name: comp.metadata?.op2Name || 'Maritime Port Expansion',
+                subtitle: comp.metadata?.op2Subtitle || 'Strategic Deep-water Berth',
+                progress: comp.metadata?.op2Progress !== undefined ? comp.metadata.op2Progress : 45,
+                stat1Label: comp.metadata?.op2Stat1Label || 'Dredgers',
+                stat1Val: comp.metadata?.op2Stat1Val || '04',
+                stat2Label: comp.metadata?.op2Stat2Label || 'Concrete (m³)',
+                stat2Val: comp.metadata?.op2Stat2Val || '850k',
+                stat3Label: comp.metadata?.op2Stat3Label || 'Est. Completion',
+                stat3Val: comp.metadata?.op2Stat3Val || 'Q2 2026',
+                image: comp.metadata?.op2Image || '',
+                link: comp.metadata?.op2Link || ''
+              }
+            ]
+          };
+        }
+        setEditingCompany(parsedCompany);
       }
     } else {
       setEditingCompany(null);
@@ -339,28 +567,20 @@ const CompanyManagement = () => {
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-display font-bold text-xs text-primary">Hero Background Image URL (Optional)</label>
-                  <input 
-                    type="text" 
-                    name="heroBgImage"
-                    value={settings.homepage?.heroBgImage || ''}
-                    placeholder="e.g. https://images.unsplash.com/... (falls back to 3D canvas if blank)"
-                    onChange={handleGlobalChange}
-                    className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-display font-bold text-xs text-primary">Hero Background Video URL (Optional)</label>
-                  <input 
-                    type="text" 
-                    name="heroBgVideo"
-                    value={settings.homepage?.heroBgVideo || ''}
-                    placeholder="e.g. Link to MP4 file"
-                    onChange={handleGlobalChange}
-                    className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                  />
-                </div>
+                {renderMediaUploadField({
+                  label: "Hero Background Image (Optional)",
+                  value: settings.homepage?.heroBgImage,
+                  fieldName: "heroBgImage",
+                  placeholder: "e.g. Image URL (falls back to 3D canvas if blank)",
+                  onChange: handleGlobalChange
+                })}
+                {renderMediaUploadField({
+                  label: "Hero Background Video (Optional)",
+                  value: settings.homepage?.heroBgVideo,
+                  fieldName: "heroBgVideo",
+                  placeholder: "e.g. Link to MP4 file",
+                  onChange: handleGlobalChange
+                })}
               </div>
             </div>
           </div>
@@ -381,27 +601,19 @@ const CompanyManagement = () => {
                     className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
                   />
                 </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-display font-bold text-xs text-primary">About Section Image URL</label>
-                  <input 
-                    type="text" 
-                    name="aboutImage"
-                    value={settings.homepage?.aboutImage || ''}
-                    onChange={handleGlobalChange}
-                    className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-display font-bold text-xs text-primary">About Section Video URL (Optional)</label>
-                  <input 
-                    type="text" 
-                    name="aboutVideo"
-                    value={settings.homepage?.aboutVideo || ''}
-                    onChange={handleGlobalChange}
-                    placeholder="e.g. Link to MP4 file (takes priority over image)"
-                    className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                  />
-                </div>
+                {renderMediaUploadField({
+                  label: "About Section Image",
+                  value: settings.homepage?.aboutImage,
+                  fieldName: "aboutImage",
+                  onChange: handleGlobalChange
+                })}
+                {renderMediaUploadField({
+                  label: "About Section Video (Optional)",
+                  value: settings.homepage?.aboutVideo,
+                  fieldName: "aboutVideo",
+                  placeholder: "e.g. Link to MP4 file (takes priority over image)",
+                  onChange: handleGlobalChange
+                })}
               </div>
               <div className="flex flex-col gap-1.5">
                 <label className="font-display font-bold text-xs text-primary">About Text Description</label>
@@ -914,38 +1126,112 @@ const CompanyManagement = () => {
             <div>
               <h3 className="font-display font-bold text-primary mb-6">Division Media Assets</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-display font-bold text-xs text-primary">Hero Image (URL)</label>
-                  <input 
-                    type="text" 
-                    name="featuredImage"
-                    value={editingCompany.featuredImage || ''}
-                    onChange={handleCompanyChange}
-                    className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                  />
-                  {editingCompany.featuredImage && (
-                    <div className="mt-2 w-32 aspect-video rounded-lg overflow-hidden border border-outline-variant/30">
-                      <img src={editingCompany.featuredImage} alt="Preview" className="w-full h-full object-cover" />
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-display font-bold text-xs text-primary">Hero Video (URL - Optional)</label>
-                  <input 
-                    type="text" 
-                    name="heroVideo"
-                    value={editingCompany.heroVideo || ''}
-                    placeholder="e.g. Link to MP4 file"
-                    onChange={handleCompanyChange}
-                    className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
-                  />
-                </div>
-              </div>
+                {renderMediaUploadField({
+                  label: "Hero Image (Featured Image)",
+                  value: editingCompany.featuredImage,
+                  fieldName: "featuredImage",
+                  isEditingCompany: true,
+                  onChange: handleCompanyChange
+                })}
+                {renderMediaUploadField({
+                  label: "Hero Video (Optional)",
+                  value: editingCompany.heroVideo,
+                  fieldName: "heroVideo",
+                  placeholder: "e.g. Link to MP4 file",
+                  isEditingCompany: true,
+                  onChange: handleCompanyChange
+                })}
             </div>
+          </div>
 
-            <hr className="border-outline-variant/20" />
+          <hr className="border-outline-variant/20" />
 
-            {/* Division specific metadata */}
+          <div>
+            <h3 className="font-display font-bold text-primary mb-2">Division Certifications & Compliance</h3>
+            <p className="text-outline-variant font-sans text-xs mb-6">
+              Manage compliance badges, ISO certifications, and regulatory standards shown in the Data Integrity section of the division page.
+            </p>
+            
+            <div className="space-y-4">
+              {((editingCompany.certifications) || []).map((cert, idx) => (
+                <div key={idx} className="flex flex-col md:flex-row gap-4 items-end bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/20 relative">
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-[10px] text-outline">Certification Title</label>
+                      <input 
+                        type="text" 
+                        value={cert.title || ''} 
+                        onChange={(e) => {
+                          const certs = [...(editingCompany.certifications || [])];
+                          certs[idx] = { ...certs[idx], title: e.target.value };
+                          setEditingCompany({ ...editingCompany, certifications: certs });
+                        }}
+                        placeholder="e.g. ISO/IEC 17025:2017"
+                        className="px-3 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans w-full"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-[10px] text-outline">Subtitle / Description</label>
+                      <input 
+                        type="text" 
+                        value={cert.subtitle || ''} 
+                        onChange={(e) => {
+                          const certs = [...(editingCompany.certifications || [])];
+                          certs[idx] = { ...certs[idx], subtitle: e.target.value };
+                          setEditingCompany({ ...editingCompany, certifications: certs });
+                        }}
+                        placeholder="e.g. Lab Testing Competency"
+                        className="px-3 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans w-full"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <label className="font-display font-bold text-[10px] text-outline">Material Icon Name</label>
+                      <input 
+                        type="text" 
+                        value={cert.icon || ''} 
+                        onChange={(e) => {
+                          const certs = [...(editingCompany.certifications || [])];
+                          certs[idx] = { ...certs[idx], icon: e.target.value };
+                          setEditingCompany({ ...editingCompany, certifications: certs });
+                        }}
+                        placeholder="e.g. verified, science, shield, eco"
+                        className="px-3 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans w-full"
+                      />
+                    </div>
+                  </div>
+                  
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      const certs = [...(editingCompany.certifications || [])];
+                      certs.splice(idx, 1);
+                      setEditingCompany({ ...editingCompany, certifications: certs });
+                    }}
+                    className="text-error hover:bg-error/10 p-2.5 rounded-lg border border-error/20 flex items-center justify-center transition-colors mb-0.5"
+                    title="Remove Certification"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">delete</span>
+                  </button>
+                </div>
+              ))}
+
+              <button 
+                type="button"
+                onClick={() => {
+                  const certs = [...(editingCompany.certifications || [])];
+                  certs.push({ title: 'New Certification', subtitle: 'Compliance Standard', icon: 'verified' });
+                  setEditingCompany({ ...editingCompany, certifications: certs });
+                }}
+                className="px-4 py-2.5 border-2 border-dashed border-outline-variant/50 text-outline hover:border-secondary hover:text-secondary rounded-xl font-display font-semibold transition-all text-xs flex items-center gap-1.5 justify-center w-full"
+              >
+                <span className="material-symbols-outlined text-[16px]">add_circle</span> Add Certification
+              </button>
+            </div>
+          </div>
+
+          <hr className="border-outline-variant/20" />
+
+          {/* Division specific metadata */}
             {editingCompany.division === 'ARC' && (
               <div className="space-y-8">
                 <div>
@@ -1260,6 +1546,53 @@ const CompanyManagement = () => {
                         placeholder="Our reports are more than just numbers..."
                       />
                     </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:col-span-2 pt-4 border-t border-outline-variant/10">
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-display font-bold text-xs text-primary">Report Code</label>
+                        <input 
+                          type="text" 
+                          name="meta_reportCode"
+                          value={editingCompany.metadata?.reportCode || ''}
+                          onChange={handleCompanyChange}
+                          className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                          placeholder="e.g. GEO-SOIL-2026"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-display font-bold text-xs text-primary">Certified By Name</label>
+                        <input 
+                          type="text" 
+                          name="meta_certifiedByName"
+                          value={editingCompany.metadata?.certifiedByName || ''}
+                          onChange={handleCompanyChange}
+                          className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                          placeholder="e.g. Dr. Elias Vance"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="font-display font-bold text-xs text-primary">Certified By Designation</label>
+                        <input 
+                          type="text" 
+                          name="meta_certifiedByDesig"
+                          value={editingCompany.metadata?.certifiedByDesig || ''}
+                          onChange={handleCompanyChange}
+                          className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary outline-none text-sm font-sans"
+                          placeholder="e.g. Chief Geotechnical Officer"
+                        />
+                      </div>
+                      <div className="md:col-span-3">
+                        {renderMediaUploadField({
+                          label: "Certified Report Document (PDF/Image)",
+                          value: editingCompany.metadata?.reportFile,
+                          fieldName: "reportFile",
+                          accept: ".pdf,image/*",
+                          isCompanyMetadata: true,
+                          isEditingCompany: true,
+                          onChange: handleCompanyChange
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -1283,7 +1616,7 @@ const CompanyManagement = () => {
                     <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
                       <h4 className="font-display font-bold text-sm text-primary">Instrument 1 (Large Bento Element)</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex flex-col gap-1.5">
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
                           <label className="font-display font-bold text-[10px] text-outline">Name</label>
                           <input 
                             type="text" 
@@ -1293,15 +1626,15 @@ const CompanyManagement = () => {
                             className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
                           />
                         </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Image URL</label>
-                          <input 
-                            type="text" 
-                            name="meta_equipment1Image"
-                            value={editingCompany.metadata?.equipment1Image || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                        <div className="md:col-span-2">
+                          {renderMediaUploadField({
+                            label: "Instrument Image",
+                            value: editingCompany.metadata?.equipment1Image,
+                            fieldName: "equipment1Image",
+                            isCompanyMetadata: true,
+                            isEditingCompany: true,
+                            onChange: handleCompanyChange
+                          })}
                         </div>
                         <div className="flex flex-col gap-1.5 md:col-span-2">
                           <label className="font-display font-bold text-[10px] text-outline">Description</label>
@@ -1319,7 +1652,7 @@ const CompanyManagement = () => {
                     <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
                       <h4 className="font-display font-bold text-sm text-primary">Instrument 2 (Small Bento Element)</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex flex-col gap-1.5">
+                        <div className="flex flex-col gap-1.5 md:col-span-2">
                           <label className="font-display font-bold text-[10px] text-outline">Name</label>
                           <input 
                             type="text" 
@@ -1329,15 +1662,15 @@ const CompanyManagement = () => {
                             className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
                           />
                         </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Image URL</label>
-                          <input 
-                            type="text" 
-                            name="meta_equipment2Image"
-                            value={editingCompany.metadata?.equipment2Image || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                        <div className="md:col-span-2">
+                          {renderMediaUploadField({
+                            label: "Instrument Image (Optional)",
+                            value: editingCompany.metadata?.equipment2Image,
+                            fieldName: "equipment2Image",
+                            isCompanyMetadata: true,
+                            isEditingCompany: true,
+                            onChange: handleCompanyChange
+                          })}
                         </div>
                         <div className="flex flex-col gap-1.5 md:col-span-2">
                           <label className="font-display font-bold text-[10px] text-outline">Description (Optional)</label>
@@ -1551,215 +1884,335 @@ const CompanyManagement = () => {
                 <div>
                   <h3 className="font-display font-bold text-primary mb-6">Active Operations Progress & Metrics</h3>
                   <div className="space-y-6">
-                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
-                      <h4 className="font-display font-bold text-sm text-primary">Operation 1 Progress</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Operation Name</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Name"
-                            value={editingCompany.metadata?.op1Name || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                    {((editingCompany.metadata?.activeOperations) || []).map((op, idx) => (
+                      <div key={idx} className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4 relative">
+                        <div className="flex justify-between items-center border-b border-outline-variant/10 pb-2 mb-4">
+                          <h4 className="font-display font-bold text-sm text-primary">Operation {idx + 1}</h4>
+                          <button 
+                            type="button"
+                            onClick={() => {
+                              const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                              ops.splice(idx, 1);
+                              setEditingCompany({
+                                ...editingCompany,
+                                metadata: {
+                                  ...editingCompany.metadata,
+                                  activeOperations: ops
+                                }
+                              });
+                            }}
+                            className="text-error hover:text-error/80 font-display font-bold text-xs flex items-center gap-1"
+                          >
+                            <span className="material-symbols-outlined text-[16px]">delete</span> Remove
+                          </button>
                         </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Subtitle</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Subtitle"
-                            value={editingCompany.metadata?.op1Subtitle || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Progress Percentage (%)</label>
-                          <input 
-                            type="number" 
-                            name="meta_op1Progress"
-                            value={editingCompany.metadata?.op1Progress !== undefined ? editingCompany.metadata.op1Progress : ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-outline-variant/10">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 1 Label (e.g. Cranes)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Stat1Label"
-                            value={editingCompany.metadata?.op1Stat1Label || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Operation Name</label>
+                            <input 
+                              type="text" 
+                              value={op.name || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], name: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Subtitle</label>
+                            <input 
+                              type="text" 
+                              value={op.subtitle || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], subtitle: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Progress Percentage (%)</label>
+                            <input 
+                              type="number" 
+                              value={op.progress !== undefined ? op.progress : ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], progress: Number(e.target.value) };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
                         </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 1 Value (e.g. 12)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Stat1Val"
-                            value={editingCompany.metadata?.op1Stat1Val || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 2 Label (e.g. Personnel)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Stat2Label"
-                            value={editingCompany.metadata?.op1Stat2Label || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                        {/* Image and Link */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Operation Cover Photo</label>
+                            
+                            <div className="flex gap-4 items-center">
+                              {/* Preview thumbnail if image exists */}
+                              {op.image && (
+                                <div className="w-16 h-16 rounded-xl overflow-hidden border border-outline-variant/30 bg-surface-container shrink-0">
+                                  <img 
+                                    src={op.image.startsWith('/uploads') ? `${API.defaults.baseURL ? API.defaults.baseURL.replace(/\/api$/, '') : 'http://localhost:5000'}${op.image}` : op.image} 
+                                    alt="Preview" 
+                                    className="w-full h-full object-cover" 
+                                  />
+                                </div>
+                              )}
+                              
+                              <div className="flex-1 flex flex-col gap-2">
+                                <div className="flex gap-2">
+                                  <label className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 rounded-xl text-xs font-semibold font-display flex items-center gap-1.5 transition-colors">
+                                    <span className="material-symbols-outlined text-[16px]">
+                                      {uploadingOpIndex === idx ? 'sync' : 'upload_file'}
+                                    </span>
+                                    {uploadingOpIndex === idx ? 'Uploading...' : 'Upload from PC'}
+                                    <input 
+                                      type="file" 
+                                      accept="image/*" 
+                                      onChange={(e) => handleUploadOpImage(e, idx)} 
+                                      className="hidden" 
+                                      disabled={uploadingOpIndex !== null}
+                                    />
+                                  </label>
+                                  
+                                  {op.image && (
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                        ops[idx] = { ...ops[idx], image: '' };
+                                        setEditingCompany({
+                                          ...editingCompany,
+                                          metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                        });
+                                      }}
+                                      className="bg-error/10 text-error hover:bg-error/20 px-3 py-2 rounded-xl text-xs font-semibold font-display flex items-center gap-1 transition-colors"
+                                    >
+                                      Clear
+                                    </button>
+                                  )}
+                                </div>
+                                <input 
+                                  type="text" 
+                                  value={op.image || ''}
+                                  onChange={(e) => {
+                                    const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                    ops[idx] = { ...ops[idx], image: e.target.value };
+                                    setEditingCompany({
+                                      ...editingCompany,
+                                      metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                    });
+                                  }}
+                                  placeholder="Or paste an image link here..."
+                                  className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans w-full"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1.5 justify-end">
+                            <label className="font-display font-bold text-[10px] text-outline">Link / URL (Optional)</label>
+                            <input 
+                              type="text" 
+                              value={op.link || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], link: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              placeholder="e.g. https://projectsite.com"
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
                         </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 2 Value (e.g. 1.4k)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Stat2Val"
-                            value={editingCompany.metadata?.op1Stat2Val || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 3 Label (e.g. Est. Completion)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Stat3Label"
-                            value={editingCompany.metadata?.op1Stat3Label || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                        {/* Stats */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-outline-variant/10">
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Stat 1 Label (e.g. Cranes)</label>
+                            <input 
+                              type="text" 
+                              value={op.stat1Label || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], stat1Label: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Stat 1 Value (e.g. 12)</label>
+                            <input 
+                              type="text" 
+                              value={op.stat1Val || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], stat1Val: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
                         </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 3 Value (e.g. Q3 2025)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op1Stat3Val"
-                            value={editingCompany.metadata?.op1Stat3Val || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                      </div>
-                    </div>
 
-                    <div className="border border-outline-variant/20 p-6 rounded-2xl bg-surface-container-lowest space-y-4">
-                      <h4 className="font-display font-bold text-sm text-primary">Operation 2 Progress</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Operation Name</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Name"
-                            value={editingCompany.metadata?.op2Name || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Stat 2 Label (e.g. Personnel)</label>
+                            <input 
+                              type="text" 
+                              value={op.stat2Label || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], stat2Label: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Stat 2 Value (e.g. 1.4k)</label>
+                            <input 
+                              type="text" 
+                              value={op.stat2Val || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], stat2Val: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
                         </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Subtitle</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Subtitle"
-                            value={editingCompany.metadata?.op2Subtitle || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Progress Percentage (%)</label>
-                          <input 
-                            type="number" 
-                            name="meta_op2Progress"
-                            value={editingCompany.metadata?.op2Progress !== undefined ? editingCompany.metadata.op2Progress : ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-outline-variant/10">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 1 Label (e.g. Dredgers)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Stat1Label"
-                            value={editingCompany.metadata?.op2Stat1Label || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 1 Value (e.g. 04)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Stat1Val"
-                            value={editingCompany.metadata?.op2Stat1Val || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Stat 3 Label (e.g. Est. Completion)</label>
+                            <input 
+                              type="text" 
+                              value={op.stat3Label || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], stat3Label: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="font-display font-bold text-[10px] text-outline">Stat 3 Value (e.g. Q3 2025)</label>
+                            <input 
+                              type="text" 
+                              value={op.stat3Val || ''}
+                              onChange={(e) => {
+                                const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                                ops[idx] = { ...ops[idx], stat3Val: e.target.value };
+                                setEditingCompany({
+                                  ...editingCompany,
+                                  metadata: { ...editingCompany.metadata, activeOperations: ops }
+                                });
+                              }}
+                              className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
+                            />
+                          </div>
                         </div>
                       </div>
+                    ))}
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 2 Label (e.g. Concrete)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Stat2Label"
-                            value={editingCompany.metadata?.op2Stat2Label || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 2 Value (e.g. 850k)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Stat2Val"
-                            value={editingCompany.metadata?.op2Stat2Val || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 3 Label (e.g. Est. Completion)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Stat3Label"
-                            value={editingCompany.metadata?.op2Stat3Label || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-1.5">
-                          <label className="font-display font-bold text-[10px] text-outline">Stat 3 Value (e.g. Q2 2026)</label>
-                          <input 
-                            type="text" 
-                            name="meta_op2Stat3Val"
-                            value={editingCompany.metadata?.op2Stat3Val || ''}
-                            onChange={handleCompanyChange}
-                            className="px-4 py-2 rounded-lg border border-outline-variant/50 focus:border-secondary outline-none text-xs font-sans"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const ops = [...(editingCompany.metadata?.activeOperations || [])];
+                        // If no operations exist in metadata, seed the current defaults first
+                        if (ops.length === 0) {
+                          ops.push(
+                            {
+                              name: editingCompany.metadata?.op1Name || 'North Rail Link',
+                              subtitle: editingCompany.metadata?.op1Subtitle || 'Industrial Hub Connector',
+                              progress: editingCompany.metadata?.op1Progress !== undefined ? editingCompany.metadata.op1Progress : 72,
+                              stat1Label: editingCompany.metadata?.op1Stat1Label || 'Cranes',
+                              stat1Val: editingCompany.metadata?.op1Stat1Val || '12',
+                              stat2Label: editingCompany.metadata?.op1Stat2Label || 'Personnel',
+                              stat2Val: editingCompany.metadata?.op1Stat2Val || '1.4k',
+                              stat3Label: editingCompany.metadata?.op1Stat3Label || 'Est. Completion',
+                              stat3Val: editingCompany.metadata?.op1Stat3Val || 'Q3 2025',
+                              image: '',
+                              link: ''
+                            },
+                            {
+                              name: editingCompany.metadata?.op2Name || 'Maritime Port Expansion',
+                              subtitle: editingCompany.metadata?.op2Subtitle || 'Strategic Deep-water Berth',
+                              progress: editingCompany.metadata?.op2Progress !== undefined ? editingCompany.metadata.op2Progress : 45,
+                              stat1Label: editingCompany.metadata?.op2Stat1Label || 'Dredgers',
+                              stat1Val: editingCompany.metadata?.op2Stat1Val || '04',
+                              stat2Label: editingCompany.metadata?.op2Stat2Label || 'Concrete (m³)',
+                              stat2Val: editingCompany.metadata?.op2Stat2Val || '850k',
+                              stat3Label: editingCompany.metadata?.op2Stat3Label || 'Est. Completion',
+                              stat3Val: editingCompany.metadata?.op2Stat3Val || 'Q2 2026',
+                              image: '',
+                              link: ''
+                            }
+                          );
+                        }
+                        // Add new empty operation
+                        ops.push({
+                          name: 'New Operation Name',
+                          subtitle: 'New Subtitle',
+                          progress: 0,
+                          image: '',
+                          link: '',
+                          stat1Label: 'Stat 1 Label',
+                          stat1Val: '0',
+                          stat2Label: 'Stat 2 Label',
+                          stat2Val: '0',
+                          stat3Label: 'Stat 3 Label',
+                          stat3Val: '0'
+                        });
+                        setEditingCompany({
+                          ...editingCompany,
+                          metadata: {
+                            ...editingCompany.metadata,
+                            activeOperations: ops
+                          }
+                        });
+                      }}
+                      className="px-6 py-3 bg-secondary text-white rounded-xl font-display font-semibold hover:bg-secondary/90 transition-colors text-xs shadow-sm"
+                    >
+                      + Add New Operation
+                    </button>
                   </div>
                 </div>
 

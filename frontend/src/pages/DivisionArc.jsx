@@ -3,6 +3,8 @@ import API from '../services/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
 import Lightbox from '../components/Lightbox';
+import { getMediaUrl } from '../services/media';
+import ProjectDetailModal from '../components/ProjectDetailModal';
 
 const DivisionArc = () => {
   const [company, setCompany] = useState(null);
@@ -13,6 +15,7 @@ const DivisionArc = () => {
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     const fetchArcData = async () => {
@@ -77,8 +80,8 @@ const DivisionArc = () => {
             {company?.heroVideo ? (
               <video className="w-full h-full object-cover" autoPlay loop muted playsInline src={company.heroVideo} />
             ) : (
-              <img 
-                className="w-full h-full object-cover" 
+              <img
+                className="w-full h-full object-cover"
                 src={company?.featuredImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuALFxi773AFyBHTufFGUq5Ht4X7XJOc07BLrNPATVM7_n_GM2i97oOmwuwmr2y6wwe3k4ZzYrK_5qKBMFg7cjJdoeMte-DQRkTmdd-XBipsRyDE4r06TYPuVtfR12lpX7udRIeBlmoQSruwDtgeE-Ay3Tle16cmEqOSecBJP67eShq2VPUpiq3MDvrdpC8P1UqYSegXQrXs-bNwL5dCxWOpzo3kbOA6e954ufpQdzu_owBJClt1lHO3zLfGH6Bd06BcehglmRxN5n4"}
                 alt="GEO ARC Wireframe Banner"
               />
@@ -89,17 +92,17 @@ const DivisionArc = () => {
       </header>
 
       {/* Specialized Services Section */}
-      <section id="disciplines" className="py-120px bg-surface-container-lowest border-y border-outline-variant/10">
+      <section id="disciplines" className="py-[160px] bg-surface-container-lowest border-y border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-16">
+          <div className="text-center mb-24">
             <h2 className="font-display text-3xl font-bold text-primary mb-4">
               {company?.metadata?.coreDisciplinesTitle || 'Core Disciplines'}
             </h2>
             <div className="w-20 h-1 bg-secondary mx-auto"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-            {services.map((service) => (
-              <div key={service._id} className="p-8 bg-white border border-outline-variant/30 rounded-xl sky-glow transition-all duration-300 flex flex-col justify-between">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {services.map((service, idx) => (
+              <div key={service._id} className={`p-8 bg-white border border-outline-variant/30 rounded-xl sky-glow flex flex-col justify-between cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
                 <div>
                   <div className="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-lg mb-6 text-primary">
                     <span className="material-symbols-outlined text-2xl">{service.icon}</span>
@@ -124,9 +127,9 @@ const DivisionArc = () => {
       </section>
 
       {/* Projects Gallery (Asymmetric Layout) */}
-      <section id="portfolio" className="py-120px bg-background">
+      <section id="portfolio" className="py-[160px] bg-background">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex justify-between items-end mb-16">
+          <div className="flex justify-between items-end mb-24">
             <div>
               <h2 className="font-display text-3xl font-bold text-primary">
                 {company?.metadata?.landmarkProjectsTitle || 'Landmark Projects'}
@@ -137,14 +140,18 @@ const DivisionArc = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
             {projects.map((project, idx) => {
               const spanClass = idx % 3 === 0 ? 'md:col-span-8' : 'md:col-span-4';
               return (
-                <div key={project._id} className={`${spanClass} group relative overflow-hidden rounded-2xl h-[450px] shadow-lg`}>
-                  <img 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    src={project.images[0] || ''}
+                <div 
+                  key={project._id} 
+                  onClick={() => setSelectedProject(project)}
+                  className={`${spanClass} group relative overflow-hidden rounded-2xl h-[450px] shadow-lg cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
+                >
+                  <img
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    src={getMediaUrl(project.images[0]) || ''}
                     alt={project.name}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-transparent to-transparent opacity-80 group-hover:opacity-95 transition-all duration-300 flex flex-col justify-end p-8">
@@ -161,20 +168,20 @@ const DivisionArc = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-120px bg-surface-container-low border-t border-outline-variant/10">
+        <section id="gallery" className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-24">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">Division Showcase Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Browse high-fidelity design models, physical blueprints, and structural milestones.</p>
             </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {gallery.map((item) => (
-                <div key={item._id} className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                  <img 
-                    src={item.url} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+              {gallery.map((item, idx) => (
+                <div key={item._id} className={`group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
+                  <img
+                    src={item.url}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <p className="text-white font-display font-semibold text-sm">{item.title}</p>
@@ -187,9 +194,9 @@ const DivisionArc = () => {
       )}
 
       {/* Team Section */}
-      <section className="py-120px bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-12">
+          <div className="text-center mb-20">
             <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
             <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
@@ -198,10 +205,10 @@ const DivisionArc = () => {
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter max-w-4xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-24">
             {/* Main CEO (Corporate) */}
             {globalCeo && (
-              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-slow cursor-pointer">
                 <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
                   <img src={globalCeo.profileImage} alt={globalCeo.name} className="w-full h-full object-cover" />
                 </div>
@@ -223,7 +230,7 @@ const DivisionArc = () => {
 
             {/* Department CEO/Head */}
             {activeDivisionCeo && (
-              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-normal cursor-pointer">
                 <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
                   <img src={activeDivisionCeo.profileImage} alt={activeDivisionCeo.name} className="w-full h-full object-cover" />
                 </div>
@@ -248,13 +255,13 @@ const DivisionArc = () => {
           <div>
             <h3 className="font-display text-lg font-bold text-primary mb-8 text-center">Division Experts & Engineers</h3>
             {activeDivisionMembers.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-gutter max-w-5xl mx-auto">
-                {activeDivisionMembers.map((member) => (
-                  <div key={member._id} className="group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+                {activeDivisionMembers.map((member, idx) => (
+                  <div key={member._id} className={`group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm cursor-pointer flex flex-col justify-between ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
                     <div>
                       <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 shadow-sm bg-surface-container">
-                        <img 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        <img
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           src={member.profileImage}
                           alt={member.name}
                         />
@@ -328,30 +335,28 @@ const DivisionArc = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Media Gallery Section */}
+      </section>      {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-24 md:py-40 bg-surface border-t border-outline-variant/10">
+        <section id="gallery" className="py-[160px] bg-surface border-t border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-24">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">GEO ARC Design Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore snapshots of active sites, blueprints, renders, and completed architectural marvels.</p>
             </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {gallery.map((item) => (
-                <div 
-                  key={item._id} 
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+              {gallery.map((item, idx) => (
+                <div
+                  key={item._id}
                   onClick={() => setSelectedMedia(item)}
-                  className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                  className={`group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
                 >
                   {item.type === 'video' ? (
                     <div className="w-full h-full relative">
-                      <video 
-                        src={item.url} 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                        muted 
+                      <video
+                        src={item.url}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        muted
                         playsInline
                       />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
@@ -359,10 +364,10 @@ const DivisionArc = () => {
                       </div>
                     </div>
                   ) : (
-                    <img 
-                      src={item.url} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    <img
+                      src={item.url}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   )}
                   <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
@@ -373,9 +378,10 @@ const DivisionArc = () => {
             </div>
           </div>
         </section>
-      )}
+      )})}
 
       <Lightbox media={selectedMedia} onClose={() => setSelectedMedia(null)} />
+      {selectedProject && <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </div>
   );
 };

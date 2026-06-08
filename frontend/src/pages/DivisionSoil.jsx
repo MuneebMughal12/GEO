@@ -3,6 +3,7 @@ import API from '../services/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
 import Lightbox from '../components/Lightbox';
+import { getMediaUrl } from '../services/media';
 
 const DivisionSoil = () => {
   const [company, setCompany] = useState(null);
@@ -78,11 +79,11 @@ const DivisionSoil = () => {
             <div className="relative">
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl emerald-glow">
                 {company?.heroVideo ? (
-                  <video className="w-full aspect-[4/3] object-cover" autoPlay loop muted playsInline src={company.heroVideo} />
+                  <video className="w-full aspect-[4/3] object-cover" autoPlay loop muted playsInline src={getMediaUrl(company.heroVideo)} />
                 ) : (
                   <img 
                     className="w-full aspect-[4/3] object-cover" 
-                    src={company?.featuredImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuBHybj8pwKP8LgTw-lrqzjcaQz9Wc8Rmod1-KL-_J6C1bI0r83Jfwyw2iT5Hea7c1PxEO2iAVk7ccK4Net1fI2UvWI15E-9oy31g4y_cGN2guV56Etibfn5GybcgBBr-0MKkhjDtJkDzxasTYhSnkjwpsNvrhKkxfZqouCCgHQbnV6Sudp1JUXPbClnIhN_Cy9HPiiPGR6o_TDlwIByp6KTycKUowoqvPvfOCxfYTcZbBYPbmx9oymY-CxKYzctwlVpe93w9Eu-O-A"}
+                    src={getMediaUrl(company?.featuredImage) || "https://lh3.googleusercontent.com/aida-public/AB6AXuBHybj8pwKP8LgTw-lrqzjcaQz9Wc8Rmod1-KL-_J6C1bI0r83Jfwyw2iT5Hea7c1PxEO2iAVk7ccK4Net1fI2UvWI15E-9oy31g4y_cGN2guV56Etibfn5GybcgBBr-0MKkhjDtJkDzxasTYhSnkjwpsNvrhKkxfZqouCCgHQbnV6Sudp1JUXPbClnIhN_Cy9HPiiPGR6o_TDlwIByp6KTycKUowoqvPvfOCxfYTcZbBYPbmx9oymY-CxKYzctwlVpe93w9Eu-O-A"}
                     alt="GEO Triaxial Soil Testing Lab"
                   />
                 )}
@@ -98,9 +99,9 @@ const DivisionSoil = () => {
       </section>
 
       {/* Scientific Methodology Section */}
-      <section id="methodology" className="py-24 md:py-40 bg-surface-container-low border-y border-outline-variant/10">
+      <section id="methodology" className="py-[160px] bg-surface-container-low border-y border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="text-center max-w-3xl mx-auto mb-24">
             <h2 className="font-display text-3xl font-bold text-primary mb-6">
               {company?.metadata?.methodologyTitle || 'Scientific Methodology'}
             </h2>
@@ -108,53 +109,51 @@ const DivisionSoil = () => {
               {company?.metadata?.methodologySubtitle || 'Our end-to-end testing lifecycle ensures every sample is tracked, analyzed, and reported with surgical precision.'}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8">
             {/* Step 1 */}
-            <div className="relative group">
-              <div className="mb-8 relative">
-                <div className="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-lg relative z-10 transition-transform group-hover:scale-110">1</div>
-                <div className="hidden md:block absolute top-1/2 left-16 right-0 h-[2px] bg-outline-variant/30 -z-0" />
+            <div className="relative group animate-float-slow cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">1</div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-primary mb-4">
+                  {company?.metadata?.methodologyStep1Title || 'Sample Collection'}
+                </h3>
+                <p className="font-sans text-sm text-on-surface-variant mb-6 leading-relaxed">
+                  {company?.metadata?.methodologyStep1Desc || 'Rigorous on-site extraction using specialized drilling rigs, ensuring sample integrity from the moment it leaves the earth.'}
+                </p>
               </div>
-              <h3 className="font-display text-xl font-bold text-primary mb-4">
-                {company?.metadata?.methodologyStep1Title || 'Sample Collection'}
-              </h3>
-              <p className="font-sans text-sm text-on-surface-variant">
-                {company?.metadata?.methodologyStep1Desc || 'Rigorous on-site extraction using specialized drilling rigs, ensuring sample integrity from the moment it leaves the earth.'}
-              </p>
-              <div className="mt-4 flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs">
+              <div className="flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs mt-auto">
                 <span className="material-symbols-outlined text-[18px]">verified</span>
                 {company?.metadata?.methodologyStep1Tag || 'Field Verification'}
               </div>
             </div>
             {/* Step 2 */}
-            <div className="relative group">
-              <div className="mb-8 relative">
-                <div className="w-16 h-16 rounded-full bg-secondary text-on-primary flex items-center justify-center font-display font-bold text-lg relative z-10 transition-transform group-hover:scale-110">2</div>
-                <div className="hidden md:block absolute top-1/2 left-16 right-0 h-[2px] bg-outline-variant/30 -z-0" />
+            <div className="relative group animate-float-normal cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-secondary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">2</div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-primary mb-4">
+                  {company?.metadata?.methodologyStep2Title || 'Laboratory Analysis'}
+                </h3>
+                <p className="font-sans text-sm text-on-surface-variant mb-6 leading-relaxed">
+                  {company?.metadata?.methodologyStep2Desc || 'Multi-phasic testing including Triaxial, Direct Shear, and Consolidation tests performed in climate-controlled environments.'}
+                </p>
               </div>
-              <h3 className="font-display text-xl font-bold text-primary mb-4">
-                {company?.metadata?.methodologyStep2Title || 'Laboratory Analysis'}
-              </h3>
-              <p className="font-sans text-sm text-on-surface-variant">
-                {company?.metadata?.methodologyStep2Desc || 'Multi-phasic testing including Triaxial, Direct Shear, and Consolidation tests performed in climate-controlled environments.'}
-              </p>
-              <div className="mt-4 flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs">
+              <div className="flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs mt-auto">
                 <span className="material-symbols-outlined text-[18px]">science</span>
                 {company?.metadata?.methodologyStep2Tag || 'Advanced Spectroscopy'}
               </div>
             </div>
             {/* Step 3 */}
-            <div className="relative group">
-              <div className="mb-8">
-                <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center font-display font-bold text-lg relative z-10 transition-transform group-hover:scale-110">3</div>
+            <div className="relative group animate-float-fast cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">3</div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-primary mb-4">
+                  {company?.metadata?.methodologyStep3Title || 'Final Certification'}
+                </h3>
+                <p className="font-sans text-sm text-on-surface-variant mb-6 leading-relaxed">
+                  {company?.metadata?.methodologyStep3Desc || 'Data synthesis and comprehensive geotechnical reporting by chartered engineers for construction readiness.'}
+                </p>
               </div>
-              <h3 className="font-display text-xl font-bold text-primary mb-4">
-                {company?.metadata?.methodologyStep3Title || 'Final Certification'}
-              </h3>
-              <p className="font-sans text-sm text-on-surface-variant">
-                {company?.metadata?.methodologyStep3Desc || 'Data synthesis and comprehensive geotechnical reporting by chartered engineers for construction readiness.'}
-              </p>
-              <div className="mt-4 flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs">
+              <div className="flex items-center gap-2 text-emerald-600 font-display font-semibold text-xs mt-auto">
                 <span className="material-symbols-outlined text-[18px]">assignment_turned_in</span>
                 {company?.metadata?.methodologyStep3Tag || 'Compliance Verified'}
               </div>
@@ -164,9 +163,9 @@ const DivisionSoil = () => {
       </section>
 
       {/* Equipment Showcase (Bento Grid) */}
-      <section id="equipment" className="py-24 md:py-40 bg-background">
+      <section id="equipment" className="py-[160px] bg-background">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col sm:flex-row justify-between items-end mb-24 gap-8">
             <div className="max-w-2xl">
               <span className="font-display text-xs font-bold text-secondary tracking-widest uppercase">The Arsenal</span>
               <h2 className="font-display text-3xl font-bold text-primary mt-2">
@@ -174,11 +173,11 @@ const DivisionSoil = () => {
               </h2>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter h-auto md:h-[650px]">
-            <div className="md:col-span-8 rounded-2xl overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300 shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 h-auto md:h-[650px]">
+            <div className="md:col-span-8 rounded-2xl overflow-hidden relative group animate-float-slow shadow-lg cursor-pointer">
               <img 
                 className="w-full h-full object-cover" 
-                src={company?.metadata?.equipment1Image || "https://lh3.googleusercontent.com/aida-public/AB6AXuAqWSc527K_R45c7K3sYFopSUmiaWG2mIPaELKOdLRO6hSH9zaVnSvMOrSDKcbaANJwjjiveM8kZLTsQp_2RrKzTnvdj0ylXKwTKhE-IvNRaDG3mjROvxudK1Xz9Na6mWU7C5Wv9ukUoJCgpdPYrFSwkYjNtuf1f9STKJnsat-1IE6twJ7pr6L0LkvefB5h-a5Mc1Gp7750kl1aunnCSigopPk41OdlOplnBPIIpdmlfNY51xIBa-8c6C7DKKICmloCn-7hWoPw8NY"}
+                src={getMediaUrl(company?.metadata?.equipment1Image) || "https://lh3.googleusercontent.com/aida-public/AB6AXuAqWSc527K_R45c7K3sYFopSUmiaWG2mIPaELKOdLRO6hSH9zaVnSvMOrSDKcbaANJwjjiveM8kZLTsQp_2RrKzTnvdj0ylXKwTKhE-IvNRaDG3mjROvxudK1Xz9Na6mWU7C5Wv9ukUoJCgpdPYrFSwkYjNtuf1f9STKJnsat-1IE6twJ7pr6L0LkvefB5h-a5Mc1Gp7750kl1aunnCSigopPk41OdlOplnBPIIpdmlfNY51xIBa-8c6C7DKKICmloCn-7hWoPw8NY"}
                 alt={company?.metadata?.equipment1Name || "Triaxial Load Frames"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8">
@@ -190,10 +189,10 @@ const DivisionSoil = () => {
                 </p>
               </div>
             </div>
-            <div className="md:col-span-4 rounded-2xl overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300 shadow-lg">
+            <div className="md:col-span-4 rounded-2xl overflow-hidden relative group animate-float-normal shadow-lg cursor-pointer">
               <img 
                 className="w-full h-full object-cover" 
-                src={company?.metadata?.equipment2Image || "https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g"}
+                src={getMediaUrl(company?.metadata?.equipment2Image) || "https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g"}
                 alt={company?.metadata?.equipment2Name || "Chemical Analysis"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8">
@@ -211,16 +210,16 @@ const DivisionSoil = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-24 md:py-40 bg-surface-container-lowest border-t border-outline-variant/10">
+        <section id="gallery" className="py-[160px] bg-surface-container-lowest border-t border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-24">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">Laboratory & Investigation Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore live captures of site excavations, core sample testing, and state-of-the-art instrumentation.</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {gallery.map((item) => (
-                <div key={item._id} className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+              {gallery.map((item, idx) => (
+                <div key={item._id} className={`group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
                   <img 
                     src={item.url} 
                     alt={item.title} 
@@ -237,9 +236,9 @@ const DivisionSoil = () => {
       )}
 
       {/* Team Section */}
-      <section className="py-120px bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-12">
+          <div className="text-center mb-20">
             <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
             <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
@@ -248,12 +247,12 @@ const DivisionSoil = () => {
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter max-w-4xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-24">
             {/* Main CEO (Corporate) */}
             {globalCeo && (
-              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-slow cursor-pointer">
                 <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
-                  <img src={globalCeo.profileImage} alt={globalCeo.name} className="w-full h-full object-cover" />
+                  <img src={getMediaUrl(globalCeo.profileImage)} alt={globalCeo.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -273,9 +272,9 @@ const DivisionSoil = () => {
 
             {/* Department CEO/Head */}
             {activeDivisionCeo && (
-              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-normal cursor-pointer">
                 <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
-                  <img src={activeDivisionCeo.profileImage} alt={activeDivisionCeo.name} className="w-full h-full object-cover" />
+                  <img src={getMediaUrl(activeDivisionCeo.profileImage)} alt={activeDivisionCeo.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -298,14 +297,14 @@ const DivisionSoil = () => {
           <div>
             <h3 className="font-display text-lg font-bold text-primary mb-8 text-center">Division Experts & Engineers</h3>
             {activeDivisionMembers.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-gutter max-w-5xl mx-auto">
-                {activeDivisionMembers.map((member) => (
-                  <div key={member._id} className="group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+                {activeDivisionMembers.map((member, idx) => (
+                  <div key={member._id} className={`group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm cursor-pointer flex flex-col justify-between ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
                     <div>
                       <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 shadow-sm bg-surface-container">
                         <img 
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                          src={member.profileImage}
+                          src={getMediaUrl(member.profileImage)}
                           alt={member.name}
                         />
                       </div>
@@ -333,29 +332,70 @@ const DivisionSoil = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div className="relative">
-              <div className="aspect-[3/4] bg-white rounded-xl shadow-2xl p-12 text-primary relative z-10 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
-                  <div className="w-16 h-16 bg-primary rounded flex items-center justify-center text-white">
-                    <span className="material-symbols-outlined text-4xl">description</span>
+              {company?.metadata?.reportFile ? (
+                <a 
+                  href={getMediaUrl(company.metadata.reportFile)} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="block relative group hover:scale-[1.02] transition-transform duration-300"
+                >
+                  <div className="aspect-[3/4] bg-white rounded-xl shadow-2xl p-12 text-primary relative z-10 flex flex-col justify-between cursor-pointer">
+                    <div className="flex justify-between items-start">
+                      <div className="w-16 h-16 bg-primary rounded flex items-center justify-center text-white relative group-hover:bg-secondary transition-colors">
+                        <span className="material-symbols-outlined text-4xl">download</span>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-display text-[10px] font-bold opacity-50 uppercase tracking-widest">Report Code</p>
+                        <p className="font-sans font-bold text-sm">{company?.metadata?.reportCode || 'GEO-SOIL-2026'}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-6">
+                      <div className="h-4 bg-surface-container w-3/4 rounded" />
+                      <div className="h-4 bg-surface-container w-full rounded" />
+                      <div className="h-4 bg-surface-container w-5/6 rounded" />
+                    </div>
+                    <div className="flex justify-between items-end">
+                      <div className="text-left flex items-center gap-1.5 text-secondary font-display font-bold text-[10px] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+                        View Report
+                      </div>
+                      <div className="text-right">
+                        <p className="font-sans text-xs opacity-50 italic">Certified by</p>
+                        <p className="font-display font-bold text-lg">{company?.metadata?.certifiedByName || 'Dr. Elias Vance'}</p>
+                        <p className="text-[10px] text-on-surface-variant font-semibold">{company?.metadata?.certifiedByDesig || 'Chief Geotechnical Officer'}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-display text-[10px] font-bold opacity-50 uppercase tracking-widest">Report Code</p>
-                    <p className="font-sans font-bold text-sm">GEO-SOIL-2026</p>
+                  <div className="absolute top-8 left-8 w-full h-full bg-white/10 rounded-xl -z-10 transform rotate-3" />
+                  <div className="absolute top-4 left-4 w-full h-full bg-white/5 rounded-xl -z-20 transform -rotate-2" />
+                </a>
+              ) : (
+                <>
+                  <div className="aspect-[3/4] bg-white rounded-xl shadow-2xl p-12 text-primary relative z-10 flex flex-col justify-between">
+                    <div className="flex justify-between items-start">
+                      <div className="w-16 h-16 bg-primary rounded flex items-center justify-center text-white">
+                        <span className="material-symbols-outlined text-4xl">description</span>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-display text-[10px] font-bold opacity-50 uppercase tracking-widest">Report Code</p>
+                        <p className="font-sans font-bold text-sm">{company?.metadata?.reportCode || 'GEO-SOIL-2026'}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-6">
+                      <div className="h-4 bg-surface-container w-3/4 rounded" />
+                      <div className="h-4 bg-surface-container w-full rounded" />
+                      <div className="h-4 bg-surface-container w-5/6 rounded" />
+                    </div>
+                    <div className="text-right">
+                      <p className="font-sans text-xs opacity-50 italic">Certified by</p>
+                      <p className="font-display font-bold text-lg">{company?.metadata?.certifiedByName || 'Dr. Elias Vance'}</p>
+                      <p className="text-[10px] text-on-surface-variant font-semibold">{company?.metadata?.certifiedByDesig || 'Chief Geotechnical Officer'}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-6">
-                  <div className="h-4 bg-surface-container w-3/4 rounded" />
-                  <div className="h-4 bg-surface-container w-full rounded" />
-                  <div className="h-4 bg-surface-container w-5/6 rounded" />
-                </div>
-                <div className="text-right">
-                  <p className="font-sans text-xs opacity-50 italic">Certified by</p>
-                  <p className="font-display font-bold text-lg">Dr. Elias Vance</p>
-                  <p className="text-[10px] text-on-surface-variant font-semibold">Chief Geotechnical Officer</p>
-                </div>
-              </div>
-              <div className="absolute top-8 left-8 w-full h-full bg-white/10 rounded-xl -z-10 transform rotate-3" />
-              <div className="absolute top-4 left-4 w-full h-full bg-white/5 rounded-xl -z-20 transform -rotate-2" />
+                  <div className="absolute top-8 left-8 w-full h-full bg-white/10 rounded-xl -z-10 transform rotate-3" />
+                  <div className="absolute top-4 left-4 w-full h-full bg-white/5 rounded-xl -z-20 transform -rotate-2" />
+                </>
+              )}
             </div>
             <div className="space-y-10">
               <h2 className="font-display text-3xl md:text-4xl font-bold leading-tight">
@@ -368,7 +408,7 @@ const DivisionSoil = () => {
                 {company?.certifications?.map((c, idx) => (
                   <li key={idx} className="flex gap-4 items-start">
                     <div className="w-8 h-8 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-[20px]">check_circle</span>
+                      <span className="material-symbols-outlined text-[20px]">{c.icon || 'check_circle'}</span>
                     </div>
                     <div>
                       <h4 className="font-display font-bold text-base text-white">{c.title}</h4>
@@ -384,19 +424,19 @@ const DivisionSoil = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-24 md:py-40 bg-surface border-t border-outline-variant/10">
+        <section id="gallery" className="py-[160px] bg-surface border-t border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-24">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">GEO Soil Testing Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore snapshots of geotechnical drilling rigs, material testing instrumentation, and active core sample logging operations.</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {gallery.map((item) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+              {gallery.map((item, idx) => (
                 <div 
                   key={item._id} 
                   onClick={() => setSelectedMedia(item)}
-                  className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                  className={`group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
                 >
                   {item.type === 'video' ? (
                     <div className="w-full h-full relative">

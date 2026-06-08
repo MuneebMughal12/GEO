@@ -108,3 +108,65 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+/* Anti-Gravity Floating 3D animations */
+@keyframes anti-gravity-slow {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+    box-shadow: 0 10px 25px -5px rgba(0, 35, 102, 0.1), 0 8px 10px -6px rgba(0, 35, 102, 0.1);
+  }
+  50% {
+    transform: translateY(-15px) rotateX(2deg) rotateY(-2deg);
+    box-shadow: 0 30px 60px -15px rgba(0, 35, 102, 0.25), 0 15px 25px -10px rgba(0, 35, 102, 0.15);
+  }
+}
+
+@keyframes anti-gravity-normal {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+    box-shadow: 0 10px 25px -5px rgba(0, 35, 102, 0.1), 0 8px 10px -6px rgba(0, 35, 102, 0.1);
+  }
+  50% {
+    transform: translateY(-12px) rotateX(-1.5deg) rotateY(2deg);
+    box-shadow: 0 25px 50px -12px rgba(0, 35, 102, 0.22), 0 12px 20px -8px rgba(0, 35, 102, 0.12);
+  }
+}
+
+@keyframes anti-gravity-fast {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+    box-shadow: 0 10px 25px -5px rgba(0, 35, 102, 0.1), 0 8px 10px -6px rgba(0, 35, 102, 0.1);
+  }
+  50% {
+    transform: translateY(-8px) rotateX(1.5deg) rotateY(1deg);
+    box-shadow: 0 20px 40px -10px rgba(0, 35, 102, 0.18), 0 10px 15px -5px rgba(0, 35, 102, 0.1);
+  }
+}
+
+.animate-float-slow {
+  animation: anti-gravity-slow 7s ease-in-out infinite;
+  perspective: 1000px;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.animate-float-normal {
+  animation: anti-gravity-normal 5.5s ease-in-out infinite;
+  perspective: 1000px;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.animate-float-fast {
+  animation: anti-gravity-fast 4s ease-in-out infinite;
+  perspective: 1000px;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.animate-float-slow:hover,
+.animate-float-normal:hover,
+.animate-float-fast:hover {
+  animation-play-state: paused !important;
+  transform: scale(1.05) translateY(-5px) rotateX(0deg) rotateY(0deg) !important;
+  box-shadow: 0 35px 70px -15px rgba(0, 35, 102, 0.35), 0 20px 30px -10px rgba(0, 35, 102, 0.25) !important;
+  z-index: 30;
+}
+

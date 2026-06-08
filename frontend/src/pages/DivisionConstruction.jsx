@@ -3,6 +3,8 @@ import API from '../services/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
 import Lightbox from '../components/Lightbox';
+import { getMediaUrl } from '../services/media';
+import ProjectDetailModal from '../components/ProjectDetailModal';
 
 const DivisionConstruction = () => {
   const [company, setCompany] = useState(null);
@@ -12,6 +14,7 @@ const DivisionConstruction = () => {
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     const fetchConstData = async () => {
@@ -40,6 +43,37 @@ const DivisionConstruction = () => {
   const activeDivisionCeo = allTeam.find(m => m.division === activeTab && m.designation.includes('CEO'));
   const activeDivisionMembers = allTeam.filter(m => m.division === activeTab && !m.designation.includes('CEO'));
 
+  const activeOperations = company?.metadata?.activeOperations || [
+    {
+      name: company?.metadata?.op1Name || 'North Rail Link',
+      subtitle: company?.metadata?.op1Subtitle || 'Industrial Hub Connector',
+      progress: company?.metadata?.op1Progress !== undefined ? company.metadata.op1Progress : 72,
+      stat1Label: company?.metadata?.op1Stat1Label || 'Cranes',
+      stat1Val: company?.metadata?.op1Stat1Val || '12',
+      stat2Label: company?.metadata?.op1Stat2Label || 'Personnel',
+      stat2Val: company?.metadata?.op1Stat2Val || '1.4k',
+      stat3Label: company?.metadata?.op1Stat3Label || 'Est. Completion',
+      stat3Val: company?.metadata?.op1Stat3Val || 'Q3 2025',
+      image: '',
+      link: ''
+    },
+    {
+      name: company?.metadata?.op2Name || 'Maritime Port Expansion',
+      subtitle: company?.metadata?.op2Subtitle || 'Strategic Deep-water Berth',
+      progress: company?.metadata?.op2Progress !== undefined ? company.metadata.op2Progress : 45,
+      stat1Label: company?.metadata?.op2Stat1Label || 'Dredgers',
+      stat1Val: company?.metadata?.op2Stat1Val || '04',
+      stat2Label: company?.metadata?.op2Stat2Label || 'Concrete (m³)',
+      stat2Val: company?.metadata?.op2Stat2Val || '850k',
+      stat3Label: company?.metadata?.op2Stat3Label || 'Est. Completion',
+      stat3Val: company?.metadata?.op2Stat3Val || 'Q2 2026',
+      image: '',
+      link: ''
+    }
+  ];
+
+  const getImageUrl = getMediaUrl;
+
   const metaTitle = company?.seo?.metaTitle || 'GEO Construction | Infrastructure & Civil Engineering';
   const metaDescription = company?.seo?.metaDescription || 'Full-cycle building construction, infrastructure development, and project management by GEO Construction.';
 
@@ -52,11 +86,11 @@ const DivisionConstruction = () => {
       <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           {company?.heroVideo ? (
-            <video className="w-full h-full object-cover" autoPlay loop muted playsInline src={company.heroVideo} />
+            <video className="w-full h-full object-cover" autoPlay loop muted playsInline src={getMediaUrl(company.heroVideo)} />
           ) : (
             <img 
               className="w-full h-full object-cover" 
-              src={company?.featuredImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuBPpuQBj18rx33YYWBnP1aKZrkDoa8ZGQe9sSUXt0DJyR0GxHJVlmAY_NbbHCR0zWOLS4FkNfaDaJu948FKC8OCPd0YlHvx067xCb9XmRcu8-EDR2WT1fOhbMkz75njMlcHUq5ei_4I3dMD_R0OBIF7i67LNv_kbHaM1rrk5dGABZmYUJIpgUYUSKgV61VZZiiiGnaNE9Izg2oidIde-j538_kHx5nfTOcsv-fHTNhdJ1RdGzrHMfhavTJwxVTppU4Jt-UGYcoRegg"}
+              src={getMediaUrl(company?.featuredImage) || "https://lh3.googleusercontent.com/aida-public/AB6AXuBPpuQBj18rx33YYWBnP1aKZrkDoa8ZGQe9sSUXt0DJyR0GxHJVlmAY_NbbHCR0zWOLS4FkNfaDaJu948FKC8OCPd0YlHvx067xCb9XmRcu8-EDR2WT1fOhbMkz75njMlcHUq5ei_4I3dMD_R0OBIF7i67LNv_kbHaM1rrk5dGABZmYUJIpgUYUSKgV61VZZiiiGnaNE9Izg2oidIde-j538_kHx5nfTOcsv-fHTNhdJ1RdGzrHMfhavTJwxVTppU4Jt-UGYcoRegg"}
               alt="GEO Heavy Civil Construction Site"
             />
           )}
@@ -88,10 +122,10 @@ const DivisionConstruction = () => {
       </section>
 
       {/* Capabilities Stats */}
-      <section className="py-120px bg-surface-container-lowest border-b border-outline-variant/10">
+      <section className="py-[160px] bg-surface-container-lowest border-b border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter">
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat1Val || '500+'}
               </h3>
@@ -99,7 +133,7 @@ const DivisionConstruction = () => {
                 {company?.metadata?.stat1Label || 'Completed Projects'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
+            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-normal cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat2Val || '12M'}
               </h3>
@@ -107,7 +141,7 @@ const DivisionConstruction = () => {
                 {company?.metadata?.stat2Label || 'Safe Man Hours'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
+            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-fast cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat3Val || '15'}
               </h3>
@@ -115,7 +149,7 @@ const DivisionConstruction = () => {
                 {company?.metadata?.stat3Label || 'Global Locations'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm hover:scale-[1.02] transition-transform duration-300">
+            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat4Val || '$4B'}
               </h3>
@@ -128,9 +162,9 @@ const DivisionConstruction = () => {
       </section>
 
       {/* Portfolio Bento Grid */}
-      <section id="landmarks" className="py-160px bg-surface">
+      <section id="landmarks" className="py-[200px] bg-surface">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-16">
+          <div className="text-center mb-24">
             <h2 className="font-display text-3xl font-bold text-primary mb-4">
               {company?.metadata?.landmarksTitle || 'Engineering Landmarks'}
             </h2>
@@ -138,13 +172,16 @@ const DivisionConstruction = () => {
               {company?.metadata?.landmarksSubtitle || 'A showcase of our multi-billion dollar infrastructure initiatives across the globe.'}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
             {projects.length > 0 && (
               <>
-                <div className="md:col-span-8 relative h-[500px] rounded-xl overflow-hidden group shadow-lg">
+                <div 
+                  onClick={() => setSelectedProject(projects[0])}
+                  className="md:col-span-8 relative h-[500px] rounded-xl overflow-hidden group animate-float-slow shadow-lg cursor-pointer"
+                >
                   <img 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    src={projects[0].images[0] || ''}
+                    src={getMediaUrl(projects[0].images[0]) || ''}
                     alt={projects[0].name}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/95 to-transparent flex flex-col justify-end p-10">
@@ -153,12 +190,16 @@ const DivisionConstruction = () => {
                     <p className="text-white/75 text-sm max-w-lg">{projects[0].description}</p>
                   </div>
                 </div>
-                <div className="md:col-span-4 flex flex-col gap-gutter">
-                  {projects.slice(1, 3).map((proj) => (
-                    <div key={proj._id} className="relative h-[238px] rounded-xl overflow-hidden group shadow-md">
+                <div className="md:col-span-4 flex flex-col gap-12">
+                  {projects.slice(1, 3).map((proj, idx) => (
+                    <div 
+                      key={proj._id} 
+                      onClick={() => setSelectedProject(proj)}
+                      className={`relative h-[238px] rounded-xl overflow-hidden group shadow-md cursor-pointer ${idx === 0 ? 'animate-float-normal' : 'animate-float-fast'}`}
+                    >
                       <img 
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                        src={proj.images[0] || ''}
+                        src={getMediaUrl(proj.images[0]) || ''}
                         alt={proj.name}
                       />
                       <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-end p-6">
@@ -174,53 +215,63 @@ const DivisionConstruction = () => {
       </section>
 
       {/* Project Timeline Process */}
-      <section id="timeline" className="py-160px bg-primary text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 opacity-5 translate-x-1/4 -translate-y-1/4">
-          <span className="material-symbols-outlined text-[600px] pointer-events-none">construction</span>
-        </div>
+      <section id="timeline" className="py-[160px] bg-surface-container-low border-y border-outline-variant/10 relative overflow-hidden">
         <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
-            <div className="lg:col-span-1 space-y-6">
-              <h2 className="font-display text-3xl font-bold mb-6">
-                {company?.metadata?.lifecycleTitle || 'The Lifecycle of Excellence'}
-              </h2>
-              <p className="text-white/60 text-sm leading-relaxed">
-                {company?.metadata?.lifecycleSubtitle || 'Our phased approach ensures stability and accountability at every milestone of the project delivery.'}
-              </p>
-            </div>
-            <div className="lg:col-span-2 space-y-12 relative before:absolute before:left-[19px] before:top-4 before:bottom-4 before:w-[2px] before:bg-white/10">
-              <div className="relative pl-16">
-                <div className="absolute left-0 top-1 w-10 h-10 rounded-full bg-secondary flex items-center justify-center z-10 text-white">
-                  <span className="material-symbols-outlined text-sm">edit</span>
-                </div>
-                <h4 className="font-display font-bold text-lg mb-2">
+          <div className="text-center max-w-3xl mx-auto mb-24">
+            <h2 className="font-display text-3xl font-bold text-primary mb-6">
+              {company?.metadata?.lifecycleTitle || 'The Lifecycle of Excellence'}
+            </h2>
+            <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
+              {company?.metadata?.lifecycleSubtitle || 'Our phased approach ensures stability and accountability at every milestone of the project delivery.'}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8">
+            {/* Step 1 */}
+            <div className="relative group animate-float-slow cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">1</div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-primary mb-4">
                   {company?.metadata?.phase1Title || 'Phase 01: Pre-Construction & Analysis'}
-                </h4>
-                <p className="text-white/60 text-sm">
+                </h3>
+                <p className="font-sans text-sm text-on-surface-variant mb-6 leading-relaxed">
                   {company?.metadata?.phase1Desc || 'Feasibility studies, soil analysis, and advanced structural modeling using proprietary GEO datasets.'}
                 </p>
               </div>
-              <div className="relative pl-16">
-                <div className="absolute left-0 top-1 w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center z-10 text-primary">
-                  <span className="material-symbols-outlined text-sm">foundation</span>
-                </div>
-                <h4 className="font-display font-bold text-lg mb-2">
+              <div className="flex items-center gap-2 text-secondary font-display font-semibold text-xs mt-auto">
+                <span className="material-symbols-outlined text-[18px]">edit</span>
+                Pre-Construction
+              </div>
+            </div>
+            {/* Step 2 */}
+            <div className="relative group animate-float-normal cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-secondary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">2</div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-primary mb-4">
                   {company?.metadata?.phase2Title || 'Phase 02: Structural Groundwork'}
-                </h4>
-                <p className="text-white/60 text-sm">
+                </h3>
+                <p className="font-sans text-sm text-on-surface-variant mb-6 leading-relaxed">
                   {company?.metadata?.phase2Desc || 'Deep foundation engineering, earth retention systems, and site utilities installation.'}
                 </p>
               </div>
-              <div className="relative pl-16">
-                <div className="absolute left-0 top-1 w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center z-10 text-primary">
-                  <span className="material-symbols-outlined text-sm">apartment</span>
-                </div>
-                <h4 className="font-display font-bold text-lg mb-2">
+              <div className="flex items-center gap-2 text-secondary font-display font-semibold text-xs mt-auto">
+                <span className="material-symbols-outlined text-[18px]">foundation</span>
+                Groundwork
+              </div>
+            </div>
+            {/* Step 3 */}
+            <div className="relative group animate-float-fast cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">3</div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-primary mb-4">
                   {company?.metadata?.phase3Title || 'Phase 03: Vertical Mobilization'}
-                </h4>
-                <p className="text-white/60 text-sm">
+                </h3>
+                <p className="font-sans text-sm text-on-surface-variant mb-6 leading-relaxed">
                   {company?.metadata?.phase3Desc || 'Rapid erection of core structures using pre-fabricated elements and high-capacity cranes.'}
                 </p>
+              </div>
+              <div className="flex items-center gap-2 text-secondary font-display font-semibold text-xs mt-auto">
+                <span className="material-symbols-outlined text-[18px]">apartment</span>
+                Mobilization
               </div>
             </div>
           </div>
@@ -228,9 +279,9 @@ const DivisionConstruction = () => {
       </section>
 
       {/* Active Operations & Real-time Progress */}
-      <section className="py-160px bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-6">
+          <div className="flex flex-col sm:flex-row justify-between items-end mb-24 gap-6">
             <div>
               <h2 className="font-display text-3xl font-bold text-primary mb-2">Active Operations</h2>
               <p className="text-outline font-sans text-sm">Real-time progress of our major current infrastructure sites.</p>
@@ -242,103 +293,76 @@ const DivisionConstruction = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-outline-variant/20 hover:shadow-lg transition-shadow duration-300">
-              <div className="flex justify-between items-start mb-6">
+            {activeOperations.map((op, idx) => (
+              <div key={idx} className={`bg-white p-8 rounded-xl shadow-sm border border-outline-variant/20 cursor-pointer flex flex-col justify-between ${idx === 0 ? 'animate-float-slow' : 'animate-float-normal'}`}>
                 <div>
-                  <h4 className="font-display font-bold text-lg text-primary">
-                    {company?.metadata?.op1Name || 'North Rail Link'}
-                  </h4>
-                  <p className="text-outline text-xs mt-1">
-                    {company?.metadata?.op1Subtitle || 'Industrial Hub Connector'}
-                  </p>
-                </div>
-                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase">
-                  {company?.metadata?.op1Progress !== undefined ? company.metadata.op1Progress : 72}% Complete
-                </span>
-              </div>
-              <div className="progress-bar mb-6">
-                <div className="progress-fill" style={{ width: `${company?.metadata?.op1Progress !== undefined ? company.metadata.op1Progress : 72}%` }} />
-              </div>
-              <div className="grid grid-cols-3 gap-4 text-center text-sm font-semibold">
-                <div>
-                  <p className="text-xs text-outline uppercase mb-1">
-                    {company?.metadata?.op1Stat1Label || 'Cranes'}
-                  </p>
-                  <p className="text-primary">
-                    {company?.metadata?.op1Stat1Val || '12'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs text-outline uppercase mb-1">
-                    {company?.metadata?.op1Stat2Label || 'Personnel'}
-                  </p>
-                  <p className="text-primary">
-                    {company?.metadata?.op1Stat2Val || '1.4k'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs text-outline uppercase mb-1">
-                    {company?.metadata?.op1Stat3Label || 'Est. Completion'}
-                  </p>
-                  <p className="text-primary">
-                    {company?.metadata?.op1Stat3Val || 'Q3 2025'}
-                  </p>
-                </div>
-              </div>
-            </div>
+                  {op.image && (
+                    <div className="w-full h-52 rounded-xl overflow-hidden mb-6 bg-surface-container shadow-inner">
+                      <img src={getImageUrl(op.image)} alt={op.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  )}
 
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-outline-variant/20 hover:shadow-lg transition-shadow duration-300">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h4 className="font-display font-bold text-lg text-primary">
-                    {company?.metadata?.op2Name || 'Maritime Port Expansion'}
-                  </h4>
-                  <p className="text-outline text-xs mt-1">
-                    {company?.metadata?.op2Subtitle || 'Strategic Deep-water Berth'}
-                  </p>
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <h4 className="font-display font-bold text-lg text-primary">
+                        {op.name}
+                      </h4>
+                      <p className="text-outline text-xs mt-1 font-sans">
+                        {op.subtitle}
+                      </p>
+                    </div>
+                    <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase shrink-0">
+                      {op.progress}% Complete
+                    </span>
+                  </div>
+
+                  <div className="progress-bar mb-6">
+                    <div className="progress-fill" style={{ width: `${op.progress}%` }} />
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-4 text-center text-sm font-semibold mb-4">
+                    {op.stat1Label && (
+                      <div>
+                        <p className="text-xs text-outline uppercase mb-1 font-sans">{op.stat1Label}</p>
+                        <p className="text-primary font-display">{op.stat1Val}</p>
+                      </div>
+                    )}
+                    {op.stat2Label && (
+                      <div>
+                        <p className="text-xs text-outline uppercase mb-1 font-sans">{op.stat2Label}</p>
+                        <p className="text-primary font-display">{op.stat2Val}</p>
+                      </div>
+                    )}
+                    {op.stat3Label && (
+                      <div>
+                        <p className="text-xs text-outline uppercase mb-1 font-sans">{op.stat3Label}</p>
+                        <p className="text-primary font-display">{op.stat3Val}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase">
-                  {company?.metadata?.op2Progress !== undefined ? company.metadata.op2Progress : 45}% Complete
-                </span>
+
+                {op.link && (
+                  <div className="pt-4 border-t border-outline-variant/10 mt-auto">
+                    <a 
+                      href={op.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-secondary font-display font-semibold text-xs flex items-center gap-2 hover:gap-3 transition-all"
+                    >
+                      Explore Operation Page <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </a>
+                  </div>
+                )}
               </div>
-              <div className="progress-bar mb-6">
-                <div className="progress-fill" style={{ width: `${company?.metadata?.op2Progress !== undefined ? company.metadata.op2Progress : 45}%` }} />
-              </div>
-              <div className="grid grid-cols-3 gap-4 text-center text-sm font-semibold">
-                <div>
-                  <p className="text-xs text-outline uppercase mb-1">
-                    {company?.metadata?.op2Stat1Label || 'Dredgers'}
-                  </p>
-                  <p className="text-primary">
-                    {company?.metadata?.op2Stat1Val || '04'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs text-outline uppercase mb-1">
-                    {company?.metadata?.op2Stat2Label || 'Concrete (m³)'}
-                  </p>
-                  <p className="text-primary">
-                    {company?.metadata?.op2Stat2Val || '850k'}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xs text-outline uppercase mb-1">
-                    {company?.metadata?.op2Stat3Label || 'Est. Completion'}
-                  </p>
-                  <p className="text-primary">
-                    {company?.metadata?.op2Stat3Val || 'Q2 2026'}
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
-
       {/* Team Section */}
-      <section className="py-120px bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-12">
+          <div className="text-center mb-20">
             <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
             <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
@@ -347,12 +371,12 @@ const DivisionConstruction = () => {
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter max-w-4xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-24">
             {/* Main CEO (Corporate) */}
             {globalCeo && (
-              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-slow cursor-pointer">
                 <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
-                  <img src={globalCeo.profileImage} alt={globalCeo.name} className="w-full h-full object-cover" />
+                  <img src={getMediaUrl(globalCeo.profileImage)} alt={globalCeo.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -372,9 +396,9 @@ const DivisionConstruction = () => {
 
             {/* Department CEO/Head */}
             {activeDivisionCeo && (
-              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-normal cursor-pointer">
                 <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
-                  <img src={activeDivisionCeo.profileImage} alt={activeDivisionCeo.name} className="w-full h-full object-cover" />
+                  <img src={getMediaUrl(activeDivisionCeo.profileImage)} alt={activeDivisionCeo.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -397,14 +421,14 @@ const DivisionConstruction = () => {
           <div>
             <h3 className="font-display text-lg font-bold text-primary mb-8 text-center">Division Experts & Engineers</h3>
             {activeDivisionMembers.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-gutter max-w-5xl mx-auto">
-                {activeDivisionMembers.map((member) => (
-                  <div key={member._id} className="group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+                {activeDivisionMembers.map((member, idx) => (
+                  <div key={member._id} className={`group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm cursor-pointer flex flex-col justify-between ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
                     <div>
                       <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 shadow-sm bg-surface-container">
                         <img 
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                          src={member.profileImage}
+                          src={getMediaUrl(member.profileImage)}
                           alt={member.name}
                         />
                       </div>
@@ -429,19 +453,19 @@ const DivisionConstruction = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-24 md:py-40 bg-surface border-t border-outline-variant/10">
+        <section id="gallery" className="py-[160px] bg-surface border-t border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-24">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">Construction & Operations Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore snapshots of active sites, heavy civil machinery, and completed architectural landmarks.</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {gallery.map((item) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+              {gallery.map((item, idx) => (
                 <div 
                   key={item._id} 
                   onClick={() => setSelectedMedia(item)}
-                  className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                  className={`group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
                 >
                   {item.type === 'video' ? (
                     <div className="w-full h-full relative">
@@ -473,6 +497,7 @@ const DivisionConstruction = () => {
       )}
 
       <Lightbox media={selectedMedia} onClose={() => setSelectedMedia(null)} />
+      {selectedProject && <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </div>
   );
 };

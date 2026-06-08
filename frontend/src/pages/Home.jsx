@@ -5,6 +5,8 @@ import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
 import ThreeHeroBackground from '../components/ThreeHeroBackground';
 import Lightbox from '../components/Lightbox';
+import { getMediaUrl } from '../services/media';
+import ProjectDetailModal from '../components/ProjectDetailModal';
 
 const Home = () => {
   const [settings, setSettings] = useState(null);
@@ -13,6 +15,7 @@ const Home = () => {
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,9 +69,9 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         {settings?.homepage?.heroBgVideo ? (
-          <video className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline src={settings.homepage.heroBgVideo} />
+          <video className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.heroBgVideo)} />
         ) : settings?.homepage?.heroBgImage ? (
-          <img className="absolute inset-0 w-full h-full object-cover" src={settings.homepage.heroBgImage} alt="Hero Background" />
+          <img className="absolute inset-0 w-full h-full object-cover" src={getMediaUrl(settings.homepage.heroBgImage)} alt="Hero Background" />
         ) : (
           <ThreeHeroBackground />
         )}
@@ -92,15 +95,15 @@ const Home = () => {
       </section>
 
       {/* Bento Divisions Grid */}
-      <section id="divisions" className="py-160px bg-surface-container-lowest">
+      <section id="divisions" className="py-[200px] bg-surface-container-lowest">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="mb-16 text-center">
+          <div className="mb-24 text-center">
             <h2 className="font-display text-3xl font-bold text-primary mb-4">Our Core Divisions</h2>
             <div className="h-1 w-20 bg-secondary mx-auto"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
             {/* GEO ARC */}
-            <div className="glass-card rounded-xl sky-glow hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center p-10 group">
+            <div className="glass-card rounded-xl sky-glow animate-float-slow flex flex-col items-center text-center p-10 group cursor-pointer">
               <div className="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-8 group-hover:bg-secondary-container transition-colors duration-300">
                 <span className="material-symbols-outlined text-4xl text-primary" data-icon="architecture">architecture</span>
               </div>
@@ -111,7 +114,7 @@ const Home = () => {
               </Link>
             </div>
             {/* GEO Soil Testing */}
-            <div className="glass-card rounded-xl sky-glow hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center p-10 group">
+            <div className="glass-card rounded-xl sky-glow animate-float-normal flex flex-col items-center text-center p-10 group cursor-pointer">
               <div className="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-8 group-hover:bg-secondary-container transition-colors duration-300">
                 <span className="material-symbols-outlined text-4xl text-primary" data-icon="science">science</span>
               </div>
@@ -122,7 +125,7 @@ const Home = () => {
               </Link>
             </div>
             {/* GEO Construction */}
-            <div className="glass-card rounded-xl sky-glow hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center p-10 group">
+            <div className="glass-card rounded-xl sky-glow animate-float-fast flex flex-col items-center text-center p-10 group cursor-pointer">
               <div className="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-8 group-hover:bg-secondary-container transition-colors duration-300">
                 <span className="material-symbols-outlined text-4xl text-primary" data-icon="home_work">home_work</span>
               </div>
@@ -137,21 +140,21 @@ const Home = () => {
       </section>
 
       {/* About Company Intro */}
-      <section className="py-160px relative overflow-hidden bg-background">
+      <section className="py-[200px] relative overflow-hidden bg-background">
         <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="relative">
+          <div className="relative animate-float-slow">
             <div className="rounded-2xl overflow-hidden shadow-2xl relative z-10">
               {settings?.homepage?.aboutVideo ? (
                 <video 
                   className="w-full h-[600px] object-cover" 
                   autoPlay loop muted playsInline 
-                  src={settings.homepage.aboutVideo} 
+                  src={getMediaUrl(settings.homepage.aboutVideo)} 
                 />
               ) : (
                 <img 
                   alt="Modern Office Building" 
                   className="w-full h-[600px] object-cover" 
-                  src={settings?.homepage?.aboutImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuADKyVl4iPTgTKT8axz8gBGKuewZn0RCuFzYfdrGN1Gpz_1bVxb39HnR98tXTwBc-IeWTO16klJ7Z--rPiJcLLNtSbO7POXjbMvJ9CwymSdXr9nGamfwfY13SUUTwEpVz_GnPqSM7XfPzgl_dNxH7J4N58PB4EIIZ4hElO94C5kcuhIIHZpnA_RZv7SKXzAaBnoP3024vt2KUn87JCyBbvOJjhtI_HiFb5JmGRm5CcjhftUIgGz7khfY3andNCd2Ar56-DytXvH0B4"}
+                  src={getMediaUrl(settings?.homepage?.aboutImage) || "https://lh3.googleusercontent.com/aida-public/AB6AXuADKyVl4iPTgTKT8axz8gBGKuewZn0RCuFzYfdrGN1Gpz_1bVxb39HnR98tXTwBc-IeWTO16klJ7Z--rPiJcLLNtSbO7POXjbMvJ9CwymSdXr9nGamfwfY13SUUTwEpVz_GnPqSM7XfPzgl_dNxH7J4N58PB4EIIZ4hElO94C5kcuhIIHZpnA_RZv7SKXzAaBnoP3024vt2KUn87JCyBbvOJjhtI_HiFb5JmGRm5CcjhftUIgGz7khfY3andNCd2Ar56-DytXvH0B4"}
                 />
               )}
             </div>
@@ -202,9 +205,9 @@ const Home = () => {
       </section>
 
       {/* Dynamic Pinned Portfolio */}
-      <section className="py-160px bg-background">
+      <section className="py-[200px] bg-background">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col sm:flex-row justify-between items-end mb-24 gap-8">
             <div>
               <h2 className="font-display text-3xl font-bold text-primary mb-4">Signature Projects</h2>
               <p className="font-sans text-on-surface-variant text-sm">Highlighting our recent milestones in luxury architecture and heavy infrastructure.</p>
@@ -214,37 +217,41 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
             {projects.length > 0 ? (
               <>
-                {/* Large Featured Card */}
-                <div className="md:col-span-8 relative group overflow-hidden rounded-2xl h-[500px]">
+                <div 
+                  onClick={() => setSelectedProject(projects[0])}
+                  className="md:col-span-8 rounded-2xl overflow-hidden relative group animate-float-slow shadow-lg cursor-pointer"
+                >
                   <img 
                     alt={projects[0].name} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    src={projects[0].images[0] || ''}
+                    src={getMediaUrl(projects[0].images[0]) || ''}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-                  <div className="absolute bottom-0 left-0 p-10">
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/95 to-transparent flex flex-col justify-end p-8">
                     <span className="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold mb-4 inline-block">{projects[0].category}</span>
                     <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">{projects[0].name}</h3>
                     <p className="text-white/80 text-sm">{projects[0].description}</p>
                   </div>
                 </div>
-
-                {/* Side grid cards */}
-                <div className="md:col-span-4 flex flex-col gap-gutter">
+                <div className="md:col-span-4 flex flex-col gap-12 justify-between">
                   {projects.slice(1, 3).map((proj, i) => (
-                    <div key={proj._id} className="relative group overflow-hidden rounded-2xl flex-1 h-[238px]">
+                    <div 
+                      key={proj._id} 
+                      onClick={() => setSelectedProject(proj)}
+                      className={`relative h-[238px] rounded-2xl overflow-hidden group shadow-lg cursor-pointer ${i === 0 ? 'animate-float-normal' : 'animate-float-fast'}`}
+                    >
                       <img 
                         alt={proj.name} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                        src={proj.images[0] || ''}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        src={getMediaUrl(proj.images[0]) || ''}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
-                      <div className="absolute bottom-0 left-0 p-6">
-                        <span className="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full text-xs font-bold mb-2 inline-block">{proj.category}</span>
-                        <h4 className="font-display font-semibold text-white text-lg">{proj.name}</h4>
+                      <div className="absolute inset-0 bg-primary/45 group-hover:bg-primary/20 transition-all flex items-end p-6">
+                        <div>
+                          <span className="text-secondary font-display font-semibold text-[10px] uppercase tracking-wider block mb-1">{proj.category}</span>
+                          <h4 className="text-white font-display font-bold text-lg">{proj.name}</h4>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -299,21 +306,21 @@ const Home = () => {
 
       {/* Pinned Gallery Showcase */}
       {gallery.length > 0 && (
-        <section className="py-160px bg-background border-t border-outline-variant/10">
+        <section className="py-[200px] bg-background border-t border-outline-variant/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-16">
+            <div className="text-center mb-24">
               <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Visual Showcase</span>
               <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">GEO Group Gallery</h2>
               <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto">
                 Explore real-time physical snapshots and high-fidelity project captures from across our architectural and construction divisions.
               </p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {gallery.map((item) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+              {gallery.map((item, idx) => (
                 <div 
                   key={item._id} 
                   onClick={() => setSelectedMedia(item)}
-                  className="group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+                  className={`group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
                 >
                   {item.type === 'video' ? (
                     <div className="w-full h-full relative">
@@ -371,6 +378,7 @@ const Home = () => {
       </section>
 
       <Lightbox media={selectedMedia} onClose={() => setSelectedMedia(null)} />
+      {selectedProject && <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </div>
   );
 };
