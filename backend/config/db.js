@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const autoSeed = require('./autoSeed');
 
 const connectDB = async () => {
   const primaryUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/geogroup';
@@ -17,6 +18,7 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 4000, // Trigger fallback fast if unreachable
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    await autoSeed();
   } catch (error) {
     console.warn(`Primary MongoDB connection failed: ${error.message}`);
     if (primaryUri !== localFallbackUri) {
@@ -27,6 +29,7 @@ const connectDB = async () => {
           useUnifiedTopology: true,
         });
         console.log(`MongoDB Connected (Fallback): ${conn.connection.host}`);
+        await autoSeed();
       } catch (fallbackError) {
         console.error(`Fallback MongoDB connection failed: ${fallbackError.message}`);
         process.exit(1);
