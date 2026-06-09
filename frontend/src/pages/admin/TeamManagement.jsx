@@ -154,26 +154,28 @@ const TeamManagement = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-8 rounded-2xl border border-outline-variant/20 shadow-sm relative overflow-hidden group">
           <p className="font-display font-semibold text-xs text-on-surface-variant uppercase tracking-widest mb-2">Total Visionaries</p>
-          <h3 className="font-display text-4xl font-extrabold text-primary">{team.length + 120}</h3>
+          <h3 className="font-display text-4xl font-extrabold text-primary">{team.length}</h3>
           <div className="mt-4 flex items-center gap-2 text-green-600 font-display font-semibold text-xs">
             <span className="material-symbols-outlined text-sm">trending_up</span>
-            <span>12% Increase this quarter</span>
+            <span>Real-time database count</span>
           </div>
         </div>
         <div className="bg-primary text-on-primary p-8 rounded-2xl shadow-sm border border-primary/20 relative overflow-hidden group">
           <p className="font-display font-semibold text-xs text-primary-fixed uppercase tracking-widest mb-2">Active Divisions</p>
-          <h3 className="font-display text-4xl font-extrabold">14</h3>
+          <h3 className="font-display text-4xl font-extrabold">3</h3>
           <div className="mt-4 flex items-center gap-2 text-primary-fixed font-display font-semibold text-xs">
             <span className="material-symbols-outlined text-sm">public</span>
-            <span>Spanning 6 Continents</span>
+            <span>ARC, SOIL, CONSTRUCTION</span>
           </div>
         </div>
         <div className="bg-white p-8 rounded-2xl border border-outline-variant/20 shadow-sm relative overflow-hidden group">
-          <p className="font-display font-semibold text-xs text-on-surface-variant uppercase tracking-widest mb-2">Pending Verifications</p>
-          <h3 className="font-display text-4xl font-extrabold text-tertiary-fixed-variant">03</h3>
+          <p className="font-display font-semibold text-xs text-on-surface-variant uppercase tracking-widest mb-2">Corporate Leadership</p>
+          <h3 className="font-display text-4xl font-extrabold text-tertiary-fixed-variant">
+            {team.filter(t => t.division === 'GLOBAL').length}
+          </h3>
           <div className="mt-4 flex items-center gap-2 text-on-surface-variant font-display font-semibold text-xs">
-            <span className="material-symbols-outlined text-sm">schedule</span>
-            <span>Action required within 48h</span>
+            <span className="material-symbols-outlined text-sm">shield</span>
+            <span>Global Directors & CEOs</span>
           </div>
         </div>
       </div>
