@@ -1,4 +1,5 @@
 const GalleryMedia = require('../models/GalleryMedia');
+const { uploadToCloudinary } = require('../utils/cloudinaryHelper');
 
 // @desc    Get gallery media items
 // @route   GET /api/gallery
@@ -27,7 +28,7 @@ exports.uploadMedia = async (req, res) => {
 
     // If file uploaded via multer
     if (req.file) {
-      url = `/uploads/${req.file.filename}`;
+      url = await uploadToCloudinary(req.file.path, 'gallery');
     }
 
     if (!url) {
