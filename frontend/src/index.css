@@ -4,8 +4,190 @@
 
 @layer base {
   body {
-    @apply bg-background text-on-background font-sans;
+    @apply bg-ivory text-ink font-sans antialiased;
   }
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+  ::selection {
+    background: #C9A227;
+    color: #0A0E1A;
+  }
+}
+
+/* ============================================================
+   LUXURY DESIGN SYSTEM
+   ============================================================ */
+
+/* Gold text + accents */
+.text-gradient-gold {
+  background: linear-gradient(120deg, #A67C00 0%, #E8D9A0 45%, #C9A227 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animated shimmering gold text */
+.text-shimmer-gold {
+  background: linear-gradient(90deg, #A67C00 0%, #F0E6C8 25%, #C9A227 50%, #F0E6C8 75%, #A67C00 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-move 4s linear infinite;
+}
+@keyframes shimmer-move {
+  to { background-position: 200% center; }
+}
+
+/* Overline / eyebrow label */
+.luxe-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C9A227;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.luxe-eyebrow::before,
+.luxe-eyebrow.center::after {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A227);
+}
+.luxe-eyebrow.center::before {
+  background: linear-gradient(90deg, transparent, #C9A227);
+}
+.luxe-eyebrow.center::after {
+  background: linear-gradient(90deg, #C9A227, transparent);
+}
+
+/* Thin gold divider */
+.gold-divider {
+  height: 1px;
+  width: 5rem;
+  background: linear-gradient(90deg, transparent, #C9A227, transparent);
+}
+
+/* Luxury buttons */
+.btn-gold {
+  background: linear-gradient(135deg, #A67C00 0%, #E8D9A0 50%, #C9A227 100%);
+  background-size: 200% auto;
+  color: #0A0E1A;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 10px 30px -10px rgba(201,162,39,0.5);
+}
+.btn-gold:hover {
+  background-position: right center;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -10px rgba(201,162,39,0.65);
+}
+.btn-outline-gold {
+  border: 1px solid rgba(201,162,39,0.6);
+  color: #C9A227;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.btn-outline-gold:hover {
+  background: rgba(201,162,39,0.1);
+  border-color: #C9A227;
+  transform: translateY(-2px);
+}
+.btn-ink {
+  background: #0A0E1A;
+  color: #F0E6C8;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  border: 1px solid rgba(201,162,39,0.25);
+}
+.btn-ink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -12px rgba(10,14,26,0.6);
+  border-color: rgba(201,162,39,0.6);
+}
+
+/* Dark luxury section base */
+.luxe-dark {
+  background: #0A0E1A;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(28,37,64,0.9), transparent),
+    radial-gradient(circle at 15% 30%, rgba(201,162,39,0.06), transparent 40%);
+  color: #F6F1E7;
+  position: relative;
+}
+
+/* Luxury glass card (light) */
+.luxe-card {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(201,162,39,0.18);
+  box-shadow: 0 24px 70px -30px rgba(10,14,26,0.3);
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s;
+}
+.luxe-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(201,162,39,0.5);
+  box-shadow: 0 40px 80px -30px rgba(10,14,26,0.45), 0 0 40px -20px rgba(201,162,39,0.4);
+}
+
+/* Dark luxury glass card */
+.luxe-card-dark {
+  background: rgba(20,28,51,0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(201,162,39,0.2);
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s;
+}
+.luxe-card-dark:hover {
+  transform: translateY(-8px);
+  border-color: rgba(201,162,39,0.55);
+  box-shadow: 0 40px 90px -30px rgba(0,0,0,0.7), 0 0 50px -20px rgba(201,162,39,0.3);
+}
+
+/* Gold hairline border frame */
+.gold-frame {
+  position: relative;
+}
+.gold-frame::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(201,162,39,0.4);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Subtle luxury texture / noise overlay helper */
+.luxe-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fine gold line separators between sections */
+.section-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,39,0.4), transparent);
 }
 
 .material-symbols-outlined {
@@ -99,14 +281,14 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #0d1428;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: linear-gradient(#C9A227, #A67C00);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: linear-gradient(#E8D9A0, #C9A227);
 }
 
 /* Anti-Gravity Floating 3D animations */

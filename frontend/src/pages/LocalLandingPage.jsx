@@ -37,7 +37,7 @@ const LocalLandingPage = () => {
     return (
       <div className="pt-32 text-center text-on-surface-variant min-h-screen">
         <h2 className="text-2xl font-bold">Location Page Not Found</h2>
-        <Link to="/" className="text-secondary mt-4 block underline">Back to Homepage</Link>
+        <Link to="/" className="text-gold-deep mt-4 block underline">Back to Homepage</Link>
       </div>
     );
   }
@@ -53,7 +53,7 @@ const LocalLandingPage = () => {
 
       <section className="bg-primary text-white py-20 text-center">
         <div className="max-w-container-max mx-auto px-margin-desktop space-y-4">
-          <span className="inline-block py-1 px-3 bg-secondary/20 text-secondary-fixed text-xs font-bold uppercase tracking-wider rounded">
+          <span className="inline-block py-1 px-3 bg-gold/20 text-secondary-fixed text-xs font-bold uppercase tracking-wider rounded">
             Local Services: GEO {page.division}
           </span>
           <h1 className="font-display text-3xl md:text-4xl font-extrabold tracking-tight">

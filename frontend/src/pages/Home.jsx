@@ -7,6 +7,8 @@ import ThreeHeroBackground from '../components/ThreeHeroBackground';
 import Lightbox from '../components/Lightbox';
 import { getMediaUrl } from '../services/media';
 import ProjectDetailModal from '../components/ProjectDetailModal';
+import Reveal from '../components/Reveal';
+import CountUp from '../components/CountUp';
 
 const Home = () => {
   const [settings, setSettings] = useState(null);
@@ -26,7 +28,6 @@ const Home = () => {
           API.get('/testimonials?division=GLOBAL'),
           API.get('/gallery?isPinnedHomepage=true'),
         ]);
-
         if (settingsRes.data.success) setSettings(settingsRes.data.data);
         if (projectsRes.data.success) setProjects(projectsRes.data.data);
         if (testimonialsRes.data.success) setTestimonials(testimonialsRes.data.data);
@@ -43,217 +44,195 @@ const Home = () => {
   const metaTitle = settings?.seo?.metaTitle || 'GEO Group | Building the Future with Precision & Innovation';
   const metaDescription = settings?.seo?.metaDescription || 'A global conglomerate delivering excellence in architectural design, soil engineering, and large-scale infrastructure construction.';
 
-  // Default Stats fallback
   const stats = settings?.homepage?.stats || [
     { label: 'Projects Completed', value: '500+' },
     { label: 'Global Clients', value: '120+' },
     { label: 'Years Excellence', value: '25+' },
-    { label: 'Active Projects', value: '45+' }
+    { label: 'Active Projects', value: '45+' },
   ];
 
-  // Default Partners fallback
   const partners = settings?.homepage?.partners || [
-    { name: 'PARTNER_A' },
-    { name: 'PARTNER_B' },
-    { name: 'PARTNER_C' },
-    { name: 'PARTNER_D' },
-    { name: 'PARTNER_E' },
-    { name: 'PARTNER_F' }
+    { name: 'PARTNER_A' }, { name: 'PARTNER_B' }, { name: 'PARTNER_C' },
+    { name: 'PARTNER_D' }, { name: 'PARTNER_E' }, { name: 'PARTNER_F' },
+  ];
+
+  const divisions = [
+    { to: '/geo-arc', icon: 'architecture', title: 'GEO ARC', desc: 'Pioneering architectural solutions that blend aesthetic elegance with functional sustainability for modern urban landscapes.' },
+    { to: '/geo-soil-testing', icon: 'science', title: 'GEO Soil Testing', desc: 'Specialized geotechnical analysis ensuring the foundational integrity of complex engineering projects worldwide.' },
+    { to: '/geo-construction', icon: 'home_work', title: 'GEO Construction', desc: 'Full-cycle construction management for commercial and industrial infrastructures, delivered with unmatched precision.' },
   ];
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full bg-ivory">
       <SEO title={metaTitle} description={metaDescription} />
       <SchemaMarkup type="Organization" data={{ email: settings?.contactEmail, phone: settings?.contactPhone, linkedin: settings?.socialLinks?.linkedin, twitter: settings?.socialLinks?.twitter }} />
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      {/* ===== Hero ===== */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden luxe-dark">
         {settings?.homepage?.heroBgVideo ? (
-          <video className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.heroBgVideo)} />
+          <video className="absolute inset-0 w-full h-full object-cover opacity-40" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.heroBgVideo)} />
         ) : settings?.homepage?.heroBgImage ? (
-          <img className="absolute inset-0 w-full h-full object-cover" src={getMediaUrl(settings.homepage.heroBgImage)} alt="Hero Background" />
+          <img className="absolute inset-0 w-full h-full object-cover opacity-40" src={getMediaUrl(settings.homepage.heroBgImage)} alt="Hero Background" />
         ) : (
-          <ThreeHeroBackground />
+          <div className="absolute inset-0 opacity-60"><ThreeHeroBackground /></div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/40 to-background/90 z-10" />
-        <div className="relative z-20 max-w-container-max mx-auto px-margin-desktop text-center">
-          <h1 className="font-display text-4xl md:text-6xl font-extrabold text-primary mb-6 max-w-4xl mx-auto leading-tight">
-            {settings?.homepage?.heroTitle || 'Building the Future with Precision & Innovation'}
+        {/* Ink gradient veils */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/60 to-ink z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(201,162,39,0.10),transparent_55%)] z-10" />
+
+        <div className="relative z-20 max-w-container-max mx-auto px-6 md:px-margin-desktop text-center pt-24">
+          <div className="animate-fade-in mb-8 inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold/30 bg-ink-700/40 backdrop-blur-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+            <span className="text-champagne/90 text-[11px] tracking-luxe uppercase font-medium">Est. Global Infrastructure Excellence</span>
+          </div>
+
+          <h1 className="font-display text-4xl md:text-7xl font-bold text-ivory mb-6 max-w-5xl mx-auto leading-[1.08] animate-fade-up">
+            {settings?.homepage?.heroTitle || (
+              <>Building the Future with <span className="text-gradient-gold italic">Precision</span> &amp; <span className="text-gradient-gold italic">Innovation</span></>
+            )}
           </h1>
-          <p className="font-sans text-lg md:text-xl text-on-surface-variant mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-sans text-base md:text-xl text-luxury-muted mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '120ms' }}>
             {settings?.homepage?.heroSubtitle || 'A global conglomerate delivering excellence in architectural design, soil engineering, and large-scale infrastructure construction.'}
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a href="#divisions" className="bg-primary text-on-primary text-center px-10 py-5 rounded-lg font-display font-semibold hover:scale-105 transition-all duration-300 shadow-xl w-full sm:w-auto">
-              Explore Companies
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up" style={{ animationDelay: '240ms' }}>
+            <a href="#divisions" className="btn-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm w-full sm:w-auto">
+              Explore Divisions
             </a>
-            <Link to="/contact" className="border-2 border-primary text-primary text-center px-10 py-5 rounded-lg font-display font-semibold hover:bg-primary/5 transition-all duration-300 w-full sm:w-auto">
-              Contact Us
+            <Link to="/contact" className="btn-outline-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm w-full sm:w-auto">
+              Request Consultation
             </Link>
           </div>
         </div>
+
+        {/* Scroll cue */}
+        <a href="#divisions" className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-gold/70 hover:text-gold transition-colors">
+          <span className="text-[10px] uppercase tracking-luxe">Scroll</span>
+          <span className="material-symbols-outlined animate-bounce">keyboard_arrow_down</span>
+        </a>
       </section>
 
-      {/* Bento Divisions Grid */}
-      <section id="divisions" className="py-[200px] bg-surface-container-lowest">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="mb-24 text-center">
-            <h2 className="font-display text-3xl font-bold text-primary mb-4">Our Core Divisions</h2>
-            <div className="h-1 w-20 bg-secondary mx-auto"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-            {/* GEO ARC */}
-            <div className="glass-card rounded-xl sky-glow animate-float-slow flex flex-col items-center text-center p-10 group cursor-pointer">
-              <div className="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-8 group-hover:bg-secondary-container transition-colors duration-300">
-                <span className="material-symbols-outlined text-4xl text-primary" data-icon="architecture">architecture</span>
-              </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">GEO ARC</h3>
-              <p className="font-sans text-on-surface-variant mb-8 text-sm">Pioneering architectural solutions that blend aesthetic elegance with functional sustainability for modern urban landscapes.</p>
-              <Link to="/geo-arc" className="text-secondary font-display font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
-                View Details <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
-            </div>
-            {/* GEO Soil Testing */}
-            <div className="glass-card rounded-xl sky-glow animate-float-normal flex flex-col items-center text-center p-10 group cursor-pointer">
-              <div className="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-8 group-hover:bg-secondary-container transition-colors duration-300">
-                <span className="material-symbols-outlined text-4xl text-primary" data-icon="science">science</span>
-              </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">GEO Soil Testing</h3>
-              <p className="font-sans text-on-surface-variant mb-8 text-sm">Specialized geotechnical analysis ensuring the foundational integrity of complex engineering projects worldwide.</p>
-              <Link to="/geo-soil-testing" className="text-secondary font-display font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
-                View Details <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
-            </div>
-            {/* GEO Construction */}
-            <div className="glass-card rounded-xl sky-glow animate-float-fast flex flex-col items-center text-center p-10 group cursor-pointer">
-              <div className="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-8 group-hover:bg-secondary-container transition-colors duration-300">
-                <span className="material-symbols-outlined text-4xl text-primary" data-icon="home_work">home_work</span>
-              </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">GEO Construction</h3>
-              <p className="font-sans text-on-surface-variant mb-8 text-sm">Full-cycle construction management for commercial and industrial infrastructures, delivered with unmatched precision.</p>
-              <Link to="/geo-construction" className="text-secondary font-display font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
-                View Details <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Company Intro */}
-      <section className="py-[200px] relative overflow-hidden bg-background">
-        <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="relative animate-float-slow">
-            <div className="rounded-2xl overflow-hidden shadow-2xl relative z-10">
-              {settings?.homepage?.aboutVideo ? (
-                <video 
-                  className="w-full h-[600px] object-cover" 
-                  autoPlay loop muted playsInline 
-                  src={getMediaUrl(settings.homepage.aboutVideo)} 
-                />
-              ) : (
-                <img 
-                  alt="Modern Office Building" 
-                  className="w-full h-[600px] object-cover" 
-                  src={getMediaUrl(settings?.homepage?.aboutImage) || "https://lh3.googleusercontent.com/aida-public/AB6AXuADKyVl4iPTgTKT8axz8gBGKuewZn0RCuFzYfdrGN1Gpz_1bVxb39HnR98tXTwBc-IeWTO16klJ7Z--rPiJcLLNtSbO7POXjbMvJ9CwymSdXr9nGamfwfY13SUUTwEpVz_GnPqSM7XfPzgl_dNxH7J4N58PB4EIIZ4hElO94C5kcuhIIHZpnA_RZv7SKXzAaBnoP3024vt2KUn87JCyBbvOJjhtI_HiFb5JmGRm5CcjhftUIgGz7khfY3andNCd2Ar56-DytXvH0B4"}
-                />
-              )}
-            </div>
-            <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-secondary/10 rounded-2xl -z-10 animate-pulse" />
-          </div>
-          <div>
-            <span className="font-display text-xs font-bold text-secondary tracking-widest uppercase mb-4 block">About GEO Group</span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-6">{settings?.homepage?.aboutTitle || 'Established Excellence in Global Infrastructure'}</h2>
-            <p className="font-sans text-on-surface-variant mb-8 leading-relaxed">
-              {settings?.homepage?.aboutText || 'With over two decades of experience, GEO Group of Companies has stood as a pillar of reliability in the construction and engineering sectors. We integrate cutting-edge technology with traditional craftsmanship to deliver projects that shape the skylines of tomorrow.'}
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center">
-                  <span className="material-symbols-outlined text-secondary" data-icon="rocket_launch">rocket_launch</span>
+      {/* ===== Divisions ===== */}
+      <section id="divisions" className="py-28 md:py-36 bg-ivory relative">
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
+          <Reveal className="mb-16 text-center">
+            <p className="luxe-eyebrow center justify-center mb-4">Our Core Divisions</p>
+            <h2 className="font-display text-3xl md:text-5xl font-bold text-ink">Three Pillars of <span className="text-gradient-gold italic">Excellence</span></h2>
+          </Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {divisions.map((d, i) => (
+              <Reveal key={d.to} delay={i * 120}>
+                <div className="luxe-card rounded-2xl flex flex-col items-center text-center p-10 group h-full">
+                  <div className="w-20 h-20 rounded-full bg-ink flex items-center justify-center mb-8 border border-gold/30 group-hover:shadow-luxe-gold transition-all duration-500">
+                    <span className="material-symbols-outlined text-4xl text-gold">{d.icon}</span>
+                  </div>
+                  <h3 className="font-display text-2xl font-bold text-ink mb-4">{d.title}</h3>
+                  <p className="font-sans text-on-surface-variant mb-8 text-sm leading-relaxed flex-grow">{d.desc}</p>
+                  <Link to={d.to} className="text-gold-deep font-sans text-xs uppercase tracking-wider font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
+                    View Division <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                  </Link>
                 </div>
-                <div>
-                  <h4 className="font-display font-bold text-primary mb-2">Our Mission</h4>
-                  <p className="font-sans text-xs text-on-surface-variant">{settings?.homepage?.aboutMission || 'To define new standards in sustainable construction and technical precision.'}</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center">
-                  <span className="material-symbols-outlined text-secondary" data-icon="visibility">visibility</span>
-                </div>
-                <div>
-                  <h4 className="font-display font-bold text-primary mb-2">Our Vision</h4>
-                  <p className="font-sans text-xs text-on-surface-variant">{settings?.homepage?.aboutVision || 'Becoming the global leader in integrated engineering and architectural services.'}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Live Statistics */}
-      <section className="py-24 bg-primary text-on-primary">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="space-y-2">
-                <div className="text-4xl md:text-5xl font-extrabold text-secondary-fixed">{stat.value}</div>
-                <div className="font-display text-[10px] md:text-xs uppercase tracking-wider text-outline-variant">{stat.label}</div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Dynamic Pinned Portfolio */}
-      <section className="py-[200px] bg-background">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-24 gap-8">
-            <div>
-              <h2 className="font-display text-3xl font-bold text-primary mb-4">Signature Projects</h2>
-              <p className="font-sans text-on-surface-variant text-sm">Highlighting our recent milestones in luxury architecture and heavy infrastructure.</p>
-            </div>
-            <Link to="/geo-construction" className="border-b-2 border-primary pb-1 text-primary font-display font-semibold hover:text-secondary hover:border-secondary transition-all">
-              View Full Portfolio
-            </Link>
-          </div>
+      <div className="section-rule max-w-container-max mx-auto" />
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-            {projects.length > 0 ? (
-              <>
-                <div 
-                  onClick={() => setSelectedProject(projects[0])}
-                  className="md:col-span-8 rounded-2xl overflow-hidden relative group animate-float-slow shadow-lg cursor-pointer"
-                >
-                  <img 
-                    alt={projects[0].name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    src={getMediaUrl(projects[0].images[0]) || ''}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/95 to-transparent flex flex-col justify-end p-8">
-                    <span className="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold mb-4 inline-block">{projects[0].category}</span>
-                    <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">{projects[0].name}</h3>
-                    <p className="text-white/80 text-sm">{projects[0].description}</p>
+      {/* ===== About ===== */}
+      <section className="py-28 md:py-36 relative overflow-hidden bg-cream">
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <Reveal className="relative gold-frame">
+            <div className="rounded-2xl overflow-hidden shadow-luxe relative z-10">
+              {settings?.homepage?.aboutVideo ? (
+                <video className="w-full h-[560px] object-cover" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.aboutVideo)} />
+              ) : (
+                <img alt="Modern architecture" className="w-full h-[560px] object-cover" src={getMediaUrl(settings?.homepage?.aboutImage) || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop'} />
+              )}
+            </div>
+            <div className="absolute -bottom-6 -right-6 w-40 h-40 border border-gold/40 rounded-2xl -z-0" />
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="luxe-eyebrow mb-4">About GEO Group</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-6 leading-tight">{settings?.homepage?.aboutTitle || 'A Legacy Built on Precision & Trust'}</h2>
+            <p className="font-sans text-on-surface-variant mb-8 leading-relaxed">
+              {settings?.homepage?.aboutText || 'With over two decades of experience, GEO Group of Companies has stood as a pillar of reliability in the construction and engineering sectors. We integrate cutting-edge technology with traditional craftsmanship to deliver projects that shape the skylines of tomorrow.'}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                { icon: 'rocket_launch', title: 'Our Mission', text: settings?.homepage?.aboutMission || 'To define new standards in sustainable construction and technical precision.' },
+                { icon: 'visibility', title: 'Our Vision', text: settings?.homepage?.aboutVision || 'Becoming the global leader in integrated engineering and architectural services.' },
+              ].map((b) => (
+                <div key={b.title} className="flex gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-ink flex items-center justify-center border border-gold/25">
+                    <span className="material-symbols-outlined text-gold">{b.icon}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-display font-bold text-ink mb-1">{b.title}</h4>
+                    <p className="font-sans text-xs text-on-surface-variant leading-relaxed">{b.text}</p>
                   </div>
                 </div>
-                <div className="md:col-span-4 flex flex-col gap-12 justify-between">
-                  {projects.slice(1, 3).map((proj, i) => (
-                    <div 
-                      key={proj._id} 
-                      onClick={() => setSelectedProject(proj)}
-                      className={`relative h-[238px] rounded-2xl overflow-hidden group shadow-lg cursor-pointer ${i === 0 ? 'animate-float-normal' : 'animate-float-fast'}`}
-                    >
-                      <img 
-                        alt={proj.name} 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                        src={getMediaUrl(proj.images[0]) || ''}
-                      />
-                      <div className="absolute inset-0 bg-primary/45 group-hover:bg-primary/20 transition-all flex items-end p-6">
-                        <div>
-                          <span className="text-secondary font-display font-semibold text-[10px] uppercase tracking-wider block mb-1">{proj.category}</span>
-                          <h4 className="text-white font-display font-bold text-lg">{proj.name}</h4>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== Stats ===== */}
+      <section className="py-24 luxe-dark luxe-grain relative">
+        <div className="relative z-10 max-w-container-max mx-auto px-6 md:px-margin-desktop">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center divide-gold/10 md:divide-x">
+            {stats.map((stat, idx) => (
+              <Reveal key={idx} delay={idx * 100} className="space-y-2">
+                <div className="font-display text-4xl md:text-6xl font-bold text-gradient-gold">
+                  <CountUp value={stat.value} />
+                </div>
+                <div className="font-sans text-[10px] md:text-xs uppercase tracking-luxe text-luxury-muted">{stat.label}</div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Signature Projects ===== */}
+      <section className="py-28 md:py-36 bg-ivory">
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
+          <Reveal className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-6">
+            <div>
+              <p className="luxe-eyebrow mb-4">Portfolio</p>
+              <h2 className="font-display text-3xl md:text-5xl font-bold text-ink">Signature <span className="text-gradient-gold italic">Projects</span></h2>
+            </div>
+            <Link to="/geo-construction" className="btn-outline-gold px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-gold-deep border-gold-deep/40">
+              View Full Portfolio
+            </Link>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            {projects.length > 0 ? (
+              <>
+                <Reveal className="md:col-span-8">
+                  <div onClick={() => setSelectedProject(projects[0])} className="rounded-2xl overflow-hidden relative group shadow-luxe cursor-pointer h-full min-h-[400px]">
+                    <img alt={projects[0].name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110" src={getMediaUrl(projects[0].images?.[0]) || ''} />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent flex flex-col justify-end p-8">
+                      <span className="border border-gold/50 text-gold px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold mb-4 inline-block w-fit">{projects[0].category}</span>
+                      <h3 className="font-display text-2xl md:text-3xl font-bold text-ivory mb-2">{projects[0].name}</h3>
+                      <p className="text-luxury-muted text-sm max-w-lg line-clamp-2">{projects[0].description}</p>
+                    </div>
+                  </div>
+                </Reveal>
+                <div className="md:col-span-4 flex flex-col gap-6">
+                  {projects.slice(1, 3).map((proj) => (
+                    <Reveal key={proj._id} delay={120} className="flex-1">
+                      <div onClick={() => setSelectedProject(proj)} className="relative h-full min-h-[188px] rounded-2xl overflow-hidden group shadow-luxe cursor-pointer">
+                        <img alt={proj.name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-500 group-hover:scale-105" src={getMediaUrl(proj.images?.[0]) || ''} />
+                        <div className="absolute inset-0 bg-ink/60 group-hover:bg-ink/30 transition-all flex items-end p-6">
+                          <div>
+                            <span className="text-gold font-sans font-semibold text-[10px] uppercase tracking-wider block mb-1">{proj.category}</span>
+                            <h4 className="text-ivory font-display font-bold text-lg">{proj.name}</h4>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Reveal>
                   ))}
                 </div>
               </>
@@ -264,116 +243,114 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials and Partners */}
-      <section className="py-160px bg-surface-container-low">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+      {/* ===== Testimonials + Partners ===== */}
+      <section className="py-28 md:py-36 bg-cream">
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="font-display text-3xl font-bold text-primary mb-8">
+            <Reveal>
+              <p className="luxe-eyebrow mb-4">Testimonials</p>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8">
                 {settings?.metadata?.testimonialTitle || 'What Global Leaders Say'}
               </h2>
-              <div className="space-y-8">
-                {testimonials.map((t, index) => (
-                  <div key={index} className="bg-white p-8 rounded-xl shadow-lg border-l-4 border-secondary">
-                    <p className="italic font-sans text-on-surface-variant mb-6 text-lg">"{t.review}"</p>
+              <div className="space-y-6">
+                {testimonials.length > 0 ? testimonials.map((t, index) => (
+                  <div key={index} className="luxe-card bg-white/80 p-8 rounded-2xl relative">
+                    <span className="material-symbols-outlined text-gold/30 text-5xl absolute top-4 right-6">format_quote</span>
+                    <p className="font-cormorant italic text-xl text-ink/80 mb-6 leading-relaxed relative z-10">"{t.review}"</p>
                     <div className="flex items-center gap-4">
-                      {t.image && (
-                        <div className="w-12 h-12 rounded-full overflow-hidden">
-                          <img src={t.image} alt={t.clientName} className="w-full h-full object-cover" />
-                        </div>
-                      )}
+                      {t.image && <div className="w-12 h-12 rounded-full overflow-hidden border border-gold/40"><img src={t.image} alt={t.clientName} className="w-full h-full object-cover" /></div>}
                       <div>
-                        <div className="font-display font-bold text-primary">{t.clientName}</div>
-                        <div className="text-sm text-secondary">{t.position}, {t.company}</div>
+                        <div className="font-display font-bold text-ink">{t.clientName}</div>
+                        <div className="text-sm text-gold-deep">{t.position}, {t.company}</div>
                       </div>
                     </div>
                   </div>
+                )) : (
+                  <div className="luxe-card bg-white/80 p-8 rounded-2xl">
+                    <p className="font-cormorant italic text-xl text-ink/70">"GEO Group transformed our vision into a landmark. Precision, elegance, and reliability at every stage."</p>
+                    <div className="mt-6 text-sm text-gold-deep">Featured Client Testimonial</div>
+                  </div>
+                )}
+              </div>
+            </Reveal>
+
+            <Reveal delay={120}>
+              <p className="luxe-eyebrow mb-6">Trusted By Industry Leaders</p>
+              <div className="grid grid-cols-3 gap-4">
+                {partners.map((partner, idx) => (
+                  <div key={idx} className="flex items-center justify-center p-6 bg-white/70 rounded-xl border border-gold/15 hover:border-gold/40 transition-colors">
+                    <span className="font-display font-bold text-base md:text-lg text-ink/40">{partner.name}</span>
+                  </div>
                 ))}
               </div>
-            </div>
-
-            {/* Partner list */}
-            <div className="grid grid-cols-3 gap-8 grayscale opacity-50">
-              {partners.map((partner, idx) => (
-                <div key={idx} className="flex items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                  <span className="font-display font-bold text-lg md:text-xl text-primary/40">{partner.name}</span>
-                </div>
-              ))}
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* Pinned Gallery Showcase */}
+      {/* ===== Gallery ===== */}
       {gallery.length > 0 && (
-        <section className="py-[200px] bg-background border-t border-outline-variant/10">
-          <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-24">
-              <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Visual Showcase</span>
-              <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">GEO Group Gallery</h2>
+        <section className="py-28 md:py-36 bg-ivory">
+          <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
+            <Reveal className="text-center mb-16">
+              <p className="luxe-eyebrow center justify-center mb-4">Visual Showcase</p>
+              <h2 className="font-display text-3xl md:text-5xl font-bold text-ink mb-4">The <span className="text-gradient-gold italic">Gallery</span></h2>
               <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto">
-                Explore real-time physical snapshots and high-fidelity project captures from across our architectural and construction divisions.
+                High-fidelity captures from across our architectural and construction divisions.
               </p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+            </Reveal>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {gallery.map((item, idx) => (
-                <div 
-                  key={item._id} 
-                  onClick={() => setSelectedMedia(item)}
-                  className={`group relative overflow-hidden rounded-xl h-64 shadow-md bg-surface-container-low cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
-                >
-                  {item.type === 'video' ? (
-                    <div className="w-full h-full relative">
-                      <video 
-                        src={item.url} 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                        muted 
-                        playsInline
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
-                        <span className="material-symbols-outlined text-white text-5xl opacity-80 group-hover:scale-110 transition-transform">play_circle</span>
+                <Reveal key={item._id} delay={(idx % 4) * 80}>
+                  <div onClick={() => setSelectedMedia(item)} className="group relative overflow-hidden rounded-xl h-64 shadow-luxe-soft bg-cream cursor-pointer">
+                    {item.type === 'video' ? (
+                      <div className="w-full h-full relative">
+                        <video src={item.url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" muted playsInline />
+                        <div className="absolute inset-0 flex items-center justify-center bg-ink/20 group-hover:bg-ink/40 transition-colors">
+                          <span className="material-symbols-outlined text-gold text-5xl opacity-90 group-hover:scale-110 transition-transform">play_circle</span>
+                        </div>
                       </div>
+                    ) : (
+                      <img src={item.url} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                      <span className="text-gold font-sans text-[9px] uppercase tracking-wider mb-1 font-semibold">{item.division} Division</span>
+                      <p className="text-ivory font-display font-semibold text-sm">{item.title}</p>
                     </div>
-                  ) : (
-                    <img 
-                      src={item.url} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                    <span className="text-secondary font-display text-[9px] uppercase tracking-wider mb-1 font-semibold">{item.division} DIVISION</span>
-                    <p className="text-white font-display font-semibold text-sm">{item.title}</p>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* Interactive Contact CTA Banner */}
-      <section className="py-160px bg-background">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="bg-primary rounded-3xl p-12 md:p-20 relative overflow-hidden text-center text-on-primary shadow-2xl">
-            <div className="relative z-10">
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-                {settings?.metadata?.ctaTitle || 'Ready to Start Your Next Milestone?'}
-              </h2>
-              <p className="font-sans text-lg opacity-80 max-w-2xl mx-auto mb-10">
-                {settings?.metadata?.ctaSubtitle || 'Consult with our experts across Architectural Design, Geotechnical Engineering, and Infrastructure Construction.'}
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link to="/contact" className="bg-secondary text-white px-10 py-5 rounded-lg font-display font-semibold hover:bg-secondary/90 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
-                  <span className="material-symbols-outlined">mail</span> {settings?.metadata?.ctaContactText || 'Contact Us Now'}
-                </Link>
-                <a href={`https://wa.me/${(settings?.whatsappNumber || '971500000000').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-lg font-display font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
-                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
-                  {settings?.metadata?.ctaWhatsappText || 'WhatsApp Us'}
-                </a>
+      {/* ===== CTA ===== */}
+      <section className="py-28 bg-cream">
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
+          <Reveal>
+            <div className="luxe-dark luxe-grain rounded-3xl p-12 md:p-20 relative overflow-hidden text-center shadow-luxe">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(201,162,39,0.15),transparent_60%)]" />
+              <div className="relative z-10">
+                <p className="luxe-eyebrow center justify-center mb-6">Let's Build Together</p>
+                <h2 className="font-display text-3xl md:text-5xl font-bold text-ivory mb-6 max-w-3xl mx-auto leading-tight">
+                  {settings?.metadata?.ctaTitle || 'Ready to Start Your Next Milestone?'}
+                </h2>
+                <p className="font-sans text-base md:text-lg text-luxury-muted max-w-2xl mx-auto mb-10">
+                  {settings?.metadata?.ctaSubtitle || 'Consult with our experts across Architectural Design, Geotechnical Engineering, and Infrastructure Construction.'}
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+                  <Link to="/contact" className="btn-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
+                    <span className="material-symbols-outlined">mail</span> {settings?.metadata?.ctaContactText || 'Contact Us Now'}
+                  </Link>
+                  <a href={`https://wa.me/${(settings?.whatsappNumber || '971500000000').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="btn-outline-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" /></svg>
+                    {settings?.metadata?.ctaWhatsappText || 'WhatsApp Us'}
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 

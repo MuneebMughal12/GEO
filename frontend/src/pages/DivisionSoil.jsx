@@ -62,7 +62,7 @@ const DivisionSoil = () => {
                 Precision Laboratory Services
               </div>
               <h1 className="font-display text-4xl md:text-5xl font-extrabold text-primary leading-tight">
-                {company?.name || 'GEO Soil Testing'} <span className="text-secondary">Testing</span>
+                {company?.name || 'GEO Soil Testing'} <span className="text-gold-deep">Testing</span>
               </h1>
               <p className="font-sans text-on-surface-variant text-base md:text-lg leading-relaxed">
                 {company?.description || 'Advanced geotechnical analysis and material characterization. Our ISO-certified laboratories provide the bedrock data required for global architectural and infrastructure marvels.'}
@@ -128,7 +128,7 @@ const DivisionSoil = () => {
             </div>
             {/* Step 2 */}
             <div className="relative group animate-float-normal cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
-              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-secondary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">2</div>
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gold text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">2</div>
               <div>
                 <h3 className="font-display text-xl font-bold text-primary mb-4">
                   {company?.metadata?.methodologyStep2Title || 'Laboratory Analysis'}
@@ -167,7 +167,7 @@ const DivisionSoil = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="flex flex-col sm:flex-row justify-between items-end mb-24 gap-8">
             <div className="max-w-2xl">
-              <span className="font-display text-xs font-bold text-secondary tracking-widest uppercase">The Arsenal</span>
+              <span className="font-display text-xs font-bold text-gold-deep tracking-widest uppercase">The Arsenal</span>
               <h2 className="font-display text-3xl font-bold text-primary mt-2">
                 {company?.metadata?.equipmentTitle || 'World-Class Instrumentation'}
               </h2>
@@ -239,7 +239,7 @@ const DivisionSoil = () => {
       <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-20">
-            <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
+            <span className="font-display text-xs font-bold text-gold-deep uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
             <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
               Explore the professional minds driving safety, precision, and geotechnical excellence across GEO Group.
@@ -256,9 +256,9 @@ const DivisionSoil = () => {
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="inline-block px-2.5 py-1 bg-secondary/10 text-secondary text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Group Leadership</span>
+                    <span className="inline-block px-2.5 py-1 bg-gold/10 text-gold-deep text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Group Leadership</span>
                     <h3 className="font-display text-xl font-bold text-primary">{globalCeo.name}</h3>
-                    <p className="font-sans text-xs text-secondary font-semibold mt-1">{globalCeo.designation}</p>
+                    <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{globalCeo.designation}</p>
                     <p className="font-sans text-xs text-on-surface-variant mt-4 leading-relaxed">{globalCeo.bio}</p>
                   </div>
                   {globalCeo.experience && (
@@ -280,7 +280,7 @@ const DivisionSoil = () => {
                   <div>
                     <span className="inline-block px-2.5 py-1 bg-primary-fixed/10 text-primary text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Department Head</span>
                     <h3 className="font-display text-xl font-bold text-primary">{activeDivisionCeo.name}</h3>
-                    <p className="font-sans text-xs text-secondary font-semibold mt-1">{activeDivisionCeo.designation}</p>
+                    <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{activeDivisionCeo.designation}</p>
                     <p className="font-sans text-xs text-on-surface-variant mt-4 leading-relaxed">{activeDivisionCeo.bio}</p>
                   </div>
                   {activeDivisionCeo.experience && (
@@ -309,7 +309,7 @@ const DivisionSoil = () => {
                         />
                       </div>
                       <h4 className="font-display text-base font-bold text-primary">{member.name}</h4>
-                      <p className="font-sans text-xs text-secondary font-semibold mt-1">{member.designation}</p>
+                      <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{member.designation}</p>
                       <p className="font-sans text-xs text-on-surface-variant mt-3 leading-relaxed">{member.bio}</p>
                     </div>
                     {member.experience && (
@@ -341,7 +341,7 @@ const DivisionSoil = () => {
                 >
                   <div className="aspect-[3/4] bg-white rounded-xl shadow-2xl p-12 text-primary relative z-10 flex flex-col justify-between cursor-pointer">
                     <div className="flex justify-between items-start">
-                      <div className="w-16 h-16 bg-primary rounded flex items-center justify-center text-white relative group-hover:bg-secondary transition-colors">
+                      <div className="w-16 h-16 bg-primary rounded flex items-center justify-center text-white relative group-hover:bg-gold transition-colors">
                         <span className="material-symbols-outlined text-4xl">download</span>
                       </div>
                       <div className="text-right">
@@ -355,7 +355,7 @@ const DivisionSoil = () => {
                       <div className="h-4 bg-surface-container w-5/6 rounded" />
                     </div>
                     <div className="flex justify-between items-end">
-                      <div className="text-left flex items-center gap-1.5 text-secondary font-display font-bold text-[10px] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="text-left flex items-center gap-1.5 text-gold-deep font-display font-bold text-[10px] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
                         <span className="material-symbols-outlined text-[16px]">open_in_new</span>
                         View Report
                       </div>

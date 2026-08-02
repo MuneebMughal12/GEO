@@ -175,7 +175,7 @@ const TeamManagement = () => {
           </h3>
           <div className="mt-4 flex items-center gap-2 text-on-surface-variant font-display font-semibold text-xs">
             <span className="material-symbols-outlined text-sm">shield</span>
-            <span>Global Directors & CEOs</span>
+            <span>Home Page Leadership</span>
           </div>
         </div>
       </div>
@@ -263,7 +263,7 @@ const TeamManagement = () => {
                     onChange={handleInputChange}
                     className="w-full border-outline-variant/50 rounded-xl focus:ring-1 focus:ring-secondary focus:border-secondary px-4 py-3 bg-background text-sm"
                   >
-                    <option value="GLOBAL">Global Corporate</option>
+                    <option value="GLOBAL">Home Page (Group Leadership)</option>
                     <option value="ARC">GEO ARC</option>
                     <option value="SOIL">GEO Soil Testing</option>
                     <option value="CONSTRUCTION">GEO Construction</option>

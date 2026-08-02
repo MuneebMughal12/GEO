@@ -13,6 +13,7 @@ import DivisionArc from './pages/DivisionArc';
 import DivisionSoil from './pages/DivisionSoil';
 import DivisionConstruction from './pages/DivisionConstruction';
 import LocalLandingPage from './pages/LocalLandingPage';
+import NotFound from './pages/NotFound';
 
 // Admin Views
 import AdminLayout from './components/AdminLayout';
@@ -57,8 +58,8 @@ function App() {
             <Route path="messages" element={<MessageManagement />} />
           </Route>
 
-          {/* Redirects */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </Router>

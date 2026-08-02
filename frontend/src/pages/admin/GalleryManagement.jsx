@@ -119,7 +119,7 @@ const GalleryManagement = () => {
             onChange={handleInputChange}
             className="px-4 py-3 rounded-xl border border-outline-variant/50 focus:border-secondary focus:ring-1 focus:ring-secondary/20 outline-none text-sm bg-white"
           >
-            <option value="GLOBAL">GEO Group (Global)</option>
+            <option value="GLOBAL">Home Page (Group)</option>
             <option value="ARC">GEO ARC</option>
             <option value="SOIL">GEO Soil Testing</option>
             <option value="CONSTRUCTION">GEO Construction</option>

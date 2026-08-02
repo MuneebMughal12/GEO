@@ -48,11 +48,11 @@ const Blog = () => {
               {posts.map((post) => (
                 <article key={post._id} className="bg-white rounded-2xl border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
                   <div className="p-6 space-y-4">
-                    <span className="inline-block px-3 py-1 rounded bg-secondary/15 text-secondary text-[10px] font-bold uppercase tracking-wider">
+                    <span className="inline-block px-3 py-1 rounded bg-gold/15 text-gold-deep text-[10px] font-bold uppercase tracking-wider">
                       {post.category}
                     </span>
                     <h3 className="font-display font-bold text-primary text-lg">
-                      <Link to={`/blog/${post.slug}`} className="hover:text-secondary transition-colors">
+                      <Link to={`/blog/${post.slug}`} className="hover:text-gold-deep transition-colors">
                         {post.title}
                       </Link>
                     </h3>
@@ -62,7 +62,7 @@ const Blog = () => {
                   </div>
                   <div className="p-6 pt-0 border-t border-outline-variant/10 flex justify-between items-center text-xs text-outline font-semibold">
                     <span>By {post.author}</span>
-                    <Link to={`/blog/${post.slug}`} className="text-secondary hover:underline flex items-center gap-1">
+                    <Link to={`/blog/${post.slug}`} className="text-gold-deep hover:underline flex items-center gap-1">
                       Read Article <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
                     </Link>
                   </div>

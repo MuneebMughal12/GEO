@@ -42,6 +42,30 @@ export default {
         "error-container": "#ffdad6",
         "on-error": "#ffffff",
         "on-error-container": "#93000a",
+
+        /* ===== LUXURY PALETTE ===== */
+        ink: "#0A0E1A",
+        "ink-800": "#0d1428",
+        "ink-700": "#141c33",
+        "ink-600": "#1c2540",
+        "ink-soft": "#232c47",
+        gold: "#C9A227",
+        "gold-light": "#E8D9A0",
+        "gold-deep": "#A67C00",
+        champagne: "#F0E6C8",
+        ivory: "#FDFBF6",
+        cream: "#F6F1E7",
+        "luxury-muted": "#9AA3B8",
+      },
+      backgroundImage: {
+        "gold-gradient": "linear-gradient(135deg, #A67C00 0%, #E8D9A0 45%, #C9A227 100%)",
+        "gold-sheen": "linear-gradient(120deg, #C9A227 0%, #F0E6C8 40%, #A67C00 80%)",
+        "ink-radial": "radial-gradient(ellipse at 50% 0%, #141c33 0%, #0A0E1A 60%)",
+      },
+      boxShadow: {
+        luxe: "0 20px 60px -15px rgba(0,0,0,0.5)",
+        "luxe-gold": "0 10px 40px -10px rgba(201,162,39,0.35)",
+        "luxe-soft": "0 24px 70px -30px rgba(10,14,26,0.35)",
       },
       borderRadius: {
         DEFAULT: "0.25rem",
@@ -59,9 +83,33 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-        display: ["Montserrat", "sans-serif"],
+        display: ["'Playfair Display'", "Montserrat", "serif"],
+        serif: ["'Playfair Display'", "serif"],
+        cormorant: ["'Cormorant Garamond'", "serif"],
         body: ["Inter", "sans-serif"],
-      }
+      },
+      letterSpacing: {
+        luxe: "0.25em",
+      },
+      keyframes: {
+        "fade-up": {
+          "0%": { opacity: "0", transform: "translateY(24px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+      },
+      animation: {
+        "fade-up": "fade-up 0.7s cubic-bezier(0.16,1,0.3,1) both",
+        "fade-in": "fade-in 0.8s ease both",
+        shimmer: "shimmer 3s linear infinite",
+      },
     },
   },
   plugins: [],

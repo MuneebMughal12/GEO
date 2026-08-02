@@ -98,7 +98,7 @@ const DivisionConstruction = () => {
         </div>
         <div className="relative z-10 max-w-container-max mx-auto px-margin-desktop w-full text-white">
           <div className="max-w-3xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/20 border border-secondary/30 text-secondary-fixed backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/20 border border-gold/30 text-secondary-fixed backdrop-blur-md">
               <span className="material-symbols-outlined text-[18px]">precision_manufacturing</span>
               <span className="font-display font-semibold text-xs uppercase tracking-widest">GEO Construction Division</span>
             </div>
@@ -109,7 +109,7 @@ const DivisionConstruction = () => {
               {company?.description || 'Setting the gold standard in civil engineering and large-scale infrastructure. From high-speed rail networks to industrial monoliths, GEO Construction delivers engineering excellence with surgical precision.'}
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <a href="#landmarks" className="bg-secondary text-white px-8 py-4 rounded-lg font-display font-semibold text-xs hover:bg-secondary/90 transition-all flex items-center gap-2 group">
+              <a href="#landmarks" className="bg-gold text-white px-8 py-4 rounded-lg font-display font-semibold text-xs hover:bg-gold/90 transition-all flex items-center gap-2 group">
                 Explore Portfolio
                 <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
               </a>
@@ -125,7 +125,7 @@ const DivisionConstruction = () => {
       <section className="py-[160px] bg-surface-container-lowest border-b border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
+            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat1Val || '500+'}
               </h3>
@@ -133,7 +133,7 @@ const DivisionConstruction = () => {
                 {company?.metadata?.stat1Label || 'Completed Projects'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-normal cursor-pointer">
+            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-normal cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat2Val || '12M'}
               </h3>
@@ -141,7 +141,7 @@ const DivisionConstruction = () => {
                 {company?.metadata?.stat2Label || 'Safe Man Hours'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-fast cursor-pointer">
+            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-fast cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat3Val || '15'}
               </h3>
@@ -149,7 +149,7 @@ const DivisionConstruction = () => {
                 {company?.metadata?.stat3Label || 'Global Locations'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-secondary bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
+            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
               <h3 className="text-primary font-display text-3xl font-bold mb-2">
                 {company?.metadata?.stat4Val || '$4B'}
               </h3>
@@ -185,7 +185,7 @@ const DivisionConstruction = () => {
                     alt={projects[0].name}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/95 to-transparent flex flex-col justify-end p-10">
-                    <span className="text-secondary font-display font-semibold text-xs tracking-wider mb-2">CIVIL INFRASTRUCTURE</span>
+                    <span className="text-gold-deep font-display font-semibold text-xs tracking-wider mb-2">CIVIL INFRASTRUCTURE</span>
                     <h3 className="text-white font-display text-2xl font-bold mb-4">{projects[0].name}</h3>
                     <p className="text-white/75 text-sm max-w-lg">{projects[0].description}</p>
                   </div>
@@ -237,14 +237,14 @@ const DivisionConstruction = () => {
                   {company?.metadata?.phase1Desc || 'Feasibility studies, soil analysis, and advanced structural modeling using proprietary GEO datasets.'}
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-secondary font-display font-semibold text-xs mt-auto">
+              <div className="flex items-center gap-2 text-gold-deep font-display font-semibold text-xs mt-auto">
                 <span className="material-symbols-outlined text-[18px]">edit</span>
                 Pre-Construction
               </div>
             </div>
             {/* Step 2 */}
             <div className="relative group animate-float-normal cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
-              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-secondary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">2</div>
+              <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-gold text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">2</div>
               <div>
                 <h3 className="font-display text-xl font-bold text-primary mb-4">
                   {company?.metadata?.phase2Title || 'Phase 02: Structural Groundwork'}
@@ -253,7 +253,7 @@ const DivisionConstruction = () => {
                   {company?.metadata?.phase2Desc || 'Deep foundation engineering, earth retention systems, and site utilities installation.'}
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-secondary font-display font-semibold text-xs mt-auto">
+              <div className="flex items-center gap-2 text-gold-deep font-display font-semibold text-xs mt-auto">
                 <span className="material-symbols-outlined text-[18px]">foundation</span>
                 Groundwork
               </div>
@@ -269,7 +269,7 @@ const DivisionConstruction = () => {
                   {company?.metadata?.phase3Desc || 'Rapid erection of core structures using pre-fabricated elements and high-capacity cranes.'}
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-secondary font-display font-semibold text-xs mt-auto">
+              <div className="flex items-center gap-2 text-gold-deep font-display font-semibold text-xs mt-auto">
                 <span className="material-symbols-outlined text-[18px]">apartment</span>
                 Mobilization
               </div>
@@ -286,8 +286,8 @@ const DivisionConstruction = () => {
               <h2 className="font-display text-3xl font-bold text-primary mb-2">Active Operations</h2>
               <p className="text-outline font-sans text-sm">Real-time progress of our major current infrastructure sites.</p>
             </div>
-            <div className="flex items-center gap-2 text-secondary font-display font-semibold text-xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse" />
+            <div className="flex items-center gap-2 text-gold-deep font-display font-semibold text-xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-gold animate-pulse" />
               LIVE MONITORING ACTIVE
             </div>
           </div>
@@ -311,7 +311,7 @@ const DivisionConstruction = () => {
                         {op.subtitle}
                       </p>
                     </div>
-                    <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase shrink-0">
+                    <span className="bg-gold/10 text-gold-deep px-3 py-1 rounded text-xs font-bold uppercase shrink-0">
                       {op.progress}% Complete
                     </span>
                   </div>
@@ -348,7 +348,7 @@ const DivisionConstruction = () => {
                       href={op.link} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="text-secondary font-display font-semibold text-xs flex items-center gap-2 hover:gap-3 transition-all"
+                      className="text-gold-deep font-display font-semibold text-xs flex items-center gap-2 hover:gap-3 transition-all"
                     >
                       Explore Operation Page <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </a>
@@ -363,7 +363,7 @@ const DivisionConstruction = () => {
       <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-20">
-            <span className="font-display text-xs font-bold text-secondary uppercase tracking-widest block mb-2">Our People</span>
+            <span className="font-display text-xs font-bold text-gold-deep uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
             <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
               Explore the professional minds driving safety, precision, and building excellence across GEO Group.
@@ -380,9 +380,9 @@ const DivisionConstruction = () => {
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="inline-block px-2.5 py-1 bg-secondary/10 text-secondary text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Group Leadership</span>
+                    <span className="inline-block px-2.5 py-1 bg-gold/10 text-gold-deep text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Group Leadership</span>
                     <h3 className="font-display text-xl font-bold text-primary">{globalCeo.name}</h3>
-                    <p className="font-sans text-xs text-secondary font-semibold mt-1">{globalCeo.designation}</p>
+                    <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{globalCeo.designation}</p>
                     <p className="font-sans text-xs text-on-surface-variant mt-4 leading-relaxed">{globalCeo.bio}</p>
                   </div>
                   {globalCeo.experience && (
@@ -404,7 +404,7 @@ const DivisionConstruction = () => {
                   <div>
                     <span className="inline-block px-2.5 py-1 bg-primary-fixed/10 text-primary text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Department Head</span>
                     <h3 className="font-display text-xl font-bold text-primary">{activeDivisionCeo.name}</h3>
-                    <p className="font-sans text-xs text-secondary font-semibold mt-1">{activeDivisionCeo.designation}</p>
+                    <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{activeDivisionCeo.designation}</p>
                     <p className="font-sans text-xs text-on-surface-variant mt-4 leading-relaxed">{activeDivisionCeo.bio}</p>
                   </div>
                   {activeDivisionCeo.experience && (
@@ -433,7 +433,7 @@ const DivisionConstruction = () => {
                         />
                       </div>
                       <h4 className="font-display text-base font-bold text-primary">{member.name}</h4>
-                      <p className="font-sans text-xs text-secondary font-semibold mt-1">{member.designation}</p>
+                      <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{member.designation}</p>
                       <p className="font-sans text-xs text-on-surface-variant mt-3 leading-relaxed">{member.bio}</p>
                     </div>
                     {member.experience && (

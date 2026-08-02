@@ -36,7 +36,7 @@ const BlogDetail = () => {
     return (
       <div className="pt-32 text-center text-on-surface-variant min-h-screen">
         <h2 className="text-2xl font-bold">Article Not Found</h2>
-        <Link to="/blog" className="text-secondary mt-4 block underline">Back to Knowledge Center</Link>
+        <Link to="/blog" className="text-gold-deep mt-4 block underline">Back to Knowledge Center</Link>
       </div>
     );
   }
@@ -49,12 +49,12 @@ const BlogDetail = () => {
       <SEO title={metaTitle} description={metaDescription} />
 
       <article className="max-w-3xl mx-auto px-6 py-20">
-        <Link to="/blog" className="text-secondary font-display font-semibold text-xs flex items-center gap-1 mb-8 hover:underline">
+        <Link to="/blog" className="text-gold-deep font-display font-semibold text-xs flex items-center gap-1 mb-8 hover:underline">
           <span className="material-symbols-outlined text-[16px]">arrow_back</span> Back to Knowledge Center
         </Link>
 
         <header className="space-y-4 mb-10 pb-8 border-b border-outline-variant/30">
-          <span className="bg-secondary/10 text-secondary px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
+          <span className="bg-gold/10 text-gold-deep px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
             {post.category}
           </span>
           <h1 className="font-display text-3xl md:text-4xl font-extrabold text-primary leading-tight">
