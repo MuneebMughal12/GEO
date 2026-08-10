@@ -66,12 +66,11 @@ const PublicLayout = () => {
         }`}
       >
         <div className="flex justify-between items-center max-w-container-max mx-auto px-6 md:px-margin-desktop h-14">
-          <Link to="/" className="flex items-baseline gap-1.5 group">
-            <span className="font-display text-xl md:text-2xl font-bold text-ivory tracking-tight">
-              {siteName.split(' ')[0]}
-            </span>
-            <span className="font-display text-xl md:text-2xl font-bold text-gradient-gold">
-              {siteName.split(' ').slice(1).join(' ') || 'Group'}
+          <Link to="/" className="flex items-center gap-3 group">
+            <span className="w-10 h-10 border border-gold/70 text-gold flex items-center justify-center font-display text-xl font-bold group-hover:bg-gold group-hover:text-ink transition-colors">G</span>
+            <span className="flex items-baseline gap-1.5">
+              <span className="font-display text-lg md:text-xl font-bold text-ivory tracking-tight">{siteName.split(' ')[0]}</span>
+              <span className="font-display text-lg md:text-xl font-bold text-gradient-gold">{siteName.split(' ').slice(1).join(' ') || 'Group'}</span>
             </span>
           </Link>
 
@@ -101,7 +100,7 @@ const PublicLayout = () => {
             {navLink('/blog', 'Knowledge', { match: true })}
             {navLink('/contact', 'Contact')}
 
-            <Link to="/contact" className="btn-gold px-6 py-2.5 rounded-full font-semibold text-xs uppercase tracking-wider">
+            <Link to="/contact" className="btn-gold px-6 py-3 rounded-md font-semibold text-xs uppercase tracking-wider">
               Get a Quote
             </Link>
           </div>
@@ -124,7 +123,7 @@ const PublicLayout = () => {
             </div>
             <Link to="/blog" className="text-champagne font-display text-lg">Knowledge Center</Link>
             <Link to="/contact" className="text-champagne font-display text-lg">Contact</Link>
-            <Link to="/contact" className="btn-gold text-center py-4 rounded-full font-bold uppercase tracking-wider text-sm">
+            <Link to="/contact" className="btn-gold text-center py-4 rounded-md font-bold uppercase tracking-wider text-sm">
               Get a Quote
             </Link>
           </div>
@@ -164,9 +163,12 @@ const PublicLayout = () => {
 
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-12 max-w-container-max mx-auto px-6 md:px-margin-desktop pb-16">
           <div>
-            <div className="flex items-baseline gap-1.5 mb-6">
-              <span className="font-display text-2xl font-bold text-ivory">{siteName.split(' ')[0]}</span>
-              <span className="font-display text-2xl font-bold text-gradient-gold">{siteName.split(' ').slice(1).join(' ') || 'Group'}</span>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-11 h-11 border border-gold/70 text-gold flex items-center justify-center font-display text-xl font-bold">G</span>
+              <span className="flex items-baseline gap-1.5">
+                <span className="font-display text-2xl font-bold text-ivory">{siteName.split(' ')[0]}</span>
+                <span className="font-display text-2xl font-bold text-gradient-gold">{siteName.split(' ').slice(1).join(' ') || 'Group'}</span>
+              </span>
             </div>
             <p className="text-luxury-muted text-sm mb-6 leading-relaxed">
               {settings?.metadata?.footerText || "Building tomorrow's infrastructure with today's most advanced technology and precision-led engineering."}

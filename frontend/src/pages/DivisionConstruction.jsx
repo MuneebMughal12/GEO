@@ -5,6 +5,7 @@ import SchemaMarkup from '../components/SchemaMarkup';
 import Lightbox from '../components/Lightbox';
 import { getMediaUrl } from '../services/media';
 import ProjectDetailModal from '../components/ProjectDetailModal';
+import PremiumPageHero from '../components/PremiumPageHero';
 
 const DivisionConstruction = () => {
   const [company, setCompany] = useState(null);
@@ -78,82 +79,56 @@ const DivisionConstruction = () => {
   const metaDescription = company?.seo?.metaDescription || 'Full-cycle building construction, infrastructure development, and project management by GEO Construction.';
 
   return (
-    <div className="relative w-full pt-20">
+    <div className="relative w-full bg-ivory">
       <SEO title={metaTitle} description={metaDescription} />
       <SchemaMarkup type="Service" data={{ name: 'GEO Construction Civil & Structural Engineering', description: metaDescription }} />
 
-      {/* Hero Section */}
-      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          {company?.heroVideo ? (
-            <video className="w-full h-full object-cover" autoPlay loop muted playsInline src={getMediaUrl(company.heroVideo)} />
-          ) : (
-            <img 
-              className="w-full h-full object-cover" 
-              src={getMediaUrl(company?.featuredImage) || "https://lh3.googleusercontent.com/aida-public/AB6AXuBPpuQBj18rx33YYWBnP1aKZrkDoa8ZGQe9sSUXt0DJyR0GxHJVlmAY_NbbHCR0zWOLS4FkNfaDaJu948FKC8OCPd0YlHvx067xCb9XmRcu8-EDR2WT1fOhbMkz75njMlcHUq5ei_4I3dMD_R0OBIF7i67LNv_kbHaM1rrk5dGABZmYUJIpgUYUSKgV61VZZiiiGnaNE9Izg2oidIde-j538_kHx5nfTOcsv-fHTNhdJ1RdGzrHMfhavTJwxVTppU4Jt-UGYcoRegg"}
-              alt="GEO Heavy Civil Construction Site"
-            />
-          )}
-          <div className="absolute inset-0 hero-gradient" />
+      <PremiumPageHero
+        eyebrow="Civil Engineering & Delivery"
+        current="GEO Construction"
+        image={company?.featuredImage || projects[0]?.images?.[0] || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=85&w=2200&auto=format&fit=crop'}
+        title={<>Building progress.<br /><span className="text-gradient-gold italic">Engineering trust.</span></>}
+        description={company?.description || 'Full-cycle construction and infrastructure delivery governed by safety, technical discipline and transparent project control.'}
+      >
+        <div className="flex flex-wrap gap-4">
+          <a href="#landmarks" className="btn-gold px-8 py-4 rounded-md font-semibold text-xs uppercase tracking-wider">Explore Portfolio</a>
+          <a href="#timeline" className="border border-white/35 bg-white/5 text-ivory px-8 py-4 rounded-md font-semibold text-xs uppercase tracking-wider hover:bg-white/10 transition-all">Delivery Process</a>
         </div>
-        <div className="relative z-10 max-w-container-max mx-auto px-margin-desktop w-full text-white">
-          <div className="max-w-3xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/20 border border-gold/30 text-secondary-fixed backdrop-blur-md">
-              <span className="material-symbols-outlined text-[18px]">precision_manufacturing</span>
-              <span className="font-display font-semibold text-xs uppercase tracking-widest">GEO Construction Division</span>
-            </div>
-            <h1 className="font-display text-4xl md:text-6xl font-extrabold leading-tight">
-              Building Tomorrow's Infrastructure.
-            </h1>
-            <p className="font-sans text-base md:text-lg text-white/80 leading-relaxed max-w-2xl">
-              {company?.description || 'Setting the gold standard in civil engineering and large-scale infrastructure. From high-speed rail networks to industrial monoliths, GEO Construction delivers engineering excellence with surgical precision.'}
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a href="#landmarks" className="bg-gold text-white px-8 py-4 rounded-lg font-display font-semibold text-xs hover:bg-gold/90 transition-all flex items-center gap-2 group">
-                Explore Portfolio
-                <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
-              </a>
-              <a href="#timeline" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-lg font-display font-semibold text-xs hover:bg-white/20 transition-all">
-                Technical Specs
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      </PremiumPageHero>
 
       {/* Capabilities Stats */}
-      <section className="py-[160px] bg-surface-container-lowest border-b border-outline-variant/10">
+      <section className="py-16 md:py-20 bg-ink border-b border-gold/20">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gold/20 border border-gold/20">
+            <div className="p-6 md:p-8 bg-ink-700 animate-float-slow cursor-pointer">
+              <h3 className="text-gold font-display text-3xl md:text-4xl font-bold mb-2">
                 {company?.metadata?.stat1Val || '500+'}
               </h3>
-              <p className="text-outline font-sans text-sm font-semibold">
+              <p className="text-champagne/60 font-sans text-xs uppercase tracking-wider font-semibold">
                 {company?.metadata?.stat1Label || 'Completed Projects'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-normal cursor-pointer">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+            <div className="p-6 md:p-8 bg-ink-700 animate-float-normal cursor-pointer">
+              <h3 className="text-gold font-display text-3xl md:text-4xl font-bold mb-2">
                 {company?.metadata?.stat2Val || '12M'}
               </h3>
-              <p className="text-outline font-sans text-sm font-semibold">
+              <p className="text-champagne/60 font-sans text-xs uppercase tracking-wider font-semibold">
                 {company?.metadata?.stat2Label || 'Safe Man Hours'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-fast cursor-pointer">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+            <div className="p-6 md:p-8 bg-ink-700 animate-float-fast cursor-pointer">
+              <h3 className="text-gold font-display text-3xl md:text-4xl font-bold mb-2">
                 {company?.metadata?.stat3Val || '15'}
               </h3>
-              <p className="text-outline font-sans text-sm font-semibold">
+              <p className="text-champagne/60 font-sans text-xs uppercase tracking-wider font-semibold">
                 {company?.metadata?.stat3Label || 'Global Locations'}
               </p>
             </div>
-            <div className="p-8 border-l-4 border-gold bg-surface rounded-r-xl shadow-sm animate-float-slow cursor-pointer">
-              <h3 className="text-primary font-display text-3xl font-bold mb-2">
+            <div className="p-6 md:p-8 bg-ink-700 animate-float-slow cursor-pointer">
+              <h3 className="text-gold font-display text-3xl md:text-4xl font-bold mb-2">
                 {company?.metadata?.stat4Val || '$4B'}
               </h3>
-              <p className="text-outline font-sans text-sm font-semibold">
+              <p className="text-champagne/60 font-sans text-xs uppercase tracking-wider font-semibold">
                 {company?.metadata?.stat4Label || 'Asset Portfolio'}
               </p>
             </div>
@@ -162,22 +137,22 @@ const DivisionConstruction = () => {
       </section>
 
       {/* Portfolio Bento Grid */}
-      <section id="landmarks" className="py-[200px] bg-surface">
+      <section id="landmarks" className="py-24 md:py-32 bg-ivory">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-24">
-            <h2 className="font-display text-3xl font-bold text-primary mb-4">
+          <div className="text-center mb-14">
+            <p className="luxe-eyebrow center justify-center mb-4">Selected Work</p><h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-4">
               {company?.metadata?.landmarksTitle || 'Engineering Landmarks'}
             </h2>
             <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">
               {company?.metadata?.landmarksSubtitle || 'A showcase of our multi-billion dollar infrastructure initiatives across the globe.'}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             {projects.length > 0 && (
               <>
                 <div 
                   onClick={() => setSelectedProject(projects[0])}
-                  className="md:col-span-8 relative h-[500px] rounded-xl overflow-hidden group animate-float-slow shadow-lg cursor-pointer"
+                  className="md:col-span-8 relative h-[500px] overflow-hidden group animate-float-slow shadow-luxe cursor-pointer"
                 >
                   <img 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
@@ -190,12 +165,12 @@ const DivisionConstruction = () => {
                     <p className="text-white/75 text-sm max-w-lg">{projects[0].description}</p>
                   </div>
                 </div>
-                <div className="md:col-span-4 flex flex-col gap-12">
+                <div className="md:col-span-4 flex flex-col gap-5">
                   {projects.slice(1, 3).map((proj, idx) => (
                     <div 
                       key={proj._id} 
                       onClick={() => setSelectedProject(proj)}
-                      className={`relative h-[238px] rounded-xl overflow-hidden group shadow-md cursor-pointer ${idx === 0 ? 'animate-float-normal' : 'animate-float-fast'}`}
+                      className={`relative h-[238px] overflow-hidden group shadow-luxe cursor-pointer ${idx === 0 ? 'animate-float-normal' : 'animate-float-fast'}`}
                     >
                       <img 
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
@@ -215,17 +190,17 @@ const DivisionConstruction = () => {
       </section>
 
       {/* Project Timeline Process */}
-      <section id="timeline" className="py-[160px] bg-surface-container-low border-y border-outline-variant/10 relative overflow-hidden">
+      <section id="timeline" className="py-24 md:py-32 bg-cream border-y border-gold/10 relative overflow-hidden">
         <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-24">
-            <h2 className="font-display text-3xl font-bold text-primary mb-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <p className="luxe-eyebrow center justify-center mb-4">Our Process</p><h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
               {company?.metadata?.lifecycleTitle || 'The Lifecycle of Excellence'}
             </h2>
             <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
               {company?.metadata?.lifecycleSubtitle || 'Our phased approach ensures stability and accountability at every milestone of the project delivery.'}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
             {/* Step 1 */}
             <div className="relative group animate-float-slow cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
               <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">1</div>
@@ -279,11 +254,11 @@ const DivisionConstruction = () => {
       </section>
 
       {/* Active Operations & Real-time Progress */}
-      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-24 md:py-32 bg-ivory border-t border-gold/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-24 gap-6">
+          <div className="flex flex-col sm:flex-row justify-between items-end mb-14 gap-6">
             <div>
-              <h2 className="font-display text-3xl font-bold text-primary mb-2">Active Operations</h2>
+              <p className="luxe-eyebrow mb-4">Live Delivery</p><h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-2">Active Operations</h2>
               <p className="text-outline font-sans text-sm">Real-time progress of our major current infrastructure sites.</p>
             </div>
             <div className="flex items-center gap-2 text-gold-deep font-display font-semibold text-xs">
@@ -292,7 +267,7 @@ const DivisionConstruction = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {activeOperations.map((op, idx) => (
               <div key={idx} className={`bg-white p-8 rounded-xl shadow-sm border border-outline-variant/20 cursor-pointer flex flex-col justify-between ${idx === 0 ? 'animate-float-slow' : 'animate-float-normal'}`}>
                 <div>
@@ -360,7 +335,7 @@ const DivisionConstruction = () => {
         </div>
       </section>
       {/* Team Section */}
-      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-24 md:py-32 bg-cream border-t border-gold/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-20">
             <span className="font-display text-xs font-bold text-gold-deep uppercase tracking-widest block mb-2">Our People</span>
@@ -371,7 +346,7 @@ const DivisionConstruction = () => {
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-16">
             {/* Main CEO (Corporate) */}
             {globalCeo && (
               <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-slow cursor-pointer">
@@ -453,9 +428,9 @@ const DivisionConstruction = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-[160px] bg-surface border-t border-outline-variant/10">
+        <section id="gallery" className="py-24 md:py-32 bg-ivory border-t border-gold/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-24">
+            <div className="text-center mb-14">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">Construction & Operations Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore snapshots of active sites, heavy civil machinery, and completed architectural landmarks.</p>
             </div>

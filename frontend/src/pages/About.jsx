@@ -3,6 +3,7 @@ import API from '../services/api';
 import SEO from '../components/SEO';
 import Reveal from '../components/Reveal';
 import { getMediaUrl } from '../services/media';
+import PremiumPageHero from '../components/PremiumPageHero';
 
 const About = () => {
   const [settings, setSettings] = useState(null);
@@ -42,53 +43,60 @@ const About = () => {
     <div className="relative w-full bg-ivory">
       <SEO title="About Us | GEO Group of Companies" description="Learn about our journey, corporate leadership, core values, and our divisions: GEO ARC, GEO Soil Testing, and GEO Construction." />
 
-      {/* Hero */}
-      <section className="luxe-dark luxe-grain py-40 pb-24 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(201,162,39,0.12),transparent_55%)]" />
-        <div className="relative z-10 max-w-container-max mx-auto px-6 md:px-margin-desktop space-y-5">
-          <p className="luxe-eyebrow center justify-center animate-fade-in">Our Legacy</p>
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-ivory tracking-tight animate-fade-up">
-            {m.aboutHeroTitle || <>The GEO Group <span className="text-gradient-gold italic">Story</span></>}
-          </h1>
-          <p className="font-sans text-luxury-muted max-w-xl mx-auto text-sm md:text-base animate-fade-up" style={{ animationDelay: '120ms' }}>
-            {m.aboutHeroSubtitle || 'Engineering stability and architectural brilliance across borders for over 25 years.'}
-          </p>
-        </div>
-      </section>
+      <PremiumPageHero
+        eyebrow="Our Legacy"
+        current="About"
+        image={settings?.homepage?.aboutImage || 'https://images.unsplash.com/photo-1542621334-a254cf47733d?q=85&w=2200&auto=format&fit=crop'}
+        title={m.aboutHeroTitle || <>Built on trust.<br /><span className="text-gradient-gold italic">Driven by detail.</span></>}
+        description={m.aboutHeroSubtitle || 'For more than two decades, GEO Group has united architectural imagination, geotechnical evidence and disciplined construction delivery.'}
+      />
 
       {/* Leadership message */}
-      <section className="py-24 md:py-32 bg-ivory">
-        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <Reveal className="space-y-6">
-            <p className="luxe-eyebrow">Message from Leadership</p>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-ink leading-tight">
-              {m.aboutMessageHeading || 'Uncompromising Standards in Civil Engineering'}
-            </h2>
-            <p className="font-sans text-on-surface-variant text-sm md:text-base leading-relaxed">
-              {m.aboutMessageText1 || 'At GEO Group of Companies, our operational philosophy is anchored in precision, transparency, and safety. Every project proposal we evaluate, borehole test we log, and civil foundation we secure represents our pledge of permanence to the global stakeholders who place their trust in our capabilities.'}
-            </p>
-            <p className="font-sans text-on-surface-variant text-sm md:text-base leading-relaxed">
-              {m.aboutMessageText2 || 'We continue to expand our technological parameters, adopting parametric modeling and high-capacity remote telemetry to make our physical infrastructures smarter, more sustainable, and highly efficient.'}
-            </p>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="luxe-card bg-white/80 p-10 rounded-2xl">
-              <h4 className="font-display font-bold text-ink text-xl mb-6">Core Commitments</h4>
-              <div className="space-y-6">
-                {commitments.map((c) => (
-                  <div key={c.title} className="flex gap-4">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-ink flex items-center justify-center border border-gold/25">
-                      <span className="material-symbols-outlined text-gold text-xl">{c.icon}</span>
-                    </div>
-                    <div>
-                      <h5 className="font-display font-bold text-sm text-ink">{c.title}</h5>
-                      <p className="font-sans text-xs text-on-surface-variant mt-1 leading-relaxed">{c.desc}</p>
-                    </div>
-                  </div>
+      <section className="py-24 md:py-36 bg-ivory overflow-hidden">
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <Reveal className="lg:col-span-5 relative">
+              <div className="aspect-[4/5] overflow-hidden bg-cream">
+                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=85&w=1400&auto=format&fit=crop" alt="GEO Group collaborative leadership environment" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+              </div>
+              <div className="absolute -bottom-6 -right-3 md:-right-6 bg-gold text-ink p-6 md:p-8 w-48 md:w-56 shadow-luxe">
+                <span className="font-display text-4xl md:text-5xl font-bold">25+</span>
+                <span className="block text-[10px] uppercase tracking-luxe mt-2 font-semibold">Years of accountable delivery</span>
+              </div>
+            </Reveal>
+            <Reveal delay={120} className="lg:col-span-7 lg:pl-4 space-y-6">
+              <p className="luxe-eyebrow">Message from Leadership</p>
+              <h2 className="font-display text-4xl md:text-6xl font-bold text-ink leading-[1.05]">
+                {m.aboutMessageHeading || <>Standards that endure.<br /><span className="text-gradient-gold italic">Partnerships that last.</span></>}
+              </h2>
+              <p className="font-sans text-on-surface-variant text-sm md:text-base leading-relaxed max-w-2xl">
+                {m.aboutMessageText1 || 'At GEO Group of Companies, our operational philosophy is anchored in precision, transparency, and safety. Every project proposal we evaluate, borehole test we log, and civil foundation we secure represents our pledge of permanence to the stakeholders who place their trust in us.'}
+              </p>
+              <p className="font-sans text-on-surface-variant text-sm md:text-base leading-relaxed max-w-2xl">
+                {m.aboutMessageText2 || 'We continue to expand our technical capabilities, adopting intelligent modeling and evidence-led systems to make the built environment safer, more sustainable and more efficient.'}
+              </p>
+              <div className="grid grid-cols-3 gap-4 pt-5 border-t border-gold/25">
+                {[['03', 'Specialist divisions'], ['01', 'Integrated standard'], ['360°', 'Project perspective']].map(([value, label]) => (
+                  <div key={label}><strong className="font-display text-2xl md:text-3xl text-ink">{value}</strong><span className="block text-[9px] md:text-[10px] uppercase tracking-wider text-on-surface-variant mt-1">{label}</span></div>
                 ))}
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mt-24 border border-gold/20">
+            {commitments.map((c, index) => (
+              <Reveal key={c.title} delay={index * 80}>
+                <div className="h-full p-8 md:p-10 bg-white border-b md:border-b-0 md:border-r last:border-0 border-gold/20 group hover:bg-ink transition-colors duration-500">
+                  <div className="w-12 h-12 bg-gold flex items-center justify-center mb-7 text-ink">
+                    <span className="material-symbols-outlined text-2xl">{c.icon}</span>
+                  </div>
+                  <span className="text-[10px] tracking-luxe text-gold-deep group-hover:text-gold">0{index + 1}</span>
+                  <h4 className="font-display font-bold text-ink group-hover:text-ivory text-xl mt-2 mb-3">{c.title}</h4>
+                  <p className="text-sm text-on-surface-variant group-hover:text-champagne/65 leading-relaxed">{c.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

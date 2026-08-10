@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import API from '../services/api';
 import SEO from '../components/SEO';
+import PremiumPageHero from '../components/PremiumPageHero';
+import { getMediaUrl } from '../services/media';
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -45,29 +47,32 @@ const BlogDetail = () => {
   const metaDescription = post.seo?.metaDescription || post.summary;
 
   return (
-    <div className="relative w-full pt-20 bg-background min-h-screen">
+    <div className="relative w-full bg-ivory min-h-screen">
       <SEO title={metaTitle} description={metaDescription} />
 
-      <article className="max-w-3xl mx-auto px-6 py-20">
+      <PremiumPageHero
+        eyebrow={post.category}
+        current="Article"
+        image={getMediaUrl(post.featuredImage) || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=85&w=2200&auto=format&fit=crop'}
+        title={post.title}
+        description={post.summary}
+        compact
+      />
+
+      <article className="max-w-4xl mx-auto px-6 py-20 md:py-28">
         <Link to="/blog" className="text-gold-deep font-display font-semibold text-xs flex items-center gap-1 mb-8 hover:underline">
           <span className="material-symbols-outlined text-[16px]">arrow_back</span> Back to Knowledge Center
         </Link>
 
-        <header className="space-y-4 mb-10 pb-8 border-b border-outline-variant/30">
-          <span className="bg-gold/10 text-gold-deep px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
-            {post.category}
-          </span>
-          <h1 className="font-display text-3xl md:text-4xl font-extrabold text-primary leading-tight">
-            {post.title}
-          </h1>
-          <div className="flex justify-between items-center text-xs text-outline font-semibold">
+        <header className="mb-12 pb-8 border-b border-gold/25">
+          <div className="flex justify-between items-center text-xs text-outline font-semibold uppercase tracking-wider">
             <span>By {post.author}</span>
             <span>{new Date(post.createdAt).toLocaleDateString()}</span>
           </div>
         </header>
 
         {/* Content body */}
-        <section className="font-sans text-on-surface-variant leading-relaxed text-base space-y-6 whitespace-pre-wrap">
+        <section className="font-sans text-on-surface-variant leading-[1.9] text-base md:text-lg space-y-7 whitespace-pre-wrap first-letter:font-display first-letter:text-6xl first-letter:font-bold first-letter:text-gold-deep first-letter:float-left first-letter:mr-3 first-letter:leading-none">
           {post.content}
         </section>
       </article>

@@ -4,6 +4,7 @@ import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
 import Lightbox from '../components/Lightbox';
 import { getMediaUrl } from '../services/media';
+import PremiumPageHero from '../components/PremiumPageHero';
 
 const DivisionSoil = () => {
   const [company, setCompany] = useState(null);
@@ -48,68 +49,35 @@ const DivisionSoil = () => {
   const metaDescription = company?.seo?.metaDescription || 'Soil investigation, geotechnical engineering, laboratory testing, and site analysis by GEO Soil Testing.';
 
   return (
-    <div className="relative w-full pt-20">
+    <div className="relative w-full bg-ivory">
       <SEO title={metaTitle} description={metaDescription} />
       <SchemaMarkup type="Service" data={{ name: 'GEO Soil Testing & Geotechnical Analysis', description: metaDescription }} />
 
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-20 md:pt-36 md:pb-28 bg-background overflow-hidden">
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-emerald-500/30 text-emerald-700 font-display font-semibold text-xs shadow-sm">
-                <span className="material-symbols-outlined text-[18px]">biotech</span>
-                Precision Laboratory Services
-              </div>
-              <h1 className="font-display text-4xl md:text-5xl font-extrabold text-primary leading-tight">
-                {company?.name || 'GEO Soil Testing'} <span className="text-gold-deep">Testing</span>
-              </h1>
-              <p className="font-sans text-on-surface-variant text-base md:text-lg leading-relaxed">
-                {company?.description || 'Advanced geotechnical analysis and material characterization. Our ISO-certified laboratories provide the bedrock data required for global architectural and infrastructure marvels.'}
-              </p>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <a href="#methodology" className="bg-primary text-on-primary px-8 py-4 rounded-lg font-display font-semibold text-xs hover:shadow-lg transition-all">
-                  Explore Capabilities
-                </a>
-                <a href="#equipment" className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-display font-semibold text-xs hover:bg-primary/5 transition-all">
-                  Our Instrumentation
-                </a>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl emerald-glow">
-                {company?.heroVideo ? (
-                  <video className="w-full aspect-[4/3] object-cover" autoPlay loop muted playsInline src={getMediaUrl(company.heroVideo)} />
-                ) : (
-                  <img 
-                    className="w-full aspect-[4/3] object-cover" 
-                    src={getMediaUrl(company?.featuredImage) || "https://lh3.googleusercontent.com/aida-public/AB6AXuBHybj8pwKP8LgTw-lrqzjcaQz9Wc8Rmod1-KL-_J6C1bI0r83Jfwyw2iT5Hea7c1PxEO2iAVk7ccK4Net1fI2UvWI15E-9oy31g4y_cGN2guV56Etibfn5GybcgBBr-0MKkhjDtJkDzxasTYhSnkjwpsNvrhKkxfZqouCCgHQbnV6Sudp1JUXPbClnIhN_Cy9HPiiPGR6o_TDlwIByp6KTycKUowoqvPvfOCxfYTcZbBYPbmx9oymY-CxKYzctwlVpe93w9Eu-O-A"}
-                    alt="GEO Triaxial Soil Testing Lab"
-                  />
-                )}
-              </div>
-              <div className="absolute -bottom-8 -left-8 glass-card p-6 rounded-xl shadow-xl z-20 max-w-[240px] border-l-4 border-emerald-500">
-                <p className="font-display font-bold text-emerald-700 text-xs tracking-wider mb-1">ACCURACY RATE</p>
-                <p className="font-display text-4xl font-extrabold text-primary">99.98%</p>
-                <p className="text-[10px] font-sans text-on-surface-variant mt-2">Validated against international ASTM/BS standards.</p>
-              </div>
-            </div>
-          </div>
+      <PremiumPageHero
+        eyebrow="Geotechnical Intelligence"
+        current="GEO Soil Testing"
+        image={company?.featuredImage || 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=85&w=2200&auto=format&fit=crop'}
+        title={<>Evidence beneath<br /><span className="text-gradient-gold italic">every foundation.</span></>}
+        description={company?.description || 'Advanced geotechnical investigation and material characterization that turns underground uncertainty into confident engineering decisions.'}
+      >
+        <div className="flex flex-wrap gap-4">
+          <a href="#methodology" className="btn-gold px-8 py-4 rounded-md font-semibold text-xs uppercase tracking-wider">Explore Capabilities</a>
+          <a href="#equipment" className="border border-white/35 bg-white/5 text-ivory px-8 py-4 rounded-md font-semibold text-xs uppercase tracking-wider hover:bg-white/10 transition-all">Our Instrumentation</a>
         </div>
-      </section>
+      </PremiumPageHero>
 
       {/* Scientific Methodology Section */}
-      <section id="methodology" className="py-[160px] bg-surface-container-low border-y border-outline-variant/10">
+      <section id="methodology" className="py-24 md:py-32 bg-cream border-y border-gold/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center max-w-3xl mx-auto mb-24">
-            <h2 className="font-display text-3xl font-bold text-primary mb-6">
+          <div className="grid md:grid-cols-2 gap-6 items-end mb-16">
+            <div><p className="luxe-eyebrow mb-4">From Ground to Guidance</p><h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-4">
               {company?.metadata?.methodologyTitle || 'Scientific Methodology'}
-            </h2>
+            </h2></div>
             <p className="font-sans text-sm text-on-surface-variant leading-relaxed">
               {company?.metadata?.methodologySubtitle || 'Our end-to-end testing lifecycle ensures every sample is tracked, analyzed, and reported with surgical precision.'}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
             {/* Step 1 */}
             <div className="relative group animate-float-slow cursor-pointer bg-white border border-outline-variant/30 rounded-2xl p-8 shadow-md pt-12 flex flex-col justify-between">
               <div className="absolute -top-6 left-8 w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-lg shadow-md transition-transform group-hover:scale-110">1</div>
@@ -163,18 +131,18 @@ const DivisionSoil = () => {
       </section>
 
       {/* Equipment Showcase (Bento Grid) */}
-      <section id="equipment" className="py-[160px] bg-background">
+      <section id="equipment" className="py-24 md:py-32 bg-ivory">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex flex-col sm:flex-row justify-between items-end mb-24 gap-8">
+          <div className="flex flex-col sm:flex-row justify-between items-end mb-14 gap-8">
             <div className="max-w-2xl">
               <span className="font-display text-xs font-bold text-gold-deep tracking-widest uppercase">The Arsenal</span>
-              <h2 className="font-display text-3xl font-bold text-primary mt-2">
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mt-3">
                 {company?.metadata?.equipmentTitle || 'World-Class Instrumentation'}
               </h2>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 h-auto md:h-[650px]">
-            <div className="md:col-span-8 rounded-2xl overflow-hidden relative group animate-float-slow shadow-lg cursor-pointer">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 h-auto md:h-[650px]">
+            <div className="md:col-span-8 overflow-hidden relative group animate-float-slow shadow-luxe cursor-pointer">
               <img 
                 className="w-full h-full object-cover" 
                 src={getMediaUrl(company?.metadata?.equipment1Image) || "https://lh3.googleusercontent.com/aida-public/AB6AXuAqWSc527K_R45c7K3sYFopSUmiaWG2mIPaELKOdLRO6hSH9zaVnSvMOrSDKcbaANJwjjiveM8kZLTsQp_2RrKzTnvdj0ylXKwTKhE-IvNRaDG3mjROvxudK1Xz9Na6mWU7C5Wv9ukUoJCgpdPYrFSwkYjNtuf1f9STKJnsat-1IE6twJ7pr6L0LkvefB5h-a5Mc1Gp7750kl1aunnCSigopPk41OdlOplnBPIIpdmlfNY51xIBa-8c6C7DKKICmloCn-7hWoPw8NY"}
@@ -189,7 +157,7 @@ const DivisionSoil = () => {
                 </p>
               </div>
             </div>
-            <div className="md:col-span-4 rounded-2xl overflow-hidden relative group animate-float-normal shadow-lg cursor-pointer">
+            <div className="md:col-span-4 overflow-hidden relative group animate-float-normal shadow-luxe cursor-pointer">
               <img 
                 className="w-full h-full object-cover" 
                 src={getMediaUrl(company?.metadata?.equipment2Image) || "https://lh3.googleusercontent.com/aida-public/AB6AXuCzBGqpi1nBgcaVwEbUfKSl5MubXT2A63gFjPu4d4FVLhhjtl2fy65LyWLA8LsEGw_578KEXdFiidNgJkHaFDVX_c3h-XIVXTOhvj4LBYgtDtds_7emlcAXtLlsW2WAx6kQ1GBHddVal-mVsTYCwCGeM6G16HNNDrTCdz6C3ODA6dhgWcgNLyacG-Tey6YrNkBfhrR-3d4QR384SNgWhivDeGUSCLKtV8i_g_k7DvzX9VcwGotHCSn32rTSeYONpEBsOEHBhdflU2g"}
@@ -210,9 +178,9 @@ const DivisionSoil = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-[160px] bg-surface-container-lowest border-t border-outline-variant/10">
+        <section id="gallery" className="py-24 md:py-32 bg-cream border-t border-gold/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-24">
+            <div className="text-center mb-14">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">Laboratory & Investigation Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore live captures of site excavations, core sample testing, and state-of-the-art instrumentation.</p>
             </div>
@@ -236,7 +204,7 @@ const DivisionSoil = () => {
       )}
 
       {/* Team Section */}
-      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-24 md:py-32 bg-ivory border-t border-gold/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-20">
             <span className="font-display text-xs font-bold text-gold-deep uppercase tracking-widest block mb-2">Our People</span>
@@ -247,7 +215,7 @@ const DivisionSoil = () => {
           </div>
 
           {/* Leaders Area (Main CEO + Department CEO) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-16">
             {/* Main CEO (Corporate) */}
             {globalCeo && (
               <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-slow cursor-pointer">
@@ -328,7 +296,7 @@ const DivisionSoil = () => {
       </section>
 
       {/* Reports Section & Data Integrity */}
-      <section className="py-24 md:py-40 bg-primary text-on-primary">
+      <section className="py-24 md:py-32 luxe-dark luxe-grain text-on-primary relative">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div className="relative">
@@ -424,9 +392,9 @@ const DivisionSoil = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-[160px] bg-surface border-t border-outline-variant/10">
+        <section id="gallery" className="py-24 md:py-32 bg-cream border-t border-gold/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-24">
+            <div className="text-center mb-14">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">GEO Soil Testing Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Explore snapshots of geotechnical drilling rigs, material testing instrumentation, and active core sample logging operations.</p>
             </div>

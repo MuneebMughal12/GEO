@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import API from '../services/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
+import PremiumPageHero from '../components/PremiumPageHero';
 
 const LocalLandingPage = () => {
   const { slug } = useParams();
@@ -46,27 +47,25 @@ const LocalLandingPage = () => {
   const metaDescription = page.seo?.metaDescription || page.description;
 
   return (
-    <div className="relative w-full pt-20 bg-background min-h-screen">
+    <div className="relative w-full bg-ivory min-h-screen">
       <SEO title={metaTitle} description={metaDescription} />
       <SchemaMarkup type="LocalBusiness" data={{ name: page.title, description: page.description, city: page.city }} />
       {page.faqs && page.faqs.length > 0 && <SchemaMarkup type="FAQ" data={{ faqs: page.faqs }} />}
 
-      <section className="bg-primary text-white py-20 text-center">
-        <div className="max-w-container-max mx-auto px-margin-desktop space-y-4">
-          <span className="inline-block py-1 px-3 bg-gold/20 text-secondary-fixed text-xs font-bold uppercase tracking-wider rounded">
-            Local Services: GEO {page.division}
-          </span>
-          <h1 className="font-display text-3xl md:text-4xl font-extrabold tracking-tight">
-            {page.title}
-          </h1>
-        </div>
-      </section>
+      <PremiumPageHero
+        eyebrow={`GEO ${page.division} • Local Expertise`}
+        current={page.city || 'Location'}
+        image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=85&w=2200&auto=format&fit=crop"
+        title={page.title}
+        description={page.description}
+        compact
+      />
 
-      <section className="py-24">
-        <div className="max-w-3xl mx-auto px-6">
+      <section className="py-24 md:py-32">
+        <div className="max-w-4xl mx-auto px-6">
           {/* Main content body (rich text) */}
           <div 
-            className="prose prose-blue font-sans text-on-surface-variant leading-relaxed text-base space-y-6"
+            className="prose prose-blue font-sans text-on-surface-variant leading-[1.9] text-base md:text-lg space-y-7"
             dangerouslySetInnerHTML={{ __html: page.content }}
           />
 
@@ -76,7 +75,7 @@ const LocalLandingPage = () => {
               <h3 className="font-display text-2xl font-bold text-primary mb-8">Frequently Asked Questions</h3>
               <div className="space-y-6">
                 {page.faqs.map((faq, idx) => (
-                  <div key={idx} className="bg-white p-6 rounded-2xl border border-outline-variant/20 shadow-sm">
+                  <div key={idx} className="bg-white p-7 border-l-2 border-gold shadow-luxe-soft">
                     <h4 className="font-display font-bold text-primary text-sm mb-2">{faq.question}</h4>
                     <p className="font-sans text-xs text-on-surface-variant leading-relaxed">{faq.answer}</p>
                   </div>

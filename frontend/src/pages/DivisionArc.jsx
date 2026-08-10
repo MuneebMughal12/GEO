@@ -5,6 +5,7 @@ import SchemaMarkup from '../components/SchemaMarkup';
 import Lightbox from '../components/Lightbox';
 import { getMediaUrl } from '../services/media';
 import ProjectDetailModal from '../components/ProjectDetailModal';
+import PremiumPageHero from '../components/PremiumPageHero';
 
 const DivisionArc = () => {
   const [company, setCompany] = useState(null);
@@ -62,70 +63,44 @@ const DivisionArc = () => {
   const metaDescription = company?.seo?.metaDescription || 'Innovative architectural design, masterplanning, and structural engineering services by GEO ARC.';
 
   return (
-    <div className="relative w-full blueprint-overlay pt-20">
+    <div className="relative w-full bg-ivory">
       <SEO title={metaTitle} description={metaDescription} />
       <SchemaMarkup type="Service" data={{ name: 'GEO ARC Architectural & Engineering Design', description: metaDescription }} />
 
-      {/* Hero Header */}
-      <header className="relative pt-24 pb-20 md:pt-36 md:pb-28">
-        <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
-          <div className="relative z-10 space-y-6">
-            <span className="inline-block py-1.5 px-4 gold-badge text-primary font-display font-semibold text-[10px] uppercase tracking-widest rounded-full">
-              {company?.metadata?.disciplineTag || 'Engineering & Architecture'}
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl font-extrabold text-primary leading-tight">
-              {company?.name || 'GEO ARC'}: {company?.tagline || 'Defining the Global Skyline'}
-            </h1>
-            <p className="font-sans text-on-surface-variant text-base md:text-lg leading-relaxed">
-              {company?.description || 'Precision-engineered structures meeting world-class architectural vision. We bridge the gap between aesthetic brilliance and structural integrity.'}
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a href="#portfolio" className="bg-primary text-on-primary px-8 py-4 rounded-lg font-display font-semibold text-xs hover:shadow-lg transition-all">
-                View Portfolio
-              </a>
-              <a href="#disciplines" className="border border-primary text-primary px-8 py-4 rounded-lg font-display font-semibold text-xs hover:bg-primary/5 transition-all">
-                Our Disciplines
-              </a>
-            </div>
-          </div>
-          <div className="relative h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-            {company?.heroVideo ? (
-              <video className="w-full h-full object-cover" autoPlay loop muted playsInline src={company.heroVideo} />
-            ) : (
-              <img
-                className="w-full h-full object-cover"
-                src={getMediaUrl(company?.featuredImage) || getMediaUrl(projects[0]?.images?.[0]) || ''}
-                alt="GEO ARC Wireframe Banner"
-                decoding="async"
-                fetchPriority="high"
-              />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
-          </div>
+      <PremiumPageHero
+        eyebrow={company?.metadata?.disciplineTag || 'Architecture & Design'}
+        current="GEO ARC"
+        image={company?.featuredImage || projects[0]?.images?.[0] || 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=85&w=2200&auto=format&fit=crop'}
+        title={<>{company?.name || 'GEO ARC'}<br /><span className="text-gradient-gold italic">{company?.tagline || 'Defining the Skyline'}</span></>}
+        description={company?.description || 'Architecture shaped by context, clarity and technical intelligence—from first sketch to fully resolved environment.'}
+      >
+        <div className="flex flex-wrap gap-4">
+          <a href="#portfolio" className="btn-gold px-8 py-4 rounded-md font-semibold text-xs uppercase tracking-wider">View Portfolio</a>
+          <a href="#disciplines" className="border border-white/35 bg-white/5 text-ivory px-8 py-4 rounded-md font-semibold text-xs uppercase tracking-wider hover:bg-white/10 transition-all">Our Disciplines</a>
         </div>
-      </header>
+      </PremiumPageHero>
 
       {/* Specialized Services Section */}
-      <section id="disciplines" className="py-[160px] bg-surface-container-lowest border-y border-outline-variant/10">
+      <section id="disciplines" className="py-24 md:py-32 bg-ivory border-y border-gold/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-24">
-            <h2 className="font-display text-3xl font-bold text-primary mb-4">
+          <div className="grid md:grid-cols-2 gap-6 items-end mb-14">
+            <div><p className="luxe-eyebrow mb-4">What We Do</p><h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-4">
               {company?.metadata?.coreDisciplinesTitle || 'Core Disciplines'}
-            </h2>
-            <div className="w-20 h-1 bg-gold mx-auto"></div>
+            </h2></div>
+            <p className="text-on-surface-variant leading-relaxed md:border-l md:border-gold/30 md:pl-8">Specialist design capability coordinated through one rigorous architectural process.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-gold/15">
             {services.map((service, idx) => (
-              <div key={service._id} className={`p-8 bg-white border border-outline-variant/30 rounded-xl sky-glow flex flex-col justify-between cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
+              <div key={service._id} className={`p-8 md:p-10 bg-white border-b md:border-b-0 md:border-r last:border-0 border-gold/15 flex flex-col justify-between cursor-pointer group hover:bg-ink transition-colors duration-500 ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
                 <div>
-                  <div className="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-lg mb-6 text-primary">
+                  <div className="w-12 h-12 bg-gold flex items-center justify-center mb-6 text-ink">
                     <span className="material-symbols-outlined text-2xl">{service.icon}</span>
                   </div>
-                  <h3 className="font-display text-xl font-bold text-primary mb-4">{service.name}</h3>
-                  <p className="font-sans text-sm text-on-surface-variant mb-6">{service.description}</p>
+                  <h3 className="font-display text-xl font-bold text-primary group-hover:text-ivory mb-4">{service.name}</h3>
+                  <p className="font-sans text-sm text-on-surface-variant group-hover:text-champagne/65 mb-6 leading-relaxed">{service.description}</p>
                 </div>
                 {service.features && service.features.length > 0 && (
-                  <ul className="space-y-3 font-sans text-sm text-on-surface mt-auto">
+                  <ul className="space-y-3 font-sans text-sm text-on-surface group-hover:text-champagne/80 mt-auto">
                     {service.features.map((feature, i) => (
                       <li key={i} className="flex items-center gap-2">
                         <span className="material-symbols-outlined text-[18px] text-gold-deep">check_circle</span>
@@ -141,11 +116,11 @@ const DivisionArc = () => {
       </section>
 
       {/* Projects Gallery (Asymmetric Layout) */}
-      <section id="portfolio" className="py-[160px] bg-background">
+      <section id="portfolio" className="py-24 md:py-32 bg-cream">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex justify-between items-end mb-24">
+          <div className="flex justify-between items-end mb-14">
             <div>
-              <h2 className="font-display text-3xl font-bold text-primary">
+              <p className="luxe-eyebrow mb-4">Selected Work</p><h2 className="font-display text-4xl md:text-5xl font-bold text-primary">
                 {company?.metadata?.landmarkProjectsTitle || 'Landmark Projects'}
               </h2>
               <p className="font-sans text-sm text-on-surface-variant mt-2">
@@ -154,14 +129,14 @@ const DivisionArc = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             {projects.map((project, idx) => {
               const spanClass = idx % 3 === 0 ? 'md:col-span-8' : 'md:col-span-4';
               return (
                 <div 
                   key={project._id} 
                   onClick={() => setSelectedProject(project)}
-                  className={`${spanClass} group relative overflow-hidden rounded-2xl h-[450px] shadow-lg cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
+                  className={`${spanClass} group relative overflow-hidden h-[450px] shadow-luxe cursor-pointer ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}
                 >
                   <img
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -184,9 +159,9 @@ const DivisionArc = () => {
 
       {/* Media Gallery Section */}
       {gallery.length > 0 && (
-        <section id="gallery" className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
+        <section id="gallery" className="py-24 md:py-32 bg-ivory border-t border-gold/10">
           <div className="max-w-container-max mx-auto px-margin-desktop">
-            <div className="text-center mb-24">
+            <div className="text-center mb-14">
               <h2 className="font-display text-3xl font-bold text-primary mb-4">Division Showcase Gallery</h2>
               <p className="font-sans text-sm text-on-surface-variant max-w-2xl mx-auto">Browse high-fidelity design models, physical blueprints, and structural milestones.</p>
             </div>
@@ -212,9 +187,9 @@ const DivisionArc = () => {
       )}
 
       {/* Team Section */}
-      <section className="py-[160px] bg-surface-container-low border-t border-outline-variant/10">
+      <section className="py-24 md:py-32 bg-cream border-t border-gold/10">
         <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-20">
+          <div className="text-center mb-14">
             <span className="font-display text-xs font-bold text-gold-deep uppercase tracking-widest block mb-2">Our People</span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">GEO ARC Team</h2>
             <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
@@ -277,7 +252,7 @@ const DivisionArc = () => {
       </section>
 
       {/* Certifications and legacy of excellence */}
-      <section className="py-120px bg-white border-t border-outline-variant/20">
+      <section className="py-24 md:py-32 bg-white border-t border-gold/15">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
             <div>

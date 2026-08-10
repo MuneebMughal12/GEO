@@ -326,29 +326,25 @@
 }
 
 .animate-float-slow {
-  animation: anti-gravity-slow 7s ease-in-out infinite;
-  perspective: 1000px;
-  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s;
 }
 
 .animate-float-normal {
-  animation: anti-gravity-normal 5.5s ease-in-out infinite;
-  perspective: 1000px;
-  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s;
 }
 
 .animate-float-fast {
-  animation: anti-gravity-fast 4s ease-in-out infinite;
-  perspective: 1000px;
-  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s;
 }
 
 .animate-float-slow:hover,
 .animate-float-normal:hover,
 .animate-float-fast:hover {
-  animation-play-state: paused !important;
-  transform: scale(1.05) translateY(-5px) rotateX(0deg) rotateY(0deg) !important;
-  box-shadow: 0 35px 70px -15px rgba(0, 35, 102, 0.35), 0 20px 30px -10px rgba(0, 35, 102, 0.25) !important;
-  z-index: 30;
+  transform: translateY(-6px) !important;
+  border-color: rgba(201,162,39,0.45) !important;
+  box-shadow: 0 28px 65px -28px rgba(10,14,26,0.5) !important;
+  z-index: 10;
 }
-

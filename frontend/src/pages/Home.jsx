@@ -53,10 +53,7 @@ const Home = () => {
     { label: 'Active Projects', value: '45+' },
   ];
 
-  const partners = settings?.homepage?.partners || [
-    { name: 'PARTNER_A' }, { name: 'PARTNER_B' }, { name: 'PARTNER_C' },
-    { name: 'PARTNER_D' }, { name: 'PARTNER_E' }, { name: 'PARTNER_F' },
-  ];
+  const partners = settings?.homepage?.partners || [];
 
   const showcaseItems = arcGalleryProjects.length > 0
     ? arcGalleryProjects.slice(0, 8).map((project) => ({
@@ -331,18 +328,17 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ===== Testimonials + Partners ===== */}
-      <section className="py-28 md:py-36 bg-cream">
+      {/* ===== Testimonials + Reasons to Choose GEO ===== */}
+      <section className="py-24 md:py-36 bg-cream">
         <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <Reveal>
-              <p className="luxe-eyebrow mb-4">Testimonials</p>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8">
-                {settings?.metadata?.testimonialTitle || 'What Global Leaders Say'}
-              </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-stretch">
+            <Reveal className="lg:col-span-7">
+              <div>
+              <p className="luxe-eyebrow mb-4">Client Perspective</p>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-ink mb-8 leading-tight">Trust is earned<br /><span className="text-gradient-gold italic">one decision at a time.</span></h2>
               <div className="space-y-6">
                 {testimonials.length > 0 ? testimonials.map((t, index) => (
-                  <div key={index} className="luxe-card bg-white/80 p-8 rounded-2xl relative">
+                  <div key={index} className="bg-white p-8 md:p-10 border-l-2 border-gold shadow-luxe-soft relative">
                     <span className="material-symbols-outlined text-gold/30 text-5xl absolute top-4 right-6">format_quote</span>
                     <p className="font-cormorant italic text-xl text-ink/80 mb-6 leading-relaxed relative z-10">"{t.review}"</p>
                     <div className="flex items-center gap-4">
@@ -354,23 +350,32 @@ const Home = () => {
                     </div>
                   </div>
                 )) : (
-                  <div className="luxe-card bg-white/80 p-8 rounded-2xl">
-                    <p className="font-cormorant italic text-xl text-ink/70">"GEO Group transformed our vision into a landmark. Precision, elegance, and reliability at every stage."</p>
-                    <div className="mt-6 text-sm text-gold-deep">Featured Client Testimonial</div>
+                  <div className="bg-ink p-8 md:p-10 text-ivory shadow-luxe">
+                    <p className="font-display text-2xl md:text-3xl leading-snug">Clear advice. Coordinated expertise. Accountable delivery.</p>
+                    <p className="mt-5 text-sm text-champagne/60 leading-relaxed">Our work is structured around the decisions clients need to make—from concept feasibility and ground conditions to cost, sequencing and final delivery.</p>
                   </div>
                 )}
               </div>
+              </div>
             </Reveal>
 
-            <Reveal delay={120}>
-              <p className="luxe-eyebrow mb-6">Trusted By Industry Leaders</p>
-              <div className="grid grid-cols-3 gap-4">
-                {partners.map((partner, idx) => (
-                  <div key={idx} className="flex items-center justify-center p-6 bg-white/70 rounded-xl border border-gold/15 hover:border-gold/40 transition-colors">
-                    <span className="font-display font-bold text-base md:text-lg text-ink/40">{partner.name}</span>
+            <Reveal delay={120} className="lg:col-span-5 bg-gold p-8 md:p-12">
+              <p className="text-ink/60 text-[10px] tracking-luxe uppercase font-bold mb-4">Why GEO Group</p>
+              <h3 className="font-display text-3xl md:text-4xl font-bold text-ink mb-8">One accountable partner from insight to execution.</h3>
+              <div className="space-y-0 border-t border-ink/20">
+                {[
+                  ['01', 'Integrated disciplines', 'Architecture, testing and construction aligned from day one.'],
+                  ['02', 'Evidence-led decisions', 'Technical clarity before time and budget are committed.'],
+                  ['03', 'Visible accountability', 'Clear ownership, milestones and communication throughout.'],
+                  ['04', 'Built for longevity', 'Solutions considered beyond handover and immediate delivery.'],
+                ].map(([number, title, text]) => (
+                  <div key={number} className="grid grid-cols-[44px_1fr] gap-4 py-5 border-b border-ink/20">
+                    <span className="font-display font-bold text-ink/45">{number}</span>
+                    <div><h4 className="font-display font-bold text-lg text-ink">{title}</h4><p className="text-sm text-ink/65 leading-relaxed mt-1">{text}</p></div>
                   </div>
                 ))}
               </div>
+              {partners.length > 0 && <p className="mt-7 text-xs text-ink/55">Trusted relationships: {partners.map((partner) => partner.name).join(' • ')}</p>}
             </Reveal>
           </div>
         </div>
@@ -417,10 +422,10 @@ const Home = () => {
       )}
 
       {/* ===== CTA ===== */}
-      <section className="py-28 bg-cream">
-        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
+      <section className="bg-cream">
+        <div className="max-w-container-max mx-auto">
           <Reveal>
-            <div className="luxe-dark luxe-grain rounded-3xl p-12 md:p-20 relative overflow-hidden text-center shadow-luxe">
+            <div className="luxe-dark luxe-grain p-12 md:p-24 relative overflow-hidden text-center shadow-luxe">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(201,162,39,0.15),transparent_60%)]" />
               <div className="relative z-10">
                 <p className="luxe-eyebrow center justify-center mb-6">Let's Build Together</p>
@@ -431,10 +436,10 @@ const Home = () => {
                   {settings?.metadata?.ctaSubtitle || 'Consult with our experts across Architectural Design, Geotechnical Engineering, and Infrastructure Construction.'}
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-                  <Link to="/contact" className="btn-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
+                  <Link to="/contact" className="btn-gold px-10 py-4 rounded-md font-semibold uppercase tracking-wider text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
                     <span className="material-symbols-outlined">mail</span> {settings?.metadata?.ctaContactText || 'Contact Us Now'}
                   </Link>
-                  <a href={`https://wa.me/${(settings?.whatsappNumber || '971500000000').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="btn-outline-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
+                  <a href={`https://wa.me/${(settings?.whatsappNumber || '971500000000').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="btn-outline-gold px-10 py-4 rounded-md font-semibold uppercase tracking-wider text-sm flex items-center justify-center gap-3 w-full sm:w-auto">
                     <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" /></svg>
                     {settings?.metadata?.ctaWhatsappText || 'WhatsApp Us'}
                   </a>
