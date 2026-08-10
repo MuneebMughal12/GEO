@@ -103,10 +103,8 @@ const Home = () => {
             <div className="animate-fade-in mb-7 inline-flex items-center gap-3 text-gold text-[11px] tracking-luxe uppercase font-semibold">
               <span className="w-10 h-px bg-gold" /> One Group. Three Disciplines.
             </div>
-            <h1 className="font-display text-5xl sm:text-6xl md:text-[82px] font-bold text-ivory mb-7 leading-[0.98] tracking-[-0.035em] animate-fade-up">
-              {settings?.homepage?.heroTitle || (
-                <>We shape ideas into <span className="text-gradient-gold italic">landmarks.</span></>
-              )}
+            <h1 className="font-display text-5xl sm:text-6xl md:text-[78px] font-bold text-ivory mb-7 leading-[0.98] tracking-[-0.035em] animate-fade-up">
+              <>Architecture. Engineering.<br /><span className="text-gradient-gold">Construction.</span></>
             </h1>
             <p className="font-sans text-base md:text-lg text-champagne/75 mb-10 max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: '120ms' }}>
               {settings?.homepage?.heroSubtitle || 'Architecture, geotechnical intelligence and construction expertise—integrated to deliver confident outcomes from concept to completion.'}
@@ -142,14 +140,14 @@ const Home = () => {
       </section>
 
       {/* ===== Divisions ===== */}
-      <section id="divisions" className="py-24 md:py-36 bg-ivory relative">
+      <section id="divisions" className="py-24 md:py-32 bg-ink relative">
         <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
           <Reveal className="mb-14 md:mb-16 grid md:grid-cols-2 gap-6 items-end">
             <div>
               <p className="luxe-eyebrow mb-4">Our Core Divisions</p>
-              <h2 className="font-display text-4xl md:text-6xl font-bold text-ink leading-[1.04]">One vision.<br /><span className="text-gradient-gold italic">Complete expertise.</span></h2>
+              <h2 className="font-display text-4xl md:text-6xl font-bold text-ivory leading-[1.04]">One vision.<br /><span className="text-gradient-gold">Complete expertise.</span></h2>
             </div>
-            <p className="font-sans text-on-surface-variant md:pl-12 md:border-l border-gold/30 leading-relaxed max-w-xl">From the first line on paper to the final structure on site, our specialist divisions work together to solve complex challenges with clarity.</p>
+            <p className="font-sans text-champagne/65 md:pl-12 md:border-l border-gold/30 leading-relaxed max-w-xl">From the first line on paper to the final structure on site, our specialist divisions work together to solve complex challenges with clarity.</p>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {divisions.map((d, i) => (
@@ -177,37 +175,43 @@ const Home = () => {
       <div className="section-rule max-w-container-max mx-auto" />
 
       {/* ===== About ===== */}
-      <section className="py-28 md:py-36 relative overflow-hidden bg-cream">
-        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <Reveal className="relative gold-frame">
-            <div className="rounded-2xl overflow-hidden shadow-luxe relative z-10">
+      <section className="py-24 md:py-32 relative overflow-hidden bg-ivory">
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop grid grid-cols-1 md:grid-cols-[0.95fr_1.05fr] gap-12 md:gap-16 items-center">
+          <Reveal className="relative">
+            <div className="rounded-[28px] overflow-hidden shadow-luxe relative z-10">
               {settings?.homepage?.aboutVideo ? (
                 <video className="w-full h-[560px] object-cover" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.aboutVideo)} />
               ) : (
                 <img alt="Modern architecture" className="w-full h-[560px] object-cover" src={getMediaUrl(settings?.homepage?.aboutImage) || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop'} loading="lazy" decoding="async" />
               )}
             </div>
-            <div className="absolute -bottom-6 -right-6 w-40 h-40 border border-gold/40 rounded-2xl -z-0" />
+            <div className="absolute top-8 left-0 z-20 bg-gold text-ink px-7 py-5 rounded-r-2xl shadow-xl">
+              <strong className="font-display text-4xl md:text-5xl">25+</strong>
+              <span className="block text-[10px] uppercase tracking-wider font-bold">Years of excellence</span>
+            </div>
           </Reveal>
           <Reveal delay={120}>
-            <p className="luxe-eyebrow mb-4">About GEO Group</p>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-6 leading-tight">{settings?.homepage?.aboutTitle || 'A Legacy Built on Precision & Trust'}</h2>
+            <p className="luxe-eyebrow mb-4">Why Choose Us</p>
+            <h2 className="font-display text-3xl md:text-5xl font-bold text-ink mb-5 leading-tight">{settings?.homepage?.aboutTitle || 'Building Dreams, Crafting Excellence'}</h2>
+            <h3 className="font-display text-base md:text-lg font-bold text-ink/80 mb-4 uppercase">Your trusted partner in design, testing & construction</h3>
             <p className="font-sans text-on-surface-variant mb-8 leading-relaxed">
               {settings?.homepage?.aboutText || 'With over two decades of experience, GEO Group of Companies has stood as a pillar of reliability in the construction and engineering sectors. We integrate cutting-edge technology with traditional craftsmanship to deliver projects that shape the skylines of tomorrow.'}
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="space-y-4">
               {[
-                { icon: 'rocket_launch', title: 'Our Mission', text: settings?.homepage?.aboutMission || 'To define new standards in sustainable construction and technical precision.' },
-                { icon: 'visibility', title: 'Our Vision', text: settings?.homepage?.aboutVision || 'Becoming the global leader in integrated engineering and architectural services.' },
+                { icon: 'architecture', title: 'As an Architect', text: 'We create context-aware residential, commercial and institutional environments.' },
+                { icon: 'science', title: 'As an Engineer', text: 'We convert ground conditions and technical evidence into buildable confidence.' },
+                { icon: 'construction', title: 'As a Builder', text: 'We execute with disciplined coordination, safety and lasting material quality.' },
               ].map((b) => (
-                <div key={b.title} className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-ink flex items-center justify-center border border-gold/25">
-                    <span className="material-symbols-outlined text-gold">{b.icon}</span>
+                <div key={b.title} className="flex gap-4 items-center bg-white border-l-4 border-gold rounded-2xl p-5 shadow-luxe-soft hover:-translate-y-1 transition-transform">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gold flex items-center justify-center text-ink">
+                    <span className="material-symbols-outlined">{b.icon}</span>
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h4 className="font-display font-bold text-ink mb-1">{b.title}</h4>
-                    <p className="font-sans text-xs text-on-surface-variant leading-relaxed">{b.text}</p>
+                    <p className="font-sans text-xs md:text-sm text-on-surface-variant leading-relaxed">{b.text}</p>
                   </div>
+                  <span className="material-symbols-outlined text-gold">expand_more</span>
                 </div>
               ))}
             </div>
@@ -292,35 +296,21 @@ const Home = () => {
             </Link>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
             {projects.length > 0 ? (
-              <>
-                <Reveal className="md:col-span-8">
-                  <div onClick={() => setSelectedProject(projects[0])} className="rounded-2xl overflow-hidden relative group shadow-luxe cursor-pointer h-full min-h-[400px]">
-                    <img alt={projects[0].name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110" src={getMediaUrl(projects[0].images?.[0]) || ''} loading="lazy" decoding="async" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent flex flex-col justify-end p-8">
-                      <span className="border border-gold/50 text-gold px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold mb-4 inline-block w-fit">{projects[0].category}</span>
-                      <h3 className="font-display text-2xl md:text-3xl font-bold text-ivory mb-2">{projects[0].name}</h3>
-                      <p className="text-luxury-muted text-sm max-w-lg line-clamp-2">{projects[0].description}</p>
+              projects.slice(0, 4).map((proj, index) => (
+                <Reveal key={proj._id} delay={(index % 2) * 100}>
+                  <div onClick={() => setSelectedProject(proj)} className="relative h-[390px] md:h-[460px] rounded-[28px] overflow-hidden group shadow-luxe cursor-pointer">
+                    <img alt={proj.name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105" src={getMediaUrl(proj.images?.[0]) || ''} loading="lazy" decoding="async" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent flex flex-col justify-end p-7 md:p-9">
+                      <span className="text-gold text-[10px] uppercase tracking-luxe font-bold mb-2">{proj.category}</span>
+                      <h3 className="font-display text-2xl md:text-3xl font-bold text-ivory mb-3">{proj.name}</h3>
+                      <p className="text-champagne/70 text-sm line-clamp-2 max-w-xl mb-5">{proj.description}</p>
+                      <span className="inline-flex items-center gap-2 bg-gold text-ink px-5 py-3 rounded-full w-fit text-[10px] uppercase tracking-wider font-bold">Explore Project <span className="material-symbols-outlined text-base">arrow_forward</span></span>
                     </div>
                   </div>
                 </Reveal>
-                <div className="md:col-span-4 flex flex-col gap-6">
-                  {projects.slice(1, 3).map((proj) => (
-                    <Reveal key={proj._id} delay={120} className="flex-1">
-                      <div onClick={() => setSelectedProject(proj)} className="relative h-full min-h-[188px] rounded-2xl overflow-hidden group shadow-luxe cursor-pointer">
-                        <img alt={proj.name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-500 group-hover:scale-105" src={getMediaUrl(proj.images?.[0]) || ''} loading="lazy" decoding="async" />
-                        <div className="absolute inset-0 bg-ink/60 group-hover:bg-ink/30 transition-all flex items-end p-6">
-                          <div>
-                            <span className="text-gold font-sans font-semibold text-[10px] uppercase tracking-wider block mb-1">{proj.category}</span>
-                            <h4 className="text-ivory font-display font-bold text-lg">{proj.name}</h4>
-                          </div>
-                        </div>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </>
+              ))
             ) : (
               <p className="col-span-12 text-center text-on-surface-variant py-10">No projects currently pinned to the homepage.</p>
             )}
