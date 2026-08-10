@@ -3,11 +3,13 @@ import { getMediaUrl } from '../services/media';
 
 const ProjectDetailModal = ({ project, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
 
   useEffect(() => {
     if (project) {
       document.body.style.overflow = 'hidden';
       setCurrentImageIndex(0);
+      setFullscreenOpen(false);
       return () => {
         document.body.style.overflow = 'unset';
       };
@@ -49,13 +51,27 @@ const ProjectDetailModal = ({ project, onClose }) => {
 
         {/* Left Side: Image Slider */}
         <div className="w-full md:w-3/5 bg-surface-container relative flex items-center justify-center h-1/2 md:h-full group overflow-hidden">
-          <img 
-            src={getMediaUrl(images[currentImageIndex])} 
-            alt={`${project.name} - slide ${currentImageIndex + 1}`} 
-            className="w-full h-full object-cover transition-all duration-500"
-            decoding="async"
-          />
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setFullscreenOpen(true);
+            }}
+            className="w-full h-full cursor-zoom-in"
+            aria-label={`Open ${project.name} image ${currentImageIndex + 1} fullscreen`}
+          >
+            <img
+              src={getMediaUrl(images[currentImageIndex])}
+              alt={`${project.name} - slide ${currentImageIndex + 1}`}
+              className="w-full h-full object-cover transition-all duration-500"
+              decoding="async"
+            />
+          </button>
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+
+          <div className="absolute top-6 right-6 pointer-events-none bg-black/55 text-white rounded-full w-10 h-10 flex items-center justify-center backdrop-blur-sm">
+            <span className="material-symbols-outlined text-xl">fullscreen</span>
+          </div>
 
           {/* Left/Right Arrows */}
           {images.length > 1 && (
@@ -149,6 +165,61 @@ const ProjectDetailModal = ({ project, onClose }) => {
           </div>
         </div>
       </div>
+
+      {fullscreenOpen && (
+        <div
+          className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-md flex items-center justify-center p-3 md:p-8"
+          onClick={(e) => {
+            e.stopPropagation();
+            setFullscreenOpen(false);
+          }}
+        >
+          <img
+            src={getMediaUrl(images[currentImageIndex])}
+            alt={`${project.name} - fullscreen image ${currentImageIndex + 1}`}
+            className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+            decoding="async"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setFullscreenOpen(false);
+            }}
+            className="absolute top-4 right-4 md:top-6 md:right-6 w-11 h-11 rounded-full bg-white/95 text-primary shadow-xl flex items-center justify-center hover:scale-105 transition-transform"
+            aria-label="Close fullscreen image"
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
+
+          {images.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="absolute left-3 md:left-8 w-12 h-12 rounded-full bg-white/90 text-primary shadow-xl flex items-center justify-center hover:scale-105 transition-transform"
+                aria-label="Previous fullscreen image"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_left</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="absolute right-3 md:right-8 w-12 h-12 rounded-full bg-white/90 text-primary shadow-xl flex items-center justify-center hover:scale-105 transition-transform"
+                aria-label="Next fullscreen image"
+              >
+                <span className="material-symbols-outlined text-3xl">chevron_right</span>
+              </button>
+            </>
+          )}
+
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/65 text-white text-xs font-semibold tracking-wider">
+            {currentImageIndex + 1} / {images.length}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
