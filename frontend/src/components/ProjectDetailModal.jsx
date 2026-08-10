@@ -53,6 +53,7 @@ const ProjectDetailModal = ({ project, onClose }) => {
             src={getMediaUrl(images[currentImageIndex])} 
             alt={`${project.name} - slide ${currentImageIndex + 1}`} 
             className="w-full h-full object-cover transition-all duration-500"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 

@@ -15,6 +15,7 @@ const Home = () => {
   const [projects, setProjects] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [gallery, setGallery] = useState([]);
+  const [arcGalleryProjects, setArcGalleryProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -22,16 +23,18 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [settingsRes, projectsRes, testimonialsRes, galleryRes] = await Promise.all([
+        const [settingsRes, projectsRes, testimonialsRes, galleryRes, arcGalleryRes] = await Promise.all([
           API.get('/companies/settings'),
           API.get('/projects?isPinnedHomepage=true'),
           API.get('/testimonials?division=GLOBAL'),
           API.get('/gallery?isPinnedHomepage=true'),
+          API.get('/projects?division=ARC&isFeatured=true'),
         ]);
         if (settingsRes.data.success) setSettings(settingsRes.data.data);
         if (projectsRes.data.success) setProjects(projectsRes.data.data);
         if (testimonialsRes.data.success) setTestimonials(testimonialsRes.data.data);
         if (galleryRes.data.success) setGallery(galleryRes.data.data);
+        if (arcGalleryRes.data.success) setArcGalleryProjects(arcGalleryRes.data.data);
       } catch (err) {
         console.error('Error fetching homepage data:', err);
       } finally {
@@ -56,6 +59,15 @@ const Home = () => {
     { name: 'PARTNER_D' }, { name: 'PARTNER_E' }, { name: 'PARTNER_F' },
   ];
 
+  const showcaseItems = arcGalleryProjects.length > 0
+    ? arcGalleryProjects.slice(0, 8).map((project) => ({
+        ...project,
+        showcaseType: 'project',
+        url: project.images?.[0],
+        title: project.name,
+      }))
+    : gallery.map((item) => ({ ...item, showcaseType: 'media' }));
+
   const divisions = [
     { to: '/geo-arc', icon: 'architecture', title: 'GEO ARC', desc: 'Pioneering architectural solutions that blend aesthetic elegance with functional sustainability for modern urban landscapes.' },
     { to: '/geo-soil-testing', icon: 'science', title: 'GEO Soil Testing', desc: 'Specialized geotechnical analysis ensuring the foundational integrity of complex engineering projects worldwide.' },
@@ -72,7 +84,7 @@ const Home = () => {
         {settings?.homepage?.heroBgVideo ? (
           <video className="absolute inset-0 w-full h-full object-cover opacity-40" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.heroBgVideo)} />
         ) : settings?.homepage?.heroBgImage ? (
-          <img className="absolute inset-0 w-full h-full object-cover opacity-40" src={getMediaUrl(settings.homepage.heroBgImage)} alt="Hero Background" />
+          <img className="absolute inset-0 w-full h-full object-cover opacity-40" src={getMediaUrl(settings.homepage.heroBgImage)} alt="Hero Background" decoding="async" fetchPriority="high" />
         ) : (
           <div className="absolute inset-0 opacity-60"><ThreeHeroBackground /></div>
         )}
@@ -147,7 +159,7 @@ const Home = () => {
               {settings?.homepage?.aboutVideo ? (
                 <video className="w-full h-[560px] object-cover" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.aboutVideo)} />
               ) : (
-                <img alt="Modern architecture" className="w-full h-[560px] object-cover" src={getMediaUrl(settings?.homepage?.aboutImage) || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop'} />
+                <img alt="Modern architecture" className="w-full h-[560px] object-cover" src={getMediaUrl(settings?.homepage?.aboutImage) || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop'} loading="lazy" decoding="async" />
               )}
             </div>
             <div className="absolute -bottom-6 -right-6 w-40 h-40 border border-gold/40 rounded-2xl -z-0" />
@@ -202,7 +214,7 @@ const Home = () => {
               <p className="luxe-eyebrow mb-4">Portfolio</p>
               <h2 className="font-display text-3xl md:text-5xl font-bold text-ink">Signature <span className="text-gradient-gold italic">Projects</span></h2>
             </div>
-            <Link to="/geo-construction" className="btn-outline-gold px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-gold-deep border-gold-deep/40">
+            <Link to="/geo-arc" className="btn-outline-gold px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold text-gold-deep border-gold-deep/40">
               View Full Portfolio
             </Link>
           </Reveal>
@@ -212,7 +224,7 @@ const Home = () => {
               <>
                 <Reveal className="md:col-span-8">
                   <div onClick={() => setSelectedProject(projects[0])} className="rounded-2xl overflow-hidden relative group shadow-luxe cursor-pointer h-full min-h-[400px]">
-                    <img alt={projects[0].name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110" src={getMediaUrl(projects[0].images?.[0]) || ''} />
+                    <img alt={projects[0].name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110" src={getMediaUrl(projects[0].images?.[0]) || ''} loading="lazy" decoding="async" />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent flex flex-col justify-end p-8">
                       <span className="border border-gold/50 text-gold px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold mb-4 inline-block w-fit">{projects[0].category}</span>
                       <h3 className="font-display text-2xl md:text-3xl font-bold text-ivory mb-2">{projects[0].name}</h3>
@@ -224,7 +236,7 @@ const Home = () => {
                   {projects.slice(1, 3).map((proj) => (
                     <Reveal key={proj._id} delay={120} className="flex-1">
                       <div onClick={() => setSelectedProject(proj)} className="relative h-full min-h-[188px] rounded-2xl overflow-hidden group shadow-luxe cursor-pointer">
-                        <img alt={proj.name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-500 group-hover:scale-105" src={getMediaUrl(proj.images?.[0]) || ''} />
+                        <img alt={proj.name} className="w-full h-full object-cover absolute inset-0 transition-transform duration-500 group-hover:scale-105" src={getMediaUrl(proj.images?.[0]) || ''} loading="lazy" decoding="async" />
                         <div className="absolute inset-0 bg-ink/60 group-hover:bg-ink/30 transition-all flex items-end p-6">
                           <div>
                             <span className="text-gold font-sans font-semibold text-[10px] uppercase tracking-wider block mb-1">{proj.category}</span>
@@ -258,7 +270,7 @@ const Home = () => {
                     <span className="material-symbols-outlined text-gold/30 text-5xl absolute top-4 right-6">format_quote</span>
                     <p className="font-cormorant italic text-xl text-ink/80 mb-6 leading-relaxed relative z-10">"{t.review}"</p>
                     <div className="flex items-center gap-4">
-                      {t.image && <div className="w-12 h-12 rounded-full overflow-hidden border border-gold/40"><img src={t.image} alt={t.clientName} className="w-full h-full object-cover" /></div>}
+                      {t.image && <div className="w-12 h-12 rounded-full overflow-hidden border border-gold/40"><img src={t.image} alt={t.clientName} className="w-full h-full object-cover" loading="lazy" decoding="async" /></div>}
                       <div>
                         <div className="font-display font-bold text-ink">{t.clientName}</div>
                         <div className="text-sm text-gold-deep">{t.position}, {t.company}</div>
@@ -289,21 +301,24 @@ const Home = () => {
       </section>
 
       {/* ===== Gallery ===== */}
-      {gallery.length > 0 && (
+      {showcaseItems.length > 0 && (
         <section className="py-28 md:py-36 bg-ivory">
           <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
             <Reveal className="text-center mb-16">
               <p className="luxe-eyebrow center justify-center mb-4">Visual Showcase</p>
               <h2 className="font-display text-3xl md:text-5xl font-bold text-ink mb-4">The <span className="text-gradient-gold italic">Gallery</span></h2>
               <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto">
-                High-fidelity captures from across our architectural and construction divisions.
+                Selected architectural work from the GEO ARC project portfolio.
               </p>
             </Reveal>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-              {gallery.map((item, idx) => (
+              {showcaseItems.map((item, idx) => (
                 <Reveal key={item._id} delay={(idx % 4) * 80}>
-                  <div onClick={() => setSelectedMedia(item)} className="group relative overflow-hidden rounded-xl h-64 shadow-luxe-soft bg-cream cursor-pointer">
-                    {item.type === 'video' ? (
+                  <div
+                    onClick={() => item.showcaseType === 'project' ? setSelectedProject(item) : setSelectedMedia(item)}
+                    className="group relative overflow-hidden rounded-xl h-64 shadow-luxe-soft bg-cream cursor-pointer"
+                  >
+                    {item.showcaseType === 'media' && item.type === 'video' ? (
                       <div className="w-full h-full relative">
                         <video src={item.url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" muted playsInline />
                         <div className="absolute inset-0 flex items-center justify-center bg-ink/20 group-hover:bg-ink/40 transition-colors">
@@ -311,10 +326,10 @@ const Home = () => {
                         </div>
                       </div>
                     ) : (
-                      <img src={item.url} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <img src={getMediaUrl(item.url)} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                      <span className="text-gold font-sans text-[9px] uppercase tracking-wider mb-1 font-semibold">{item.division} Division</span>
+                      <span className="text-gold font-sans text-[9px] uppercase tracking-wider mb-1 font-semibold">GEO {item.division || 'ARC'} Division</span>
                       <p className="text-ivory font-display font-semibold text-sm">{item.title}</p>
                     </div>
                   </div>

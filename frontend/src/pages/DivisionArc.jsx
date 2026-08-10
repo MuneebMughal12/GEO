@@ -11,7 +11,6 @@ const DivisionArc = () => {
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
   const [allTeam, setAllTeam] = useState([]);
-  const activeTab = 'ARC';
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -24,7 +23,7 @@ const DivisionArc = () => {
           API.get('/companies/geo-arc'),
           API.get('/services?division=ARC'),
           API.get('/projects?division=ARC'),
-          API.get('/team'),
+          API.get('/team?division=ARC'),
           API.get('/gallery?division=ARC')
         ]);
 
@@ -42,9 +41,22 @@ const DivisionArc = () => {
     fetchArcData();
   }, []);
 
-  const globalCeo = allTeam.find(m => m.division === 'GLOBAL');
-  const activeDivisionCeo = allTeam.find(m => m.division === activeTab && m.designation.includes('CEO'));
-  const activeDivisionMembers = allTeam.filter(m => m.division === activeTab && !m.designation.includes('CEO'));
+  const activeDivisionCeo = allTeam.find(m => m.designation.toUpperCase().includes('CEO'));
+  const activeDivisionMembers = allTeam.filter(m => !m.designation.toUpperCase().includes('CEO'));
+
+  const renderTeamPortrait = (member, className) => member.profileImage ? (
+    <img
+      src={getMediaUrl(member.profileImage)}
+      alt={member.name}
+      className={className}
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <div className={`${className} bg-gradient-to-br from-primary to-primary-container flex items-center justify-center text-white font-display text-4xl font-bold`}>
+      {member.name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase()}
+    </div>
+  );
 
   const metaTitle = company?.seo?.metaTitle || 'GEO ARC | Engineering & Architecture';
   const metaDescription = company?.seo?.metaDescription || 'Innovative architectural design, masterplanning, and structural engineering services by GEO ARC.';
@@ -82,8 +94,10 @@ const DivisionArc = () => {
             ) : (
               <img
                 className="w-full h-full object-cover"
-                src={company?.featuredImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuALFxi773AFyBHTufFGUq5Ht4X7XJOc07BLrNPATVM7_n_GM2i97oOmwuwmr2y6wwe3k4ZzYrK_5qKBMFg7cjJdoeMte-DQRkTmdd-XBipsRyDE4r06TYPuVtfR12lpX7udRIeBlmoQSruwDtgeE-Ay3Tle16cmEqOSecBJP67eShq2VPUpiq3MDvrdpC8P1UqYSegXQrXs-bNwL5dCxWOpzo3kbOA6e954ufpQdzu_owBJClt1lHO3zLfGH6Bd06BcehglmRxN5n4"}
+                src={getMediaUrl(company?.featuredImage) || getMediaUrl(projects[0]?.images?.[0]) || ''}
                 alt="GEO ARC Wireframe Banner"
+                decoding="async"
+                fetchPriority="high"
               />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
@@ -153,6 +167,8 @@ const DivisionArc = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     src={getMediaUrl(project.images[0]) || ''}
                     alt={project.name}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-transparent to-transparent opacity-80 group-hover:opacity-95 transition-all duration-300 flex flex-col justify-end p-8">
                     <span className="text-secondary-fixed-dim font-display text-[10px] uppercase tracking-widest mb-1">{project.location}</span>
@@ -182,6 +198,8 @@ const DivisionArc = () => {
                     src={item.url}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                     <p className="text-ivory font-display font-semibold text-sm">{item.title}</p>
@@ -198,41 +216,18 @@ const DivisionArc = () => {
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-20">
             <span className="font-display text-xs font-bold text-gold-deep uppercase tracking-widest block mb-2">Our People</span>
-            <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">Leadership & Experts</h2>
+            <h2 className="font-display text-3xl md:text-4xl font-extrabold text-primary mb-4">GEO ARC Team</h2>
             <p className="font-sans text-on-surface-variant text-sm max-w-2xl mx-auto mb-12">
-              Explore the professional minds driving safety, precision, and architectural excellence across GEO Group.
+              The dedicated architecture team responsible for GEO ARC design development and project documentation.
             </p>
           </div>
 
-          {/* Leaders Area (Main CEO + Department CEO) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-24">
-            {/* Main CEO (Corporate) */}
-            {globalCeo && (
-              <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-slow cursor-pointer">
-                <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
-                  <img src={globalCeo.profileImage} alt={globalCeo.name} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="inline-block px-2.5 py-1 bg-gold/10 text-gold-deep text-[9px] font-display font-semibold uppercase tracking-wider rounded-md mb-3">Group Leadership</span>
-                    <h3 className="font-display text-xl font-bold text-primary">{globalCeo.name}</h3>
-                    <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{globalCeo.designation}</p>
-                    <p className="font-sans text-xs text-on-surface-variant mt-4 leading-relaxed">{globalCeo.bio}</p>
-                  </div>
-                  {globalCeo.experience && (
-                    <div className="pt-4 border-t border-outline-variant/10 text-[10px] text-outline font-semibold uppercase tracking-wider mt-4">
-                      Experience: {globalCeo.experience}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Department CEO/Head */}
+          {/* GEO ARC division leader */}
+          <div className="max-w-2xl mx-auto mb-24">
             {activeDivisionCeo && (
               <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row gap-6 animate-float-normal cursor-pointer">
                 <div className="w-full sm:w-1/3 aspect-[3/4] overflow-hidden rounded-xl bg-surface-container">
-                  <img src={activeDivisionCeo.profileImage} alt={activeDivisionCeo.name} className="w-full h-full object-cover" />
+                  {renderTeamPortrait(activeDivisionCeo, 'w-full h-full object-cover')}
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -255,16 +250,12 @@ const DivisionArc = () => {
           <div>
             <h3 className="font-display text-lg font-bold text-primary mb-8 text-center">Division Experts & Engineers</h3>
             {activeDivisionMembers.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-3xl mx-auto">
                 {activeDivisionMembers.map((member, idx) => (
                   <div key={member._id} className={`group bg-white border border-outline-variant/20 rounded-xl p-6 shadow-sm cursor-pointer flex flex-col justify-between ${idx % 3 === 0 ? 'animate-float-slow' : idx % 3 === 1 ? 'animate-float-normal' : 'animate-float-fast'}`}>
                     <div>
                       <div className="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 shadow-sm bg-surface-container">
-                        <img
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          src={member.profileImage}
-                          alt={member.name}
-                        />
+                        {renderTeamPortrait(member, 'w-full h-full object-cover transition-transform duration-500 group-hover:scale-105')}
                       </div>
                       <h4 className="font-display text-base font-bold text-primary">{member.name}</h4>
                       <p className="font-sans text-xs text-gold-deep font-semibold mt-1">{member.designation}</p>

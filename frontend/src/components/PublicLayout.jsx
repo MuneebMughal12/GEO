@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import API from '../services/api';
 import FloatingActions from './FloatingActions';
@@ -27,6 +27,12 @@ const PublicLayout = () => {
 
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false); }, [location.pathname]);
+
+  // Every route should open from the top instead of preserving the previous
+  // page's scroll position.
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
 
   const siteName = settings?.siteName || 'GEO Group';
 
