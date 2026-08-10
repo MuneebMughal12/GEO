@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import API from '../services/api';
 import SEO from '../components/SEO';
 import SchemaMarkup from '../components/SchemaMarkup';
-import ThreeHeroBackground from '../components/ThreeHeroBackground';
 import Lightbox from '../components/Lightbox';
 import { getMediaUrl } from '../services/media';
 import ProjectDetailModal from '../components/ProjectDetailModal';
@@ -68,10 +67,23 @@ const Home = () => {
       }))
     : gallery.map((item) => ({ ...item, showcaseType: 'media' }));
 
+  const heroImage = getMediaUrl(
+    settings?.homepage?.heroBgImage ||
+    arcGalleryProjects[0]?.images?.[0] ||
+    projects[0]?.images?.[0]
+  ) || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=85&w=2200&auto=format&fit=crop';
+
   const divisions = [
-    { to: '/geo-arc', icon: 'architecture', title: 'GEO ARC', desc: 'Pioneering architectural solutions that blend aesthetic elegance with functional sustainability for modern urban landscapes.' },
-    { to: '/geo-soil-testing', icon: 'science', title: 'GEO Soil Testing', desc: 'Specialized geotechnical analysis ensuring the foundational integrity of complex engineering projects worldwide.' },
-    { to: '/geo-construction', icon: 'home_work', title: 'GEO Construction', desc: 'Full-cycle construction management for commercial and industrial infrastructures, delivered with unmatched precision.' },
+    { to: '/geo-arc', number: '01', icon: 'architecture', title: 'GEO ARC', label: 'Architecture & Design', image: arcGalleryProjects[0]?.images?.[0] || 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=85&w=1200&auto=format&fit=crop', desc: 'Pioneering architectural solutions that blend aesthetic elegance with functional sustainability for modern urban landscapes.' },
+    { to: '/geo-soil-testing', number: '02', icon: 'science', title: 'GEO Soil Testing', label: 'Geotechnical Intelligence', image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=85&w=1200&auto=format&fit=crop', desc: 'Specialized geotechnical analysis ensuring the foundational integrity of complex engineering projects worldwide.' },
+    { to: '/geo-construction', number: '03', icon: 'home_work', title: 'GEO Construction', label: 'Build & Infrastructure', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=85&w=1200&auto=format&fit=crop', desc: 'Full-cycle construction management for commercial and industrial infrastructures, delivered with unmatched precision.' },
+  ];
+
+  const practices = [
+    { icon: 'verified', title: 'Quality Without Compromise', text: 'Every drawing, test and build stage follows rigorous review standards.' },
+    { icon: 'schedule', title: 'Delivery With Discipline', text: 'Clear milestones, transparent reporting and accountable project leadership.' },
+    { icon: 'eco', title: 'Responsible by Design', text: 'Efficient systems and context-aware solutions reduce long-term impact.' },
+    { icon: 'engineering', title: 'Integrated Expertise', text: 'Architecture, geotechnics and construction collaborate under one group.' },
   ];
 
   return (
@@ -80,69 +92,85 @@ const Home = () => {
       <SchemaMarkup type="Organization" data={{ email: settings?.contactEmail, phone: settings?.contactPhone, linkedin: settings?.socialLinks?.linkedin, twitter: settings?.socialLinks?.twitter }} />
 
       {/* ===== Hero ===== */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden luxe-dark">
+      <section className="relative min-h-[860px] md:min-h-screen flex items-center overflow-hidden bg-ink">
         {settings?.homepage?.heroBgVideo ? (
-          <video className="absolute inset-0 w-full h-full object-cover opacity-40" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.heroBgVideo)} />
-        ) : settings?.homepage?.heroBgImage ? (
-          <img className="absolute inset-0 w-full h-full object-cover opacity-40" src={getMediaUrl(settings.homepage.heroBgImage)} alt="Hero Background" decoding="async" fetchPriority="high" />
+          <video className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline src={getMediaUrl(settings.homepage.heroBgVideo)} />
         ) : (
-          <div className="absolute inset-0 opacity-60"><ThreeHeroBackground /></div>
+          <img className="absolute inset-0 w-full h-full object-cover scale-[1.02]" src={heroImage} alt="GEO Group landmark project" decoding="async" fetchPriority="high" />
         )}
-        {/* Ink gradient veils */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/60 to-ink z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(201,162,39,0.10),transparent_55%)] z-10" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,14,26,0.97)_0%,rgba(10,14,26,0.88)_42%,rgba(10,14,26,0.42)_72%,rgba(10,14,26,0.28)_100%)] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/25 z-10" />
 
-        <div className="relative z-20 max-w-container-max mx-auto px-6 md:px-margin-desktop text-center pt-24">
-          <div className="animate-fade-in mb-8 inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold/30 bg-ink-700/40 backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="text-champagne/90 text-[11px] tracking-luxe uppercase font-medium">Est. Global Infrastructure Excellence</span>
-          </div>
-
-          <h1 className="font-display text-4xl md:text-7xl font-bold text-ivory mb-6 max-w-5xl mx-auto leading-[1.08] animate-fade-up">
-            {settings?.homepage?.heroTitle || (
-              <>Building the Future with <span className="text-gradient-gold italic">Precision</span> &amp; <span className="text-gradient-gold italic">Innovation</span></>
-            )}
-          </h1>
-          <p className="font-sans text-base md:text-xl text-luxury-muted mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '120ms' }}>
-            {settings?.homepage?.heroSubtitle || 'A global conglomerate delivering excellence in architectural design, soil engineering, and large-scale infrastructure construction.'}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up" style={{ animationDelay: '240ms' }}>
-            <a href="#divisions" className="btn-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm w-full sm:w-auto">
-              Explore Divisions
-            </a>
-            <Link to="/contact" className="btn-outline-gold px-10 py-4 rounded-full font-semibold uppercase tracking-wider text-sm w-full sm:w-auto">
-              Request Consultation
-            </Link>
+        <div className="relative z-20 w-full max-w-container-max mx-auto px-6 md:px-margin-desktop pt-32 pb-56 md:pb-40">
+          <div className="max-w-3xl border-l border-gold/70 pl-5 md:pl-9">
+            <div className="animate-fade-in mb-7 inline-flex items-center gap-3 text-gold text-[11px] tracking-luxe uppercase font-semibold">
+              <span className="w-10 h-px bg-gold" /> One Group. Three Disciplines.
+            </div>
+            <h1 className="font-display text-5xl sm:text-6xl md:text-[82px] font-bold text-ivory mb-7 leading-[0.98] tracking-[-0.035em] animate-fade-up">
+              {settings?.homepage?.heroTitle || (
+                <>We shape ideas into <span className="text-gradient-gold italic">landmarks.</span></>
+              )}
+            </h1>
+            <p className="font-sans text-base md:text-lg text-champagne/75 mb-10 max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: '120ms' }}>
+              {settings?.homepage?.heroSubtitle || 'Architecture, geotechnical intelligence and construction expertise—integrated to deliver confident outcomes from concept to completion.'}
+            </p>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 animate-fade-up" style={{ animationDelay: '240ms' }}>
+              <a href="#divisions" className="btn-gold px-9 py-4 rounded-md font-semibold uppercase tracking-wider text-xs text-center">
+                Explore Our Expertise
+              </a>
+              <Link to="/contact" className="border border-white/35 bg-white/5 hover:bg-white/10 text-ivory px-9 py-4 rounded-md font-semibold uppercase tracking-wider text-xs text-center transition-all">
+                Start a Project
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Scroll cue */}
-        <a href="#divisions" className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-gold/70 hover:text-gold transition-colors">
-          <span className="text-[10px] uppercase tracking-luxe">Scroll</span>
-          <span className="material-symbols-outlined animate-bounce">keyboard_arrow_down</span>
-        </a>
+        <div className="absolute bottom-0 left-0 right-0 z-20">
+          <div className="max-w-container-max mx-auto md:px-margin-desktop">
+            <div className="grid grid-cols-3 bg-ivory/95 backdrop-blur-xl border-t border-gold/30 shadow-2xl">
+              {[
+                ['01', 'Architecture', 'Vision-led environments'],
+                ['02', 'Soil Testing', 'Evidence-led foundations'],
+                ['03', 'Construction', 'Precision-led delivery'],
+              ].map(([number, title, subtitle]) => (
+                <a key={number} href="#divisions" className="group px-4 py-6 md:px-8 md:py-8 border-r last:border-r-0 border-ink/10 hover:bg-gold transition-colors">
+                  <span className="block text-[10px] tracking-luxe text-gold-deep group-hover:text-ink/60 mb-2">{number}</span>
+                  <strong className="block font-display text-base md:text-xl text-ink">{title}</strong>
+                  <span className="hidden md:block text-xs text-on-surface-variant group-hover:text-ink/70 mt-1">{subtitle}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ===== Divisions ===== */}
-      <section id="divisions" className="py-28 md:py-36 bg-ivory relative">
+      <section id="divisions" className="py-24 md:py-36 bg-ivory relative">
         <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop">
-          <Reveal className="mb-16 text-center">
-            <p className="luxe-eyebrow center justify-center mb-4">Our Core Divisions</p>
-            <h2 className="font-display text-3xl md:text-5xl font-bold text-ink">Three Pillars of <span className="text-gradient-gold italic">Excellence</span></h2>
+          <Reveal className="mb-14 md:mb-16 grid md:grid-cols-2 gap-6 items-end">
+            <div>
+              <p className="luxe-eyebrow mb-4">Our Core Divisions</p>
+              <h2 className="font-display text-4xl md:text-6xl font-bold text-ink leading-[1.04]">One vision.<br /><span className="text-gradient-gold italic">Complete expertise.</span></h2>
+            </div>
+            <p className="font-sans text-on-surface-variant md:pl-12 md:border-l border-gold/30 leading-relaxed max-w-xl">From the first line on paper to the final structure on site, our specialist divisions work together to solve complex challenges with clarity.</p>
           </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {divisions.map((d, i) => (
               <Reveal key={d.to} delay={i * 120}>
-                <div className="luxe-card rounded-2xl flex flex-col items-center text-center p-10 group h-full">
-                  <div className="w-20 h-20 rounded-full bg-ink flex items-center justify-center mb-8 border border-gold/30 group-hover:shadow-luxe-gold transition-all duration-500">
-                    <span className="material-symbols-outlined text-4xl text-gold">{d.icon}</span>
+                <Link to={d.to} className="relative block h-[520px] overflow-hidden group bg-ink shadow-luxe">
+                  <img src={getMediaUrl(d.image)} alt={d.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/5" />
+                  <div className="absolute top-6 left-6 right-6 flex items-center justify-between text-ivory">
+                    <span className="text-[11px] tracking-luxe text-gold">{d.number}</span>
+                    <span className="material-symbols-outlined w-11 h-11 border border-white/30 flex items-center justify-center rounded-full backdrop-blur-sm group-hover:bg-gold group-hover:text-ink group-hover:border-gold transition-all">{d.icon}</span>
                   </div>
-                  <h3 className="font-display text-2xl font-bold text-ink mb-4">{d.title}</h3>
-                  <p className="font-sans text-on-surface-variant mb-8 text-sm leading-relaxed flex-grow">{d.desc}</p>
-                  <Link to={d.to} className="text-gold-deep font-sans text-xs uppercase tracking-wider font-semibold flex items-center gap-2 group-hover:gap-4 transition-all">
-                    View Division <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-                  </Link>
-                </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-7 md:p-8 translate-y-16 group-hover:translate-y-0 transition-transform duration-500">
+                    <span className="text-gold text-[10px] uppercase tracking-luxe font-semibold">{d.label}</span>
+                    <h3 className="font-display text-3xl font-bold text-ivory mt-2 mb-4">{d.title}</h3>
+                    <p className="font-sans text-champagne/75 text-sm leading-relaxed mb-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">{d.desc}</p>
+                    <span className="text-ivory text-xs uppercase tracking-wider font-semibold flex items-center gap-3">Discover division <span className="material-symbols-outlined text-gold text-lg">arrow_forward</span></span>
+                  </div>
+                </Link>
               </Reveal>
             ))}
           </div>
@@ -202,6 +230,54 @@ const Home = () => {
                 <div className="font-sans text-[10px] md:text-xs uppercase tracking-luxe text-luxury-muted">{stat.label}</div>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Delivery Standards ===== */}
+      <section className="bg-ivory overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          <Reveal className="relative min-h-[520px] lg:min-h-[680px] overflow-hidden">
+            <img
+              src={getMediaUrl(arcGalleryProjects[1]?.images?.[0]) || 'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=85&w=1500&auto=format&fit=crop'}
+              alt="GEO team delivering an engineered project"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+            <div className="absolute left-6 right-6 bottom-8 md:left-12 md:right-12 md:bottom-12 text-ivory">
+              <span className="inline-block border border-gold/60 px-4 py-2 text-[10px] uppercase tracking-luxe text-gold mb-5">The GEO Standard</span>
+              <h2 className="font-display text-4xl md:text-6xl font-bold leading-[1.02] max-w-xl">Designed with purpose.<br />Delivered with proof.</h2>
+            </div>
+          </Reveal>
+
+          <div className="bg-gold px-6 py-16 md:px-14 md:py-20 lg:px-20 lg:py-24 flex items-center">
+            <div className="max-w-2xl">
+              <Reveal>
+                <p className="text-ink/60 text-[11px] tracking-luxe uppercase font-bold mb-5">How we work</p>
+                <h3 className="font-display text-3xl md:text-5xl font-bold text-ink leading-tight mb-5">Confidence at every stage.</h3>
+                <p className="text-ink/70 leading-relaxed mb-10 max-w-xl">A strong outcome is never accidental. Our teams combine creative thinking, technical evidence and disciplined execution from the first conversation onward.</p>
+              </Reveal>
+              <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
+                {practices.map((item, index) => (
+                  <Reveal key={item.title} delay={index * 80}>
+                    <div className="border-t border-ink/25 pt-5">
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="material-symbols-outlined text-ink">{item.icon}</span>
+                        <h4 className="font-display font-bold text-lg text-ink">{item.title}</h4>
+                      </div>
+                      <p className="text-sm text-ink/65 leading-relaxed">{item.text}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+              <Reveal delay={240}>
+                <Link to="/about" className="inline-flex items-center gap-3 mt-10 px-7 py-3.5 bg-ink text-ivory rounded-md text-xs uppercase tracking-wider font-semibold hover:bg-ink-700 transition-colors">
+                  Discover Our Approach <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                </Link>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
