@@ -78,13 +78,15 @@ const ProjectDetailModal = ({ project, onClose }) => {
             <>
               <button 
                 onClick={handlePrev}
-                className="absolute left-4 bg-white/95 text-primary hover:bg-white p-3 rounded-xl shadow-lg border border-outline-variant/30 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 duration-300"
+                className="absolute left-3 md:left-5 z-20 bg-white/95 text-primary hover:bg-white p-3 rounded-full shadow-xl border border-outline-variant/30 flex items-center justify-center transition-transform hover:scale-105"
+                aria-label="Previous project image"
               >
                 <span className="material-symbols-outlined">chevron_left</span>
               </button>
               <button 
                 onClick={handleNext}
-                className="absolute right-4 bg-white/95 text-primary hover:bg-white p-3 rounded-xl shadow-lg border border-outline-variant/30 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 duration-300"
+                className="absolute right-3 md:right-5 z-20 bg-white/95 text-primary hover:bg-white p-3 rounded-full shadow-xl border border-outline-variant/30 flex items-center justify-center transition-transform hover:scale-105"
+                aria-label="Next project image"
               >
                 <span className="material-symbols-outlined">chevron_right</span>
               </button>
@@ -101,6 +103,7 @@ const ProjectDetailModal = ({ project, onClose }) => {
                   className={`h-2.5 rounded-full transition-all duration-300 ${
                     currentImageIndex === idx ? 'w-8 bg-white' : 'w-2.5 bg-white/50 hover:bg-white/70'
                   }`}
+                  aria-label={`Show project image ${idx + 1}`}
                 />
               ))}
             </div>
