@@ -34,11 +34,11 @@ const ProjectDetailModal = ({ project, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-[100] bg-primary/45 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-fade-in"
+      className="fixed inset-0 z-[100] bg-primary/45 backdrop-blur-md flex items-center justify-center p-0 animate-fade-in"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-[32px] w-full max-w-5xl overflow-hidden shadow-2xl border border-outline-variant/30 animate-scale-up flex flex-col md:flex-row h-[90vh] md:h-[75vh]"
+        className="bg-white rounded-none w-screen max-w-none h-[100dvh] overflow-hidden shadow-2xl animate-scale-up flex flex-col md:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button Mobile */}
@@ -50,20 +50,20 @@ const ProjectDetailModal = ({ project, onClose }) => {
         </button>
 
         {/* Left Side: Image Slider */}
-        <div className="w-full md:w-3/5 bg-surface-container relative flex items-center justify-center h-1/2 md:h-full group overflow-hidden">
+        <div className="w-full md:w-[68%] bg-black relative flex items-center justify-center h-[52%] md:h-full group overflow-hidden">
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               setFullscreenOpen(true);
             }}
-            className="w-full h-full cursor-zoom-in"
+            className="w-full h-full cursor-zoom-in flex items-center justify-center"
             aria-label={`Open ${project.name} image ${currentImageIndex + 1} fullscreen`}
           >
             <img
               src={getMediaUrl(images[currentImageIndex])}
               alt={`${project.name} - slide ${currentImageIndex + 1}`}
-              className="w-full h-full object-cover transition-all duration-500"
+              className="w-full h-full object-contain transition-all duration-500"
               decoding="async"
             />
           </button>
@@ -113,7 +113,7 @@ const ProjectDetailModal = ({ project, onClose }) => {
         </div>
 
         {/* Right Side: Detailed Info */}
-        <div className="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-between h-1/2 md:h-full bg-white relative">
+        <div className="w-full md:w-[32%] p-6 md:p-10 flex flex-col justify-between h-[48%] md:h-full bg-white relative">
           {/* Close Button Desktop */}
           <button 
             onClick={onClose} 
