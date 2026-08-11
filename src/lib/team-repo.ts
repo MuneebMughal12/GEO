@@ -2,6 +2,7 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { getDb } from "@/lib/mongodb";
 import { TeamMember } from "@/lib/models";
+import { touchContentVersion } from "@/lib/content-version";
 
 type TeamInput = Omit<TeamMember, "id" | "createdAt" | "updatedAt">;
 
@@ -38,6 +39,7 @@ export async function createTeamMember(input: TeamInput): Promise<TeamMember> {
   const now = new Date().toISOString();
   const member: TeamMember = normalize({ ...input, id: randomUUID(), createdAt: now, updatedAt: now });
   await db.collection<TeamMember>("team_members").insertOne(member);
+  await touchContentVersion();
   return member;
 }
 
@@ -51,6 +53,7 @@ export async function updateTeamMember(id: string, input: TeamInput): Promise<Te
     { $set: update },
     { returnDocument: "after" },
   );
+  if (result) await touchContentVersion();
   return result ? normalize(result) : null;
 }
 
@@ -58,5 +61,6 @@ export async function deleteTeamMember(id: string): Promise<boolean> {
   const db = await getDb();
   if (!db) throw new Error("MongoDB is not configured");
   const result = await db.collection<TeamMember>("team_members").deleteOne({ id });
+  if (result.deletedCount === 1) await touchContentVersion();
   return result.deletedCount === 1;
 }

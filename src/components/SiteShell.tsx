@@ -7,6 +7,7 @@ import Cursor from "@/components/Cursor";
 import Preloader from "@/components/Preloader";
 import SmoothScroll from "@/components/SmoothScroll";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import LiveContentRefresh from "@/components/LiveContentRefresh";
 
 /**
  * The public site chrome (nav, footer, cursor, preloader…) wraps every page
@@ -23,6 +24,7 @@ export default function SiteShell({ children, footerImage }: { children: React.R
   return (
     <>
       <Preloader />
+      <LiveContentRefresh />
       <SmoothScroll />
       <Cursor />
       <Nav />

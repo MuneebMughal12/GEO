@@ -1,6 +1,7 @@
 import "server-only";
 import { getDb } from "@/lib/mongodb";
 import { DEFAULT_SITE_SETTINGS, SiteSettings } from "@/lib/models";
+import { touchContentVersion } from "@/lib/content-version";
 
 const KEY = "main";
 
@@ -25,5 +26,6 @@ export async function updateSiteSettings(input: Partial<SiteSettings>): Promise<
     updatedAt: new Date().toISOString(),
   };
   await db.collection("site_settings").updateOne({ key: KEY }, { $set: next }, { upsert: true });
+  await touchContentVersion();
   return next;
 }

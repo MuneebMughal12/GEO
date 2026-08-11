@@ -1,5 +1,6 @@
 import { getDb } from "./mongodb";
 import { normalizeProject, Project } from "./models";
+import { touchContentVersion } from "./content-version";
 
 /** Write operations used by the admin panel. These require MongoDB. */
 
@@ -37,6 +38,7 @@ export async function adminCreateProject(project: Project): Promise<void> {
     createdAt: now,
     updatedAt: now,
   });
+  await touchContentVersion();
 }
 
 export async function adminUpdateProject(slug: string, patch: Partial<Project>): Promise<void> {
@@ -45,9 +47,11 @@ export async function adminUpdateProject(slug: string, patch: Partial<Project>):
   await d
     .collection(COLLECTION)
     .updateOne({ slug }, { $set: { ...rest, updatedAt: new Date().toISOString() } });
+  await touchContentVersion();
 }
 
 export async function adminDeleteProject(slug: string): Promise<void> {
   const d = await db();
   await d.collection(COLLECTION).deleteOne({ slug });
+  await touchContentVersion();
 }
