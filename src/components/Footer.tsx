@@ -91,7 +91,7 @@ export default function Footer() {
           onClick={toTop}
           className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#3a3a3a] px-6 py-3 text-sm text-[#d4d4d4] transition-colors hover:border-[#d2a24c] hover:bg-[#d2a24c] hover:text-[#0a0a0a]"
         >
-          <span aria-hidden>↑</span> Back to top
+          <span aria-hidden>&uarr;</span> Back to top
         </button>
 
         <div className="grid grid-cols-2 gap-8 md:justify-items-end">
@@ -132,11 +132,27 @@ export default function Footer() {
         </div>
       </motion.div>
 
-      <div className="relative mx-auto flex max-w-[1500px] flex-col gap-2 border-t border-[#161616] px-5 py-5 text-xs text-[#4a4a4a] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <div className="relative mx-auto grid max-w-[1500px] gap-2 border-t border-[#161616] px-5 py-5 text-xs text-[#4a4a4a] sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:px-8">
         <p>
-          © {new Date().getFullYear()} {company.legalName}
+          &copy; {new Date().getFullYear()} {company.legalName}
         </p>
-        <p>Soil Testing · Designing · Construction · Real Estate · Material Supply</p>
+        <p className="sm:text-center">Soil Testing &middot; Designing &middot; Construction &middot; Real Estate &middot; Material Supply</p>
+        <p className="sm:text-right">
+          Designed &amp; Developed by{" "}
+          <a
+            href="mailto:vizotech.official@gmail.com"
+            className="font-medium text-[#d2a24c] transition-colors hover:text-white"
+          >
+            Vizotech
+          </a>
+          <span className="hidden lg:inline"> &middot; </span>
+          <a
+            href="mailto:vizotech.official@gmail.com"
+            className="hidden transition-colors hover:text-white lg:inline"
+          >
+            vizotech.official@gmail.com
+          </a>
+        </p>
       </div>
     </footer>
   );
