@@ -15,7 +15,7 @@ const capabilities = [
   "Material Suppliers",
 ];
 
-export default function Hero() {
+export default function Hero({ image = "/geo-arc/vision-flow-group-headquarters.webp" }: { image?: string }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -35,7 +35,7 @@ export default function Hero() {
         className="absolute -inset-[8%] will-change-transform"
       >
         <Image
-          src="/geo-arc/vision-flow-group-headquarters.webp"
+          src={image}
           alt=""
           fill
           priority

@@ -31,6 +31,28 @@ export type Project = {
   updatedAt?: string;
 };
 
+export type SiteSettings = {
+  heroImage: string;
+  footerImage: string;
+  updatedAt?: string;
+};
+
+export const DEFAULT_SITE_SETTINGS: SiteSettings = {
+  heroImage: "/geo-arc/vision-flow-group-headquarters.webp",
+  footerImage: "/geo-arc/vision-flow-group-headquarters.webp",
+};
+
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  photo: string;
+  order: number;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export const DIVISIONS: Array<{ value: Division; label: string }> = [
   { value: "geo-arc", label: "GEO ARC" },
   { value: "geo-soil-testing", label: "GEO Soil Testing" },

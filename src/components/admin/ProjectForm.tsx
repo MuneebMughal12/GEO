@@ -83,7 +83,7 @@ export default function ProjectForm({ initial }: { initial?: Project }) {
     );
     setBusy(false);
     if (res.ok) {
-      router.push("/admin");
+      router.push("/admin/projects");
       router.refresh();
     } else {
       const data = await res.json().catch(() => ({}));
@@ -213,7 +213,7 @@ export default function ProjectForm({ initial }: { initial?: Project }) {
           className="rounded-full bg-[#d2a24c] px-6 py-3 text-sm font-medium text-[#0a0a0a] transition-opacity hover:opacity-85 disabled:opacity-50">
           {busy ? "Saving…" : isEdit ? "Save changes" : "Create project"}
         </button>
-        <button type="button" onClick={() => router.push("/admin")}
+        <button type="button" onClick={() => router.push("/admin/projects")}
           className="rounded-full border border-[#333] px-6 py-3 text-sm text-[#d4d4d4] transition-colors hover:border-white hover:text-white">
           Cancel
         </button>

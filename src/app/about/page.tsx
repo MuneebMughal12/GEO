@@ -4,6 +4,9 @@ import RevealText from "@/components/RevealText";
 import Counter from "@/components/Counter";
 import HexGrid from "@/components/HexGrid";
 import { company } from "@/data/company";
+import { getTeamMembers } from "@/lib/team-repo";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "About",
@@ -11,7 +14,8 @@ export const metadata: Metadata = {
     "Meet GEO Group of Companies, an integrated team for architecture, soil testing, construction, real estate marketing and material supply.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const team = await getTeamMembers();
   return (
     <>
       {/* hero */}
@@ -31,9 +35,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* intro + ceo */}
+      {/* intro */}
       <section className="py-16 sm:py-24">
-        <div className="mx-auto grid max-w-[1400px] gap-14 px-5 sm:px-8 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
           <div>
             <RevealText className="text-xl font-medium leading-snug sm:text-2xl">
               {company.intro}
@@ -54,28 +58,30 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div>
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm">
-              <Image
-                src="/img/site-team.jpg"
-                alt="Site team at morning briefing"
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
-            </div>
-            <div className="mt-6 border-l-2 border-[#d2a24c] pl-5">
-              <p className="text-sm leading-relaxed text-[#b4b4b4]">
-                &ldquo;A strong commitment to quality, professional approach, and
-                understanding the client&rsquo;s need has always been our priority.&rdquo;
-              </p>
-              <p className="mt-3 text-sm font-semibold text-white">{company.ceo.name}</p>
-              <p className="text-xs text-[#d2a24c]">{company.ceo.role}</p>
-            </div>
-          </div>
         </div>
       </section>
+
+      {team.length > 0 && (
+        <section className="border-t border-[#1f1f1f] py-20 sm:py-28">
+          <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
+            <p className="eyebrow">Our people</p>
+            <h2 className="display mt-5 text-[10vw] leading-[0.9] sm:text-[6vw] lg:text-[4vw]"><span className="lead">Meet the</span><span className="hot">team</span></h2>
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {team.map((member) => (
+                <article key={member.id} className="group">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-[#111]">
+                    {member.photo ? <Image src={member.photo} alt={member.name} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-105" unoptimized /> : <div className="grid h-full place-items-center text-7xl text-[#292929]">{member.name.charAt(0)}</div>}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold">{member.name}</h3>
+                  <p className="mt-1 text-xs uppercase tracking-[0.16em] text-[#d2a24c]">{member.role}</p>
+                  {member.bio && <p className="mt-3 text-sm leading-relaxed text-[#888]">{member.bio}</p>}
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* mission / vision / values */}
       <section className="border-y border-[#1f1f1f] py-20 sm:py-28">

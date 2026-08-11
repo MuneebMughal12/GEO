@@ -12,10 +12,12 @@ export default function ImageUploader({
   value,
   onChange,
   label = "Photos",
+  multiple = true,
 }: {
   value: string[];
   onChange: (urls: string[]) => void;
   label?: string;
+  multiple?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -38,7 +40,7 @@ export default function ImageUploader({
         setError("Upload failed. Check your connection.");
       }
     }
-    if (added.length) onChange([...value, ...added]);
+    if (added.length) onChange(multiple ? [...value, ...added] : [added[added.length - 1]]);
     setBusy(false);
     if (inputRef.current) inputRef.current.value = "";
   }
@@ -71,7 +73,7 @@ export default function ImageUploader({
           ref={inputRef}
           type="file"
           accept="image/*"
-          multiple
+          multiple={multiple}
           className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
         />

@@ -1,0 +1,2 @@
+import { redirect } from "next/navigation"; import { isAuthenticated } from "@/lib/auth"; import AdminShell from "@/components/admin/AdminShell"; import TeamForm from "@/components/admin/TeamForm";
+export const dynamic="force-dynamic";export default async function NewTeamPage(){if(!(await isAuthenticated()))redirect("/admin/login");return <AdminShell title="Add Team Member" subtitle="Create a new profile for the About page."><TeamForm/></AdminShell>}

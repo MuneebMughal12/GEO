@@ -12,7 +12,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
  * The public site chrome (nav, footer, cursor, preloader…) wraps every page
  * except the admin panel, which gets a clean, app-like shell of its own.
  */
-export default function SiteShell({ children }: { children: React.ReactNode }) {
+export default function SiteShell({ children, footerImage }: { children: React.ReactNode; footerImage?: string }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
@@ -27,7 +27,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       <Cursor />
       <Nav />
       <main>{children}</main>
-      <Footer />
+      <Footer image={footerImage} />
       <WhatsAppButton />
     </>
   );

@@ -3,6 +3,9 @@ import { Bai_Jamjuree } from "next/font/google";
 import "./globals.css";
 import SiteShell from "@/components/SiteShell";
 import { company } from "@/data/company";
+import { getSiteSettings } from "@/lib/site-settings-repo";
+
+export const dynamic = "force-dynamic";
 
 const jamjuree = Bai_Jamjuree({
   subsets: ["latin"],
@@ -33,15 +36,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
   return (
     <html lang="en" className={`${jamjuree.variable} antialiased`}>
       <body>
-        <SiteShell>{children}</SiteShell>
+        <SiteShell footerImage={settings.footerImage}>{children}</SiteShell>
       </body>
     </html>
   );

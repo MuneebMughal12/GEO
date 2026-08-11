@@ -8,7 +8,7 @@ import { company } from "@/data/company";
 import Marquee from "./Marquee";
 import RevealText from "./RevealText";
 
-export default function Footer() {
+export default function Footer({ image = "/geo-arc/vision-flow-group-headquarters.webp" }: { image?: string }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -55,7 +55,7 @@ export default function Footer() {
         className="relative mx-auto mt-12 h-[38svh] w-full max-w-2xl will-change-transform sm:mt-16"
       >
         <Image
-          src="/geo-arc/vision-flow-group-headquarters.webp"
+          src={image}
           alt="GEO Group architecture project"
           fill
           sizes="(max-width: 768px) 100vw, 42rem"
