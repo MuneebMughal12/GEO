@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a0a0a;
+  --color-ink-2: #111111;
+  --color-line: #1f1f1f;
+  --color-muted: #8a8a8a;
+  --color-dim: #4a4a4a;
+  --color-accent: #d2a24c;
+  --color-accent-soft: #e8ce93;
+  --color-accent-deep: #7a5626;
+
+  --font-display: var(--font-jamjuree), system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: #0a0a0a;
+}
+
+body {
+  background: #0a0a0a;
+  color: #fff;
+  font-family: var(--font-jamjuree), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Hide native cursor only where we draw our own */
+@media (hover: hover) and (pointer: fine) {
+  body.has-cursor,
+  body.has-cursor * {
+    cursor: none !important;
+  }
+}
+
+::selection {
+  background: #d2a24c;
+  color: #0a0a0a;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d2a24c;
+}
+
+/* ---- Display headings: staggered indent, one word in accent ---- */
+.display {
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: #8a8a8a;
+}
+.display .lead {
+  color: #fff;
+}
+.display .hot {
+  /* metallic gold gradient, like the logo */
+  background: linear-gradient(180deg, #f0dca6 0%, #d2a24c 48%, #8a6224 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.display > span {
+  display: block;
+}
+.display > span:nth-child(2) {
+  padding-left: 0.1em;
+}
+.display > span:nth-child(3) {
+  padding-left: 0.2em;
+}
+
+/* reusable gold gradient text (brand wordmark, accents) */
+.gold-text {
+  background: linear-gradient(180deg, #f0dca6 0%, #d2a24c 50%, #9a6e2c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+
+.glow {
+  background:
+    radial-gradient(60% 60% at 50% 40%, rgba(210, 162, 76, 0.12), transparent 70%),
+    radial-gradient(40% 40% at 85% 85%, rgba(210, 162, 76, 0.06), transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
