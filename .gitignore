@@ -1,33 +1,41 @@
-# Dependency directories
-node_modules/
-jspm_packages/
-web_modules/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Local env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Build outputs
-dist/
-build/
-.cache/
+# testing
+/coverage
 
-# IDE files
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# next.js
+/.next/
+/out/
 
-# OS files
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
+*.pem
 
-# Uploads directory (local storage backup)
-backend/uploads/*
-!backend/uploads/.gitkeep
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
