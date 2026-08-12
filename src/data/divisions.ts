@@ -1,5 +1,55 @@
 export const divisions = [
-  { slug: "geo-arc", name: "GEO ARC", eyebrow: "Architecture & Design", number: "01", description: "Purpose-led architectural design for homes, commercial developments and institutional spaces, from concept and planning to detailed visualization.", services: ["Architectural Design", "3D Visualization", "Interior Design", "Master Planning", "Approval Drawings", "Landscape Design"] },
-  { slug: "geo-soil-testing", name: "GEO Soil Testing", eyebrow: "Geotechnical Laboratory", number: "02", description: "Field investigation and laboratory testing that turns ground conditions into reliable engineering decisions and safer foundations.", services: ["Site Investigation", "Soil Sampling", "Laboratory Analysis", "Compaction Testing", "Foundation Recommendations", "Technical Reporting"] },
-  { slug: "geo-construction", name: "GEO Construction", eyebrow: "Civil & Infrastructure", number: "03", description: "Disciplined construction delivery for residential, commercial and civil projects with transparent milestones and accountable site leadership.", services: ["Pre-Construction Planning", "Civil & Structural Works", "Residential Construction", "Commercial Construction", "Project Management", "Renovation & Fit-Out"] },
+  {
+    slug: "geo-arc",
+    name: "GEO ARC",
+    eyebrow: "Architecture & Design",
+    number: "01",
+    description: "Purpose-led architectural design for homes, commercial developments and institutional spaces, from concept and planning to detailed visualization.",
+    services: ["Architectural Design", "3D Visualization", "Interior Design", "Master Planning", "Approval Drawings", "Landscape Design"],
+    facts: [
+      { label: "Portfolio", value: "30 architecture projects" },
+      { label: "Primary region", value: "Islamabad & Rawalpindi" },
+      { label: "Work", value: "Residential & commercial" },
+      { label: "Delivery", value: "Design through visualization" },
+    ],
+    leader: null,
+  },
+  {
+    slug: "geo-soil-testing",
+    name: "Geoservices Engineering Consultants",
+    eyebrow: "Geotechnical & Material Testing",
+    number: "02",
+    description: "An independent material-testing and geotechnical practice established on 3 August 2008, delivering field investigation, laboratory analysis and foundation recommendations across Pakistan.",
+    services: ["Surface & Topographic Investigation", "Sub-Surface Soil Investigation", "Geotechnical Reports", "Foundation Design", "Soil Laboratory Testing", "Concrete & Aggregate Testing", "Asphalt & Pavement Testing", "Geophysical & Hydrogeological Surveying"],
+    facts: [
+      { label: "Established", value: "3 August 2008" },
+      { label: "PEC record", value: "Licence No. 52036" },
+      { label: "Head office", value: "I-14/3, Islamabad" },
+      { label: "Laboratory", value: "Old Chakra, Rawalpindi" },
+    ],
+    leader: {
+      name: "Dr. Babar Khan",
+      role: "Chief Executive Officer",
+      bio: "Ph.D. in Geological Engineering; former Logging Geologist with Halliburton Sperry-Sun Worldwide; active member of PAPG, PGES and ISSMGE.",
+    },
+  },
+  {
+    slug: "geo-construction",
+    name: "GEO Services Engineering",
+    eyebrow: "Construction & Project Delivery",
+    number: "03",
+    description: "A Pakistani engineering and construction enterprise delivering building infrastructure, civil works, project management, renovation, design-fit-out and multidisciplinary consulting.",
+    services: ["Civil Infrastructure Development", "Building Infrastructure", "Project Management & Supervision", "Residential Construction", "Commercial Construction", "Renovation & Fit-Out", "Engineering Consulting"],
+    facts: [
+      { label: "2026 portfolio", value: "22 listed projects" },
+      { label: "Technical team", value: "12 engineers & 4 surveyors" },
+      { label: "Site workforce", value: "8 foremen & 50 labour" },
+      { label: "PEC profile record", value: "Licence 19870 · C4/E" },
+    ],
+    leader: {
+      name: "Dr. Babar Khan",
+      role: "Chairman, GEO Group of Companies",
+      bio: "Leads GEO Services Engineering with a stated focus on integrity, quality, innovation, safety and accountable design-build delivery.",
+    },
+  },
 ] as const;
