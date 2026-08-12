@@ -47,6 +47,22 @@ export default async function DivisionPage({ division }: { division: Division })
         </section>
       )}
 
+      {details.profileImage && (
+        <section className="border-t border-[#1f1f1f] py-16 sm:py-20">
+          <div className="mx-auto grid max-w-[1400px] gap-8 px-5 sm:px-8 lg:grid-cols-[0.65fr_1.35fr] lg:items-center">
+            <div>
+              <p className="eyebrow">Company profile</p>
+              <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">{details.profileImage.title}</h2>
+              <p className="mt-5 max-w-lg text-sm leading-relaxed text-[#9a9a9a] sm:text-base">{details.profileImage.caption}</p>
+            </div>
+            <a href={details.profileImage.src} target="_blank" rel="noreferrer" className="group relative block aspect-[1.42/1] overflow-hidden rounded-sm border border-[#2a2a2a] bg-white">
+              <Image src={details.profileImage.src} alt={details.profileImage.title} fill sizes="(max-width: 1024px) 100vw, 65vw" className="object-contain p-3 transition-transform duration-700 group-hover:scale-[1.02]" />
+              <span className="absolute bottom-4 right-4 rounded-full bg-[#0a0a0a]/80 px-4 py-2 text-xs text-white backdrop-blur">Open full image</span>
+            </a>
+          </div>
+        </section>
+      )}
+
       <section className="border-y border-[#1f1f1f] py-16 sm:py-20">
         <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
           <p className="eyebrow">Capabilities</p>
@@ -74,7 +90,7 @@ export default async function DivisionPage({ division }: { division: Division })
           {projects.length ? (
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project) => (
-                <Link key={project.slug} href={`/projects/${project.slug}`} className="group block">
+                <Link key={project.slug} href={`/projects/${project.slug}?from=${division}`} className="group block">
                   <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-[#111]">
                     <Image src={project.cover} alt={project.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />

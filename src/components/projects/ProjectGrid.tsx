@@ -56,7 +56,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                 transition={{ duration: 0.35, delay: (i % 6) * 0.04 }}
               >
                 <Link
-                  href={`/projects/${p.slug}`}
+                  href={`/projects/${p.slug}?from=projects`}
                   onMouseEnter={() => setHover(i)}
                   onMouseLeave={() => setHover(null)}
                   className="group relative block overflow-hidden rounded-sm"

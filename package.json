@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed:geo": "node scripts/seed-geo-projects.mjs",
-    "migrate:profiles": "node scripts/migrate-profile-projects.mjs"
+    "migrate:profiles": "node scripts/migrate-profile-projects.mjs",
+    "fix:construction-images": "node scripts/fix-construction-project-images.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

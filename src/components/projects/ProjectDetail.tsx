@@ -11,10 +11,16 @@ export default function ProjectDetail({
   project,
   prev,
   next,
+  backHref,
+  backLabel,
+  origin,
 }: {
   project: Project;
   prev: Project;
   next: Project;
+  backHref: string;
+  backLabel: string;
+  origin: string;
 }) {
   const gallery = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
@@ -68,10 +74,10 @@ export default function ProjectDetail({
         <div className="sticky top-0 flex h-[100svh] flex-col justify-center px-5 pt-20 sm:px-8">
           <div className="mx-auto w-full max-w-[1500px]">
             <Link
-              href="/projects"
+              href={backHref}
               className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#3a3a3a] bg-[#0a0a0a]/50 px-5 py-2.5 text-sm text-[#d4d4d4] backdrop-blur transition-colors hover:border-white hover:text-white"
             >
-              <span aria-hidden>‹</span> Back
+              <span aria-hidden>‹</span> {backLabel}
             </Link>
 
             <div className="grid gap-5 lg:grid-cols-[92px_1fr_300px] lg:gap-8">
@@ -198,13 +204,13 @@ export default function ProjectDetail({
             <div className="mt-5 grid gap-4 lg:grid-cols-[92px_1fr] lg:gap-8">
               <div className="flex gap-2 lg:flex-col">
                 <Link
-                  href={`/projects/${prev.slug}`}
+                  href={`/projects/${prev.slug}?from=${origin}`}
                   className="inline-flex items-center gap-2 rounded-full border border-[#3a3a3a] bg-[#0a0a0a]/50 px-4 py-2 text-xs text-[#d4d4d4] backdrop-blur transition-colors hover:border-[#d2a24c] hover:bg-[#d2a24c] hover:text-[#0a0a0a]"
                 >
                   <span aria-hidden>‹</span> Previous
                 </Link>
                 <Link
-                  href={`/projects/${next.slug}`}
+                  href={`/projects/${next.slug}?from=${origin}`}
                   className="inline-flex items-center gap-2 rounded-full border border-[#3a3a3a] bg-[#0a0a0a]/50 px-4 py-2 text-xs text-[#d4d4d4] backdrop-blur transition-colors hover:border-[#d2a24c] hover:bg-[#d2a24c] hover:text-[#0a0a0a]"
                 >
                   Next <span aria-hidden>›</span>

@@ -4,12 +4,11 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "motion/react";
-import { projects } from "@/data/projects";
+import type { Project } from "@/lib/models";
 
-const featured = projects.slice(0, 6);
-const COUNT = featured.length;
-
-export default function ProjectShowcase() {
+export default function ProjectShowcase({ projects }: { projects: Project[] }) {
+  const featured = projects;
+  const COUNT = featured.length;
   const ref = useRef<HTMLElement>(null);
   const [i, setI] = useState(0);
   const [dir, setDir] = useState(1);
@@ -28,6 +27,8 @@ export default function ProjectShowcase() {
   });
 
   const p = featured[i];
+
+  if (!COUNT || !p) return null;
 
   return (
     <section ref={ref} style={{ height: `${COUNT * 100}vh` }} className="relative">

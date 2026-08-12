@@ -13,6 +13,7 @@ export const divisions = [
       { label: "Delivery", value: "Design through visualization" },
     ],
     leader: null,
+    profileImage: null,
   },
   {
     slug: "geo-soil-testing",
@@ -31,6 +32,11 @@ export const divisions = [
       name: "Dr. Babar Khan",
       role: "Chief Executive Officer",
       bio: "Ph.D. in Geological Engineering; former Logging Geologist with Halliburton Sperry-Sun Worldwide; active member of PAPG, PGES and ISSMGE.",
+    },
+    profileImage: {
+      src: "https://res.cloudinary.com/ducq2epdj/image/upload/v1786550805/geo-group/profile-2026/soil/page-13-profile-credential.png",
+      title: "Company profile credential",
+      caption: "Official credential reproduced from page 13 of the Geoservices Engineering Consultants company profile.",
     },
   },
   {
@@ -51,5 +57,6 @@ export const divisions = [
       role: "Chairman, GEO Group of Companies",
       bio: "Leads GEO Services Engineering with a stated focus on integrity, quality, innovation, safety and accountable design-build delivery.",
     },
+    profileImage: null,
   },
 ] as const;

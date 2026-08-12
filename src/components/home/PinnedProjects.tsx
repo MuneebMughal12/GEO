@@ -20,7 +20,7 @@ export default async function PinnedProjects() {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <Link key={project.slug} href={`/projects/${project.slug}`} className="group relative block overflow-hidden rounded-sm bg-[#111]">
+            <Link key={project.slug} href={`/projects/${project.slug}?from=home`} className="group relative block overflow-hidden rounded-sm bg-[#111]">
               <div className="relative aspect-[4/3]">
                 <Image src={project.cover} alt={project.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/10 to-transparent" />

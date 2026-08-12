@@ -5,19 +5,25 @@ import ServicesGrid from "@/components/home/ServicesGrid";
 import ProjectShowcase from "@/components/home/ProjectShowcase";
 import Testimonials from "@/components/home/Testimonials";
 import PinnedProjects from "@/components/home/PinnedProjects";
+import DivisionOverview from "@/components/home/DivisionOverview";
 import { getSiteSettings } from "@/lib/site-settings-repo";
+import { getProjects } from "@/lib/projects-repo";
+import type { Division } from "@/lib/models";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const settings = await getSiteSettings();
+  const [settings, projects] = await Promise.all([getSiteSettings(), getProjects()]);
+  const divisionOrder: Division[] = ["geo-arc", "geo-soil-testing", "geo-construction"];
+  const showcaseProjects = divisionOrder.flatMap((division) => projects.filter((project) => project.division === division).slice(0, 2));
   return (
     <>
       <Hero image={settings.heroImage} />
       <AboutBlock />
       <DiagonalMarquee />
       <ServicesGrid />
-      <ProjectShowcase />
+      <DivisionOverview projects={projects} />
+      <ProjectShowcase projects={showcaseProjects} />
       <Testimonials />
       <PinnedProjects />
     </>
