@@ -16,6 +16,7 @@ export async function POST(request: Request) {
     }
     const member = await createTeamMember({
       name: body.name.trim(), role: body.role.trim(), bio: body.bio?.trim() || "",
+      division: body.division || "geo-arc", isLead: Boolean(body.isLead),
       photo: body.photo?.trim() || "", order: Number(body.order) || 0,
     });
     return NextResponse.json(member, { status: 201 });

@@ -11,6 +11,8 @@ function normalize(member: Partial<TeamMember>): TeamMember {
     id: member.id || "",
     name: member.name || "",
     role: member.role || "",
+    division: member.division || "geo-arc",
+    isLead: Boolean(member.isLead),
     bio: member.bio || "",
     photo: member.photo || "",
     order: Number(member.order) || 0,

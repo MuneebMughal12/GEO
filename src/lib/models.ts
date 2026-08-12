@@ -46,6 +46,8 @@ export type TeamMember = {
   id: string;
   name: string;
   role: string;
+  division: Division;
+  isLead: boolean;
   bio: string;
   photo: string;
   order: number;

@@ -19,6 +19,7 @@ export async function PUT(request: Request, { params }: Context) {
     }
     const member = await updateTeamMember((await params).id, {
       name: body.name.trim(), role: body.role.trim(), bio: body.bio?.trim() || "",
+      division: body.division || "geo-arc", isLead: Boolean(body.isLead),
       photo: body.photo?.trim() || "", order: Number(body.order) || 0,
     });
     return member ? NextResponse.json(member) : NextResponse.json({ error: "Team member not found" }, { status: 404 });

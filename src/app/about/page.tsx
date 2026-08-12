@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import RevealText from "@/components/RevealText";
 import Counter from "@/components/Counter";
 import HexGrid from "@/components/HexGrid";
 import { company } from "@/data/company";
 import { getTeamMembers } from "@/lib/team-repo";
+import DivisionTeams from "@/components/DivisionTeams";
 
 export const dynamic = "force-dynamic";
 
@@ -61,27 +61,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {team.length > 0 && (
-        <section className="border-t border-[#1f1f1f] py-20 sm:py-28">
-          <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-            <p className="eyebrow">Our people</p>
-            <h2 className="display mt-5 text-[10vw] leading-[0.9] sm:text-[6vw] lg:text-[4vw]"><span className="lead">Meet the</span><span className="hot">team</span></h2>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {team.map((member) => (
-                <article key={member.id} className="group">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-[#111]">
-                    {member.photo ? <Image src={member.photo} alt={member.name} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-105" unoptimized /> : <div className="grid h-full place-items-center text-7xl text-[#292929]">{member.name.charAt(0)}</div>}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                  </div>
-                  <h3 className="mt-4 text-lg font-semibold">{member.name}</h3>
-                  <p className="mt-1 text-xs uppercase tracking-[0.16em] text-[#d2a24c]">{member.role}</p>
-                  {member.bio && <p className="mt-3 text-sm leading-relaxed text-[#888]">{member.bio}</p>}
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <DivisionTeams team={team} />
 
       {/* mission / vision / values */}
       <section className="border-y border-[#1f1f1f] py-20 sm:py-28">
