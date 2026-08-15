@@ -75,7 +75,14 @@ export default function ProjectDetail({
           <div className="mx-auto w-full max-w-[1500px]">
             <Link
               href={backHref}
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#3a3a3a] bg-[#0a0a0a]/50 px-5 py-2.5 text-sm text-[#d4d4d4] backdrop-blur transition-colors hover:border-white hover:text-white"
+              className="fixed left-5 top-[4.75rem] z-[510] inline-flex items-center gap-2 rounded-full border border-[#3a3a3a] bg-[#0a0a0a]/90 px-4 py-2 text-xs text-[#f0f0f0] shadow-lg shadow-black/40 backdrop-blur-md transition-colors hover:border-white sm:hidden"
+            >
+              <span aria-hidden>‹</span> {backLabel}
+            </Link>
+            <div aria-hidden className="mb-5 h-10 sm:hidden" />
+            <Link
+              href={backHref}
+              className="mb-5 hidden items-center gap-2 rounded-full border border-[#3a3a3a] bg-[#0a0a0a]/50 px-5 py-2.5 text-sm text-[#d4d4d4] backdrop-blur transition-colors hover:border-white hover:text-white sm:inline-flex"
             >
               <span aria-hidden>‹</span> {backLabel}
             </Link>
