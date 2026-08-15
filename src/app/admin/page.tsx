@@ -6,15 +6,17 @@ import { isCloudinaryConfigured } from "@/lib/cloudinary";
 import { getProjects } from "@/lib/projects-repo";
 import { getTeamMembers } from "@/lib/team-repo";
 import AdminShell from "@/components/admin/AdminShell";
+import { getAllTestimonials } from "@/lib/testimonials-repo";
 
 export const dynamic = "force-dynamic";
 export default async function AdminPage() {
   if (!(await isAuthenticated())) redirect("/admin/login");
-  const [projects, team] = await Promise.all([getProjects(), getTeamMembers()]);
+  const [projects, team, testimonials] = await Promise.all([getProjects(), getTeamMembers(), getAllTestimonials()]);
   const cards = [
     {label:"Projects",value:projects.length,href:"/admin/projects",note:"Add, edit, pin or delete"},
     {label:"Pinned on home",value:projects.filter(p=>p.pinned).length,href:"/admin/projects",note:"Featured above the footer"},
     {label:"Team members",value:team.length,href:"/admin/team",note:"Manage the About page team"},
+    {label:"Pending testimonials",value:testimonials.filter(item=>item.status === "pending").length,href:"/admin/testimonials",note:"Review and approve client submissions"},
     {label:"Site images",value:2,href:"/admin/settings",note:"Hero and footer backgrounds"},
   ];
   return <AdminShell title="Dashboard" subtitle="Manage the GEO Group website from one place.">

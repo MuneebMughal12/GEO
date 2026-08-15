@@ -55,6 +55,23 @@ export type TeamMember = {
   updatedAt?: string;
 };
 
+export type TestimonialStatus = "pending" | "approved";
+
+export type Testimonial = {
+  id: string;
+  name: string;
+  role: string;
+  organization: string;
+  location: string;
+  contact: string;
+  quote: string;
+  rating: number;
+  status: TestimonialStatus;
+  submittedAt: string;
+  approvedAt?: string;
+  updatedAt?: string;
+};
+
 export const DIVISIONS: Array<{ value: Division; label: string }> = [
   { value: "geo-arc", label: "GEO ARC" },
   { value: "geo-soil-testing", label: "GEO Soil Testing" },

@@ -8,6 +8,7 @@ const navigation = [
   { href: "/admin/projects", label: "Projects", mark: "P" },
   { href: "/admin/settings", label: "Site Images", mark: "I" },
   { href: "/admin/team", label: "Team", mark: "T" },
+  { href: "/admin/testimonials", label: "Testimonials", mark: "R" },
 ];
 
 export default function AdminShell({ title, subtitle, actions, children }: {
