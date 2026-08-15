@@ -19,6 +19,8 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
     return () => { document.removeEventListener("keydown", close); document.body.style.overflow = previous; };
   }, [allOpen, formOpen]);
 
+  if (testimonials.length === 0) return null;
+
   return (
     <section className="relative overflow-hidden py-24 sm:py-32">
       <div className="glow pointer-events-none absolute inset-0 opacity-60" />
@@ -26,12 +28,12 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
         <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
           <div><p className="eyebrow">Verified client experiences</p><h2 className="display mt-5 text-[11vw] leading-[0.9] sm:text-[7vw] lg:text-[4.6vw]"><span>Results that</span><span><span className="hot">speak</span> for</span><span className="lead">themselves</span></h2></div>
           <div className="flex flex-wrap gap-3">
-            {testimonials.length > 0 && <button onClick={() => { setActive(0); setAllOpen(true); }} className="rounded-full border border-[#3a3a3a] px-5 py-2.5 text-sm text-white transition-colors hover:border-[#d2a24c]">See all ({testimonials.length})</button>}
+            <button onClick={() => { setActive(0); setAllOpen(true); }} className="rounded-full border border-[#3a3a3a] px-5 py-2.5 text-sm text-white transition-colors hover:border-[#d2a24c]">See all ({testimonials.length})</button>
             <button onClick={() => setFormOpen(true)} className="rounded-full bg-[#d2a24c] px-5 py-2.5 text-sm font-medium text-black transition-opacity hover:opacity-85">Share your experience</button>
           </div>
         </div>
 
-        {visible.length > 0 ? <div className="mt-16 divide-y divide-[#3c2c10] border-y border-[#3c2c10]">{visible.map((testimonial, index) => <TestimonialRow key={testimonial.id} testimonial={testimonial} index={index} />)}</div> : <div className="mt-14 rounded-sm border border-[#252525] bg-[#0f0f0f] p-8 sm:p-12"><p className="text-xl font-semibold text-white">Real client testimonials will appear here after approval.</p><p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#888]">No placeholder reviews are displayed. If you have worked with GEO Group, submit your experience for admin verification.</p></div>}
+        <div className="mt-16 divide-y divide-[#3c2c10] border-y border-[#3c2c10]">{visible.map((testimonial, index) => <TestimonialRow key={testimonial.id} testimonial={testimonial} index={index} />)}</div>
       </div>
 
       <AnimatePresence>
